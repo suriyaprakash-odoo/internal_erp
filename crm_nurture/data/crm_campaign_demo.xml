@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="crm_campaign_1" model="crm.campaign">
+			<field name="name">Simple Webform Campaign</field>
+			<field name="no_delete">True</field>
+		</record>
+		<record id="crm_campaign_2" model="crm.campaign">
+			<field name="name">Detailed Webform Campaign</field>
+			<field name="no_delete">True</field>
+		</record>
+	</data>
+</odoo>

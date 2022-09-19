@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="mprf_request_tree" model="ir.ui.view">
+			<field name="name">mprf.request.tree</field>
+			<field name="model">mprf.request</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<tree string="MPRF Request">
+					<field name="department_id" />
+					<field name="job_position_id" />
+					<field name="num_of_positions" />
+					<field name="manpower_reason" />
+					<field name="requested_by" />
+					<field name="requested_date" />
+					<field name="status" />
+					<field name="duration_days" />
+				</tree>
+			</field>
+		</record>
+		<record id="mprf_request_form" model="ir.ui.view">
+			<field name="name">mprf.request.form</field>
+			<field name="model">mprf.request</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<form string="MPRF Request">
+					<header>
+						<field name="status" widget="statusbar" statusbar_visible="new,requested,approved,close" />
+						<button name="send_approval" string="Send for Approval" type="object" attrs="{'invisible': [('status', 'not in', ('new'))]}"/>
+						<button name="approval_request" string="Approve" type="object" attrs="{'invisible': [('status', 'not in', ('requested'))]}"/>
+						<button name="close_request" string="Close" type="object" attrs="{'invisible': [('status', 'not in', ('approved'))]}"/>
+						<button name="reject_request" string="Reject" type="object" attrs="{'invisible': [('status', 'not in', ('requested'))]}"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="department_id" required="1" />
+								<field name="num_of_positions" required="1" />
+								<label for="from_exp" string="Experience(in years)" />
+								<div>
+									<field name="from_exp" style="width: 46.5%" required="1" />
+									To
+									<field name="to_exp" style="width: 47.5%" required="1" />
+								</div>
+								<field name="manpower_reason" />
+								<field name="qualification_required" widget='many2many_tags' required="1" />
+								<field name="reporting_to" />
+							</group>
+							<group>
+								<field name="job_position_id" required="1" />
+								<field name="tentative_doj" />
+								<field name="gender" required="1" />
+								<field name="skills_required" widget='many2many_tags' required="1" />
+								<field name="other_skills" />
+								<field name="close_date" readonly="1" />
+							</group>
+							<group>
+								<label for="budget_from" string="Budget(in CTC/years)" />
+								<div>
+									<field name="budget_from" style="width: 46.5%" required="1" />
+									To
+									<field name="budget_to" style="width: 47.5%" required="1" />
+								</div>
+								<field name="employement_type" />
+								<label for="period_count" string="T/P/C Period" />
+								<div>
+									<field name="period_count" style="width: 46.5%" required="1" />
+									/
+									<field name="period_type" style="width: 47.5%" required="1" />
+								</div>
+							</group>
+							<group>
+								<field name="requested_by" required="1" />
+								<field name="designation" required="1" />
+								<field name="requested_date" required="1" />
+							</group>
+							<group>
+								<field name="job_description" required="1" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window"
+			id="action_view_mprf_request">
+			<field name="name">MPRF Request</field>
+			<field name="res_model">mprf.request</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record> 
+		
+		<menuitem id="sub_menu_mprf_request" action="action_view_mprf_request"
+			name="MPRF Requests" parent="hr_recruitment.menu_hr_recruitment_root" sequence = '2'/>
+
+
+	<function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>mprf.request</value>
+        <value
+            eval="[
+            	'department_id',
+                'num_of_positions',
+                'from_exp',
+                'to_exp',
+                'manpower_reason',
+                'qualification_required',
+                'reporting_to',
+                'job_position_id',
+                'tentative_doj',
+                'gender',
+                'skills_required',
+                'other_skills',
+                'budget_from',
+                'budget_to',
+                'employement_type',
+                'period_count',
+                'period_type',
+                'requested_by',
+                'designation',
+                'requested_date',
+                'job_description',
+            ]" />
+    </function>
+			
+	</data>
+</odoo>

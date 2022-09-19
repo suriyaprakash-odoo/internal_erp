@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vendor_multi_payment_manager,vendor.multi.payment.manager,vendor_multi_payment.model_vendor_multi_payment,account.group_account_manager,1,1,1,1
+access_vendor_multi_payment_line_manager,vendor.multi.payment.line.manager,vendor_multi_payment.model_vendor_multi_payment_line,account.group_account_manager,1,1,1,1

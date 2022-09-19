@@ -1,0 +1,20 @@
+{
+    'name': 'PPTS Account Access',
+    'version': '11.0.1.0.0',
+    'description': 'Bulk payments for invoice',
+    'summary': 'PPTS Account Access',
+    'category': 'Account Invoice',
+    'author': 'PPTS [India] Pvt.Ltd.',
+    'website': "http://www.pptssolutions.com",
+    'sequence': 100,
+    'depends': ['base','account','account_cancel','ppts_payment_mode_master','account_multi_payment','ppts_gst_code_master','account_reports','ppts_bulk_payments','account_firc','journal_bank_and_cash'],
+    'data': [
+        'security/account_security.xml',
+        'security/ir.model.access.csv',
+        'views/account_access_view.xml',
+    ],
+    'license': 'LGPL-3',
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

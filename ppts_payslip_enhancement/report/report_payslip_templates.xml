@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="ppts_payslip_external_layout_standard">
+
+        <div class="article o_report_layout_standard">
+            <t t-raw="0" />
+        </div>
+
+    </template>
+
+	<template id="ppts_payslip_external_layout">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+        <t t-call="ppts_payslip_enhancement.ppts_payslip_external_layout_standard"><t t-raw="0"/></t>
+        
+    </template>
+    
+
+	<template id="report_ppts_payslip">
+	    <t t-call="web.html_container">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="ppts_payslip_enhancement.ppts_payslip_external_layout">
+	                <div class="page">
+	
+	                    <table class="table table-condensed table-bordered">
+	                    	<tr>
+                                <th style="width:100%;">
+                                
+                                	 <div class="col-xs-3 mb4" style="width:100%;">
+	                                	  	<div style="float:left">
+						                    	<img src="ppts_payslip_enhancement/static/src/img/logo.gif" style="max-height: 45px;"/>
+						                    </div>
+						                    <!-- div style="float:right">
+						                    	<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 45px;"/>
+						                    </div> -->
+					                </div>
+                                
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center;font-size: 17px;">
+									<span t-field="o.company_id.street"/>, <span t-field="o.company_id.street2"/>, 
+									<br/>
+									<span t-field="o.company_id.city"/> - <span t-field="o.company_id.zip"/>, <span t-field="o.company_id.state_id"/>                               	
+                                
+                                </th>
+                            </tr>
+                            <tr>
+								<th style="text-align:center;font-size: 16px;">
+									<span t-field="o.name"/>
+								</th>
+                          	</tr>
+                          	
+                          	<style>
+                          		.border-right {
+                          			border-top:1px solid #ffffff;
+                          			border-bottom:1px solid #ffffff;
+                          			border-left:1px solid #ffffff;
+                          			border-right:1px solid #ddd;
+                          		}
+                          		
+                          	</style>
+                          	
+                          	 <tr>
+								<th style="width:100%;">
+								
+									<table class="table table-condensed" style="padding:0px;margin:0px;">
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Name </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.name"/></th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Employee Code </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.employee_code"/></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Designation </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.job_id"/></th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">EPF No. </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.epf_number"/></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Department </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.department_id"/></th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Bank A/C No. </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.bank_account_id"/></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">No. of Working Days </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-if="o.worked_days_line_ids" t-esc="sum(o.worked_days_line_ids.filtered(lambda r:r.code == 'WORK100').mapped('number_of_days'))"/></th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Bank </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-if="o.employee_id.bank_account_id" t-field="o.employee_id.bank_account_id.bank_id"/></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Days Payable </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-if="o.worked_days_line_ids" t-esc="sum(o.worked_days_line_ids.filtered(lambda r:r.code == 'PRENTDAYS').mapped('number_of_days'))"/></th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Branch </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <t t-if="o.employee_id.bank_account_id"> <span t-if="o.employee_id.bank_account_id.bank_id" t-field="o.employee_id.bank_account_id.bank_id.street"/> </t></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Sanctioned Leave </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> ?</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Date of Joining </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.date_of_joining"/></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Loss of Pay </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> ?</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">PAN Number </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.pan_number"/></th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:15%;border-top:1px solid #ffffff">UAN Number </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.uan_number"/></th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff">Aadhar Number </th>
+	                    					<th style="width:35%;border-top:1px solid #ffffff"> <span t-field="o.employee_id.aadhar_number"/></th>
+	                    				</tr>
+	                    				
+	                    			</table>
+								
+								</th>
+                          	</tr>
+                          	
+                          	
+                          	<tr>
+								<th style="width:100%;padding:0px;">
+								
+									<t t-set="ctc_total" t-value="0"/>
+									<t t-set="earning_total" t-value="0"/>
+									<t t-set="deduction_total" t-value="0"/>
+								
+									<table class="table table-condensed" style="padding:0px;margin:0px;">
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff"></th><th style="width:15%;border-top:1px solid #ffffff;text-align:right;">CTC</th><th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">Earnings</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff"></th><th style="width:25%;border-top:1px solid #ffffff">Deductions</th>
+	                    				</tr>
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Basic</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    					
+	                    					<t t-set="ctc_total" t-value="ctc_total+o.contract_id.basic_salary"/>
+	                    					
+	                    					<span t-if="o.contract_id" t-esc="o.contract_id.basic_salary"/>
+	                    					
+	                    					</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    					
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'BASIC').mapped('total'))"/>
+	                    						
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'BASIC').mapped('total'))"/>
+	                    						
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Employee EPF</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					
+	                    					<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'EMPEPF').mapped('total'))"/>
+	                    					
+	                    					<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'EMPEPF').mapped('total'))"/>
+	                    					
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">HRA</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    					
+	                    					<t t-set="ctc_total" t-value="ctc_total+o.contract_id.rent_allowance"/>
+	                    					
+	                    					<span t-if="o.contract_id" t-esc="o.contract_id.rent_allowance"/>
+	                    					</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    					
+	                    					<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'HRA').mapped('total'))"/>
+	                    					
+	                    					<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'HRA').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Employer EPF</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    						
+	                    						<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'EPF').mapped('total'))"/>
+	                    						
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'EPF').mapped('total'))"/>
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Transport</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    					
+	                    						<t t-set="ctc_total" t-value="ctc_total+o.contract_id.transport"/>
+	                    						<span t-if="o.contract_id" t-esc="o.contract_id.transport"/>
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'TCA').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'TCA').mapped('total'))"/>
+	                    					</th>
+	                    					
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Employee ESI</th><th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    						
+	                    						<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'EMPESI').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'EMPESI').mapped('total'))"/>
+	                    					
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Medical Allowance</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="ctc_total" t-value="ctc_total+o.contract_id.medical_allowance"/>
+	                    						<span t-if="o.contract_id" t-esc="o.contract_id.medical_allowance"/>
+	                    					</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'MEDA').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'MEDA').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Employer ESI</th>
+	                    					
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					
+	                    						<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'ESI').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'ESI').mapped('total'))"/>
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Special Allowance</th>
+	                    					
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="ctc_total" t-value="ctc_total+o.contract_id.special_allowance"/>
+	                    						<span t-if="o.contract_id" t-esc="o.contract_id.special_allowance"/>
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'SPLALW').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'SPLALW').mapped('total'))"/>
+	                    					</th>
+	                    					
+	                    					<th style="width:25%;border-top:1px solid #ffffff">EPF V.C.</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					0
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Employer EPF</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="ctc_total" t-value="ctc_total+sum(o.line_ids.filtered(lambda r:r.code == 'COMEPF').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'COMEPF').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'COMEPF').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'COMEPF').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Professional Tax</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'PTD').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'PTD').mapped('total'))"/>
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Employer ESI</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="ctc_total" t-value="ctc_total+sum(o.line_ids.filtered(lambda r:r.code == 'COMESI').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'COMESI').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'COMESI').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'COMESI').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Income Tax / TDS</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					0
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Project Allowance</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="ctc_total" t-value="ctc_total+o.contract_id.project_allowance"/>
+	                    						<span t-if="o.contract_id" t-esc="o.contract_id.project_allowance"/>
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'PALW').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'PALW').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Transport</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'TCA').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'TCA').mapped('total'))"/>
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Exgratia</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						<t t-set="ctc_total" t-value="ctc_total+o.contract_id.exgratia"/>
+	                    						<span t-if="o.contract_id" t-esc="o.contract_id.exgratia"/>
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    						<t t-set="earning_total" t-value="earning_total+sum(o.line_ids.filtered(lambda r:r.code == 'EXALW').mapped('total'))"/>
+	                    						<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'EXALW').mapped('total'))"/>
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Loan/Advance</th>
+	                    					
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					0
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff">Others</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;">
+	                    						0
+	                    					</th>
+	                    					<th style="width:15%;border-top:1px solid #ffffff;text-align:right;" class="border-right">
+	                    					0
+	                    					</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Mediclaim</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					
+	                    					<t t-set="deduction_total" t-value="deduction_total+sum(o.line_ids.filtered(lambda r:r.code == 'MEDCLM').mapped('total'))"/>
+	                    					<span t-if="o.line_ids" t-esc="sum(o.line_ids.filtered(lambda r:r.code == 'MEDCLM').mapped('total'))"/>
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;border-top:1px solid #ffffff"></th><th style="width:15%;border-top:1px solid #ffffff;text-align:right;"></th><th style="width:15%;border-top:1px solid #ffffff;border-bottom:1px solid #ddd;text-align:right;" class="border-right"></th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff">Other Deductions</th>
+	                    					<th style="width:25%;border-top:1px solid #ffffff;text-align:right;">
+	                    					0
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				
+	                    				<tr>
+	                    					<th style="width:20%;">Total</th>
+	                    					<th style="width:15%;text-align:right;">
+	                    						<span t-esc="ctc_total"/>
+	                    					</th>
+	                    					<th style="width:15%;text-align:right;border-right:1px solid #ddd;">
+	                    						<span t-esc="earning_total"/>
+	                    					</th>
+	                    					<th style="width:25%;">Total Deductions</th>
+	                    					<th style="width:25%;text-align:right;">
+	                    						<span t-esc="deduction_total"/>
+	                    					</th>
+	                    				</tr>
+	                    				
+	                    				<tr>
+											<th style="width:20%;">
+												Net Pay:-
+											</th>
+											
+											<th colspan="4">
+												<t t-set="net_total" t-value="0"/>
+												<t t-set="net_total" t-value="sum(o.line_ids.filtered(lambda r:r.code == 'NET').mapped('total')) or 0"/>
+												<span t-esc="net_total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+												 (<span t-esc="o.company_id.currency_id.amount_to_text(net_total)" />)
+												
+											</th>
+			                          	</tr>
+			                          	
+			                          	<tr>
+											<th colspan="5">
+												Note: This is a computer generated payslip and does not require signature.
+											</th>
+			                          	</tr>
+	                    				
+	                    			</table>
+								
+								</th>
+                          	</tr>
+                          	
+                          	
+	                    </table>
+	
+	                </div>
+	            </t>
+	        </t>
+	    </t>
+	</template>
+</odoo>

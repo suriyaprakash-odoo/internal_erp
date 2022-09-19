@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="assets_frontend" inherit_id="website.assets_frontend" name="website_blog assets">
+			<xpath expr="." position="inside">
+				<link rel='stylesheet' href="/crm_nurture/static/css/crm_nurture.css"/>
+				<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+				<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"/>
+			</xpath>
+		</template>
+
+		<template id="unsubscribe" name="Unsubscribe">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty">
+					<section class="mt16 mb128">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center mt16 mb32">
+									<h2>
+										<span style="color:#008000;">
+											<strong>Unsubscribed successfully</strong>
+										</span>
+									</h2>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</t>
+		</template>
+
+		<template id="confirmation">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty">
+					<section class="mt16 mb128">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center mt16 mb32">
+									<h2>
+										<span style="color:#008000;">
+											<strong>Lead Saved</strong>
+										</span>
+									</h2>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</t>
+		</template>
+
+		<template id="lead_error_msg">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty">
+					<section class="mt16 mb128">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center mt16 mb32">
+									<h2>
+										<span style="color:#008000;">
+												<strong>Lead Not Created due to Technical Problem. Report this issue to Administrator.</strong>
+										</span>
+									</h2>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</t>
+		</template>
+
+		<template id="create_lead" name="Create Lead">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty oe_website_appointment">
+					<section class="ehtml_form container para_large form_bg" id="ehtml_form">
+						<form class="form-horizontal mt32 form_size" id="leadform" action="/Lead/detailed_save/" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+							<h1 style="text-align: center;padding-bottom:30px;font-family: Geneva;font-weight:bold">Create Lead</h1>
+							<div class="oe_website_appointment">
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="lead_subject" style="font-weight: normal;">Subject
+										<span style="color:red">*</span>
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="lead_subject" style="float: left;" name="lead_subject" required="required" type="text" placeholder="Lead Description" t-att-value="lead_subject"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="company_name" style="font-weight: normal;">Company Name
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="company_name" style="float: left;" name="company_name" type="text" placeholder="Company Name" t-att-value="company_name"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="prospect_first_name" style="font-weight: normal;">Contact Name
+										<span style="color:red">*</span>
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="prospect_first_name" style="width:50%;float: left;" name="prospect_first_name" required="required" type="text" placeholder="First name" t-att-value="prospect_first_name"/>
+										<input class="form-control" id="prospect_last_name" style="width:50%;" name="prospect_last_name" type="text" placeholder="Last name" t-att-value="prospect_last_name"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="prospect_mail_id" style="font-weight: normal;">Email Address
+										<span style="color:red">*</span>
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="prospect_mail_id" style="float: left;" name="prospect_mail_id" required="required" type="email" placeholder="Email Address" t-att-value="prospect_mail_id"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="prospect_phone" style="font-weight: normal;">Mobile/Phone</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="prospect_phone" style="float: left;" name="prospect_phone" placeholder="Mobile/Phone" t-att-value="prospect_phone"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="lead_address" style="font-weight: normal;">Address</label>
+									<div class="col-sm-9">
+										<div class="form-group row">
+											<div class="col-sm-12">
+												<input class="form-control" id="street" style="width:50%;float: left;" name="street" type="text" placeholder="Street" t-att-value="street"/>
+												<input class="form-control" id="street2" style="width:50%;float: left;" name="street2" type="text" placeholder="Street 2" t-att-value="street2"/>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-sm-12">
+												<input class="form-control" id="city" style="width:50%;float: left;" name="city" type="text" placeholder="City" t-att-value="city"/>
+												<select name="state_id" id="state_id" class="form-control" style="width:50%;float: left;">
+													<option value="" selected="selected">State</option>
+													<t t-foreach="states or []" t-as="state">
+														<option t-att-value="state.id">
+															<t t-esc="state.name"/>
+														</option>
+													</t>
+												</select>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-sm-12">
+												<select name="country_id" id="country_id" class="form-control" style="width:50%;float: left;">
+													<option value="" selected="selected">Country</option>
+													<t t-foreach="countries or []" t-as="country">
+														<option t-att-value="country.id">
+															<t t-esc="country.name"/>
+														</option>
+													</t>
+												</select>
+												<input class="form-control" id="pin" style="width:50%;float: left;" name="pin" type="text" placeholder="Zip" t-att-value="pin"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="butn">
+									<input class="btn btn-primary" value="Reset" type="reset"/>
+									<button type="btnsubmit" id="submit_btn" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</form>
+						<script>
+							$(document).ready(function(){
+								$("#submit_btn").click(function(){
+									email=$("#prospect_mail_id").val();
+									arr = email.split('@');
+									if (arr[1].indexOf(".") >= 0){
+									}else{
+										alert("Please enter a valid Email address");
+										return false;
+									}
+								});
+							});
+						</script>
+					</section>
+				</div>
+			</t>
+		</template>
+		<template id="create_lead_2" name="Create Lead">
+			<t t-call="website.layout">
+				<div id="wrap" class="oe_structure oe_empty oe_website_appointment">
+					<section class="ehtml_form container para_large form_bg" id="ehtml_form">
+						<form class="form-horizontal mt32 form_size" id="leadform" action="/Lead/simplified_save/" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+							<h1 style="text-align: center;padding-bottom:30px;font-family: Geneva;font-weight:bold">Create Lead</h1>
+							<div class="oe_website_appointment">
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="lead_subject" style="font-weight: normal;">Subject
+										<span style="color:red">*</span>
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="lead_subject" style="float: left;" name="lead_subject" required="required" type="text" placeholder="Lead Description" t-att-value="lead_subject"/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label" for="prospect_mail_id" style="font-weight: normal;">Email Address
+										<span style="color:red">*</span>
+									</label>
+									<div class="col-sm-9">
+										<input class="form-control" id="prospect_mail_id" style="float: left;" name="prospect_mail_id" required="required" type="email" placeholder="Email Address" t-att-value="prospect_mail_id"/>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="butn">
+									<input class="btn btn-primary" value="Reset" type="reset"/>
+									<button type="btnsubmit" id="submit_btn" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</form>
+						<script>
+							$(document).ready(function(){
+								$("#submit_btn").click(function(){
+									email=$("#prospect_mail_id").val();
+									arr = email.split('@');
+									if (arr[1].indexOf(".") >= 0){
+									}else{
+										alert("Please enter a valid Email address");
+										return false;
+									}
+								});
+							});
+						</script>
+					</section>
+				</div>
+			</t>
+		</template>
+	</data>
+</odoo>

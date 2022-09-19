@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Form View -->
+	<record id="ppts_payment_mode_master_form" model="ir.ui.view">
+        <field name="name">ppts.payment.mode.master</field>
+        <field name="model">ppts.payment.mode.master</field>
+        <field name="arch" type="xml">
+            <form string="Payment Mode Master">
+            	<sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="ppts_payment_mode_master_tree" model="ir.ui.view">
+        <field name="name">ppts.payment.mode.master</field>
+        <field name="model">ppts.payment.mode.master</field>
+        <field name="arch" type="xml">
+            <tree string="Payment Mode Tree">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+	<!-- Search View -->
+	<record id="ppts_payment_mode_master_filter" model="ir.ui.view">
+        <field name="name">ppts.payment.mode.master</field>
+        <field name="model">ppts.payment.mode.master</field>
+        <field name="arch" type="xml">
+            <search string="Search Payment Mode">
+                <field name="name"/>
+                <group expand="0" string="Group By">
+                    <filter string="Name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action View -->
+    <record id="mma_ppts_payment_mode_master" model="ir.actions.act_window">
+        <field name="name">Payment Mode</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ppts.payment.mode.master</field>
+        <field name="view_id" ref="ppts_payment_mode_master_tree"/>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="ppts_payment_mode_master_filter"/>
+    </record>
+    
+    <!-- Menu Details -->
+
+    <menuitem id="mam_payment_mode_master" name="Payment Mode" parent="account.account_management_menu" sequence="2" action="mma_ppts_payment_mode_master"/>
+
+</odoo>

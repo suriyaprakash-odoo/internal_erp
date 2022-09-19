@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Crm Lead -->
+
+	<record id="view_form_custom_sale_inheritance" model="ir.ui.view">
+		<field name="name">crm.lead.form.opportunity</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+		<field name="arch" type="xml">
+			<field name='tag_ids' position="after">
+				<field name="create_date" />
+				<field name="active_date" />
+				<field name="no_active_date" />
+				<field name="age_of_date" />
+				<field name="date_diff" invisible="1" />
+			</field>
+			<field name='team_id' position="after">
+				<field name="industry_id" />
+				<field name="services_id" />
+				<field name="last_action" invisible="True" />
+				<field name="to_mail_send" invisible="1" />
+				<field name='email_list' invisible="1" />
+			</field>
+			<xpath expr="//form/sheet/notebook/page[2]" position="after">
+				<page string="Next Activities">
+					<field name="next_activity_ids" options="{'color_field': 'color'}">
+						<tree string="Next Activities">
+							<field name="res_name" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="activity_type_id" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="summary" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="date_deadline" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="last_action" invisible="1" />
+							<field name="date_diff" invisible="1" />
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="crm_case_form_view_leads_inheritance" model="ir.ui.view">
+		<field name="name">crm.lead.form.lead</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_form_view_leads" />
+		<field name="arch" type="xml">
+			<field name='tag_ids' position="after">
+				<field name="create_date" />
+				<field name="active_date" />
+				<field name="no_active_date" />
+				<field name="age_of_date" />
+				<field name="date_diff" invisible="1" />
+			</field>
+			<field name='team_id' position="after">
+				<field name="industry_id" />
+				<field name="services_id" />
+				<field name="last_action" invisible="True" />
+				<field name="to_mail_send" invisible="1" />
+				<field name='email_list' invisible="1" />
+			</field>
+			<xpath expr="//form/sheet/notebook/page[2]" position="after">
+				<page name="lead" string="Contact Information">
+					<group>
+						<group>
+							<field name="partner_name" />
+							<label for="street" string="Address" />
+							<div class="o_address_format">
+								<field name="street" placeholder="Street..." class="o_address_street" />
+								<field name="street2" placeholder="Street 2..." class="o_address_street" />
+								<field name="city" placeholder="City" class="o_address_city" />
+								<field name="state_id" class="o_address_state"
+									placeholder="State" options='{"no_open": True}' />
+								<field name="zip" placeholder="ZIP" class="o_address_zip" />
+								<field name="country_id" placeholder="Country" class="o_address_country"
+									options='{"no_open": True, "no_create": True}' />
+							</div>
+							<field name="website" widget="url" placeholder="e.g. www.odoo.com" />
+						</group>
+
+						<group>
+							<label for="contact_name" />
+							<div class="o_row">
+								<field name="contact_name" />
+								<field name="title" placeholder="Title" domain="[]"
+									options='{"no_open": True}' />
+							</div>
+							<field name="function" />
+							<field name="mobile" />
+							<field name="opt_out" />
+						</group>
+						<group string="Marketing">
+							<field name="campaign_id" />
+							<field name="medium_id" />
+							<field name="source_id" />
+						</group>
+						<group string="Misc" name="Misc">
+							<field name="day_open" groups="base.group_no_one" />
+							<field name="day_close" groups="base.group_no_one" />
+							<field name="referred" />
+							<field name="type" invisible="1" />
+						</group>
+					</group>
+				</page>
+				<page string="Next Activities">
+					<field name="next_activity_ids" options="{'color_field': 'color'}">
+						<tree string="Next Activities">
+							<field name="res_name" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="activity_type_id" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="summary" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="date_deadline" attrs="{'invisible': [('last_action', '=', True)]}" />
+							<field name="last_action" invisible="1" />
+							<field name="date_diff" invisible="1" />
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_create_opportunity_simplified_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.form.simple</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.view_create_opportunity_simplified" />
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/group/group[1]" position="after">
+				<group>
+					<field name="industry_id" />
+					<field name="services_id" />
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="crm_case_pivot_view_leads_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.pivot.lead</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_pivot_view_leads" />
+		<field name="arch" type="xml">
+			<field name='stage_id' position="after">
+				<field name="industry_id" type="row" />
+				<field name="services_id" type="row" />
+			</field>
+		</field>
+	</record>
+
+	<record id="view_crm_case_leads_filter_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.search.lead</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
+		<field name="arch" type="xml">
+			<filter name="groupby_salesperson" position="after">
+				<filter string="Industry" name="groupby_salesperson" domain="[]"
+					context="{'group_by':'industry_id'}" />
+				<filter string="Services" name="groupby_salesperson" domain="[]"
+					context="{'group_by':'services_id'}" />
+			</filter>
+		</field>
+	</record>
+
+	<record id="view_crm_case_opportunities_filter_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.search.opportunity</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+		<field name="arch" type="xml">
+			<xpath expr="//search/group/filter[1]" position="after">
+				<filter string="Industry" name="groupby_salesperson" domain="[]"
+					context="{'group_by':'industry_id'}" />
+				<filter string="Services" name="groupby_salesperson" domain="[]"
+					context="{'group_by':'services_id'}" />
+			</xpath>
+		</field>
+	</record>
+
+	<!-- Crm opportunity Report -->
+
+	<record id="crm_opportunity_report_view_pivot_inherit" model="ir.ui.view">
+		<field name="name">crm.opportunity.report.pivot</field>
+		<field name="model">crm.opportunity.report</field>
+		<field name="inherit_id" ref="crm.crm_opportunity_report_view_pivot" />
+		<field name="arch" type="xml">
+			<pivot string="Pipeline Analysis" disable_linking="True">
+				<field name="industry_id" type="row" />
+				<field name="services_id" type="row" />
+				<!-- <field name="active_date" type="row" /> -->
+			</pivot>
+		</field>
+	</record>
+
+	<record id="crm_opportunity_report_view_pivot_lead_inherit"
+		model="ir.ui.view">
+		<field name="name">crm.opportunity.report.view.pivot.lead</field>
+		<field name="model">crm.opportunity.report</field>
+		<field name="inherit_id" ref="crm.crm_opportunity_report_view_pivot_lead" />
+		<field name="arch" type="xml">
+			<field name='team_id' position="after">
+				<field name="industry_id" type="row" />
+				<field name="services_id" type="row" />
+				<!-- <field name="active_date" type="row" /> -->
+			</field>
+		</field>
+	</record>
+
+	<!-- Sales Team -->
+
+	<record id="crm_team_view_form_inherit" model="ir.ui.view">
+		<field name="name">crm.team.form</field>
+		<field name="model">crm.team</field>
+		<field name="inherit_id" ref="sales_team.crm_team_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/div/div" position="before">
+				<group>
+					<field name="crm_team_id" />
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<!-- Mail activity -->
+
+	<record id="mail_activity_view_form_popup_inheritance" model="ir.ui.view">
+		<field name="name">mail.activity.view.form.popup</field>
+		<field name="model">mail.activity</field>
+		<field name="inherit_id" ref="mail.mail_activity_view_form_popup" />
+		<field name="arch" type="xml">
+			<field name='activity_type_id' position="before">
+				<field name="res_name" invisible="1" />
+				<field name="crm_lead_id" />
+				<field name="last_action" invisible="True" />
+			</field>
+		</field>
+	</record>
+
+	<record id="mail_activity_view_tree_inheritance" model="ir.ui.view">
+		<field name="name">mail.activity.view.tree</field>
+		<field name="model">mail.activity</field>
+		<field name="inherit_id" ref="mail.mail_activity_view_tree" />
+		<field name="arch" type="xml">
+			<field name='activity_type_id' position="after">
+				<field name="user_id" />
+			</field>
+		</field>
+	</record>
+
+
+	<!-- Crm Industry -->
+
+	<record id="crm_industry_view_form" model="ir.ui.view">
+		<field name="name">Crm Industry</field>
+		<field name="model">crm.industry</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="name" required="True" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="crm_industry_view_tree">
+		<field name="name">crm.industry.tree</field>
+		<field name="model">crm.industry</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="crm_industry_action_menu" model="ir.actions.act_window">
+		<field name="name">Crm Industry</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">crm.industry</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click here to create an Expense Category
+			</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_crm_industry" action="crm_industry_action_menu"
+		name="Industry" parent="crm.menu_crm_config_lead" sequence="1"
+		groups="sales_team.group_sale_manager" />
+
+	<!-- Crm services -->
+
+	<record id="crm_services_view_form" model="ir.ui.view">
+		<field name="name">Crm Services</field>
+		<field name="model">crm.services</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="name" required="True" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="crm_services_view_tree">
+		<field name="name">crm.services.tree</field>
+		<field name="model">crm.services</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="crm_services_action_menu" model="ir.actions.act_window">
+		<field name="name">Crm Services</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">crm.services</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click here to create an Expense Category
+			</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_crm_services" action="crm_services_action_menu"
+		name="Services" parent="crm.menu_crm_config_lead" sequence="2"
+		groups="sales_team.group_sale_manager" />
+
+</odoo>   

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="ShowPaymentTds">
+        <div>
+            <t>
+	            <div>
+	               <h2 id="outstanding_tds"><t t-esc="title">TDS</t></h2>
+	            </div>
+            </t>
+            <table style="width:100%;">
+                <t t-foreach="lines" t-as="line">
+                    <tr>
+                    	<t>
+                        	<td>
+                           		<span class="oe_form_field"	style="margin-left: 2px;"><t t-esc="line.name"></t></span>
+                        	</td>
+	                        <td>
+	                            <span class="oe_form_field"	style="margin-left: 20px;"><t t-esc="currency" /><t t-esc="line.bal_amount"></t></span>
+	                        </td>
+	                        <td t-if="line.bal_amount>0">
+	                            <a title="assign to tds" role="button" class="oe_form_field outstanding_credit_tds"
+	                             t-att-data-id="line.id" style="margin-left: 20px;">Add</a>
+                        	</td>
+                        	<td>
+	                            <a role="button" tabindex="0" class="js_tds_rec_info fa fa-info-circle" 
+	                            	t-att-index="line.index" style="margin-left: 20px;"></a>
+	                        </td>
+                         </t>
+                    </tr>
+                </t>
+            </table>
+        </div>
+    </t>
+    
+    <t t-name="TdsPopOverRec">
+        <div>
+            <table>
+                <tr>
+                    <td><strong>Name: </strong></td>
+                    <td style="text-align:right;"><t t-esc="name" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Code: </strong></td>
+                    <td style="text-align:right;"><t t-esc="code" /></td>
+                </tr>
+                <tr>
+                    <td><strong>TDS Amount: </strong></td>
+                    <td style="text-align:right;"><t t-esc="currency" /><t t-esc="tds_amount" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Balance Amount: </strong></td>
+                    <td style="text-align:right;"><t t-esc="currency" /><t t-esc="bal_amount" /></td>
+                </tr>
+            </table>
+        </div>
+	</t>
+
+    <t t-name="ShowJournalTds">
+        <div>
+            <table style="width:100%;">
+                <t t-foreach="lines" t-as="line">
+                    <tr>
+	                    <t>
+	                     	<td>
+	                            <a role="button" tabindex="0" class="js_tds_info fa fa-info-circle" 
+	                            	t-att-index="line.index" style="margin-right: 48px;"></a>
+	                        </td>
+	                        <td>
+	                            <span class="oe_form_field" style="color: #8181F7;"><i style="margin-right: 53px;"><t t-esc="line.name"></t></i></span>
+	                        </td>
+	                        <td>
+	                            <span class="oe_form_field" style="color: #8181F7;">(<t t-esc="currency" /><t t-esc="line.reconcile_amount">)</t></span>
+	                        </td>
+                    	</t>
+                    </tr>
+                </t>
+            </table>
+        </div>
+    </t>
+
+	<t t-name="TdsPopOver">
+        <div>
+            <table>
+                <tr>
+                    <td><strong>Name: </strong></td>
+                    <td style="text-align:right;"><t t-esc="name" /></td>
+                </tr>
+                <tr>
+                    <td><strong>Amount: </strong></td>
+                    <td style="text-align:right;"><t t-esc="currency" /><t t-esc="reconcile_amount" /></td>
+                </tr>
+            </table>
+        </div>
+	    <button class="btn btn-xs btn-primary js_unreconcile_tds pull-left"
+	    	t-att-tds_reconcile_id="tds_reconcile_id" style="margin-top:5px; margin-bottom:5px;">
+	    	Unreconcile</button>
+	</t>
+</templates>

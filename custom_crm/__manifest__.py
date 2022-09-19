@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+{
+    'name' : 'Custom CRM',
+    'version' : '1.1',
+    'description': """Customization for CRM Lead/Opportunity""",
+    'category': 'crm',
+    'website': 'http://www.pptssolutions.com',
+    'author':'PPTS',
+    'depends' : ['base', 'crm', 'sales_team', 'mail', 'sale_crm'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/crm_security.xml',
+        'data/custom_crm_cron.xml',
+        'data/custom_crm_mail.xml',
+        'report/dwr_report.xml',
+        'report/report_templates.xml',
+        'report/dwr_report_templates.xml',
+        'report/weekly_report_templates.xml',
+        'view/assign_followers_view.xml',
+        'view/crm_dwr_view.xml',
+        'view/crm_lead_industry_services_view.xml',
+        'view/crm_lead_product_view.xml',
+        'view/crm_lead_view.xml',
+        'view/crm_opportunity_report_view.xml',
+        'view/crm_team_view.xml',
+        'view/mail_activity_view.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+	
+        <record id="mail_alias_applicant_new" model="mail.alias">
+            <field name="alias_name">Job Applicant</field>
+            <field name="alias_model_id" ref="model_hr_applicant"/>
+            <field name="alias_user_id" ref="base.user_root"/>
+            <field name="alias_contact">everyone</field>
+        </record>
+	
+		<record id="email_template_data_offer_letter_applicant" model="mail.template">
+			<field name="name">Applicant: Offer Letter</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Applicant: Offer Letter</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p><strong> Greetings from the PPTS!!! </strong></p> 
+			<p> We take great pleasure in inviting you to join the family of <strong>PPTS [India] Pvt.Ltd</strong>.</p>  
+			<p> This is to confirm you that we are satisfied with your interview performance and we have selected you for <strong>${object.job_id.name}</strong>.</p> 
+			<p> NOTE:  As per our discussion, You are expected to join on <strong>${object.availability} 09:30 AM,</strong> Changes in any of these day your offer will be Void.</p>  
+			<p>Kindly acknowledge the same.</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_applying_thanks" model="mail.template">
+			<field name="name">Applicant: Thank You For Applying</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Thank you for Applying with PPTS</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p> Thanks for taking the time to apply for our position. We appreciate your interest in PPTS.</p>  
+			<p> We're currently in the process of taking applications for this position.</p> 
+			<p>If you are selected to continue to the interview process, our human resources department will be in touch with you.</p>  
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_wait_listed" model="mail.template">
+			<field name="name">Applicant: Wait Listed</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Thank you for Job interest with PPTS</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p> Thank you for taking the time to meet with our team about the ${object.job_id.name} at PPTS.It was a pleasure to learn more about your skills and accomplishments.</p>  
+			<p>Unfortunately, our team did not select you for further consideration.</p> 
+			<p>I would like to note that competition for jobs at PPTS is always strong and that we often have to make difficult choices between many high-caliber candidates. Now that we’ve had the chance to know more about you, we will be keeping your resume on file for future openings that better fit your profile.</p>  
+			<p>I am happy to answer your questions if you would like any specific feedback about your application or interviews.</p>
+			<p>Thanks again for your interest in PPTS and best of luck with your job search.</p>
+
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_refused" model="mail.template">
+			<field name="name">Applicant: Refused</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Thank you for Job interest with PPTS</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p> We appreciate your interest in PPTS and the time you’ve invested in applying for the ${object.job_id.name} opening.</p>  
+
+			<p>We ended up moving forward with another candidate, but we’d like to thank you for talking to our team and giving us the opportunity to learn about your skills and accomplishments.</p> 
+
+			<p>We will be advertising more positions in the coming months. We hope you’ll keep us in mind and we encourage you to apply again.</p>  
+
+			<p>We wish you good luck with your job search and professional future endeavors.</p>
+			
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_technical_discussion" model="mail.template">
+			<field name="name">Applicant: Technical Discussion</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Technical Discussion</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p> Your Application is shortlisted for <strong>Technical Discussion.</strong></p>  
+			<p>Please find the below details.</p>
+			<p><strong>Interview Details:</strong></p>
+			
+			 <table width="500" cellspacing="1" cellpadding="1" border="0" height="73">
+		            <tbody>
+		            <tr>
+		            	<td><b><strong>Company Link</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href="www.pptssolutions.com"><b><u>www.pptssolutions.com</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>MAP</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href=" https://goo.gl/maps/85YKh56jZEt"><b><u>  https://goo.gl/maps/85YKh56jZEt</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>WORK LOCATION</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b>Coimbatore</b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>DATE OF INTERVIEW</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Time</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		                
+		                </tbody></table>
+		           <p><strong><b>VENUE:</b></strong></p> 
+		           <p><strong><b>Point Perfect Transcription Services [India] Pvt.Ltd</b></strong></p> 
+		           <p><strong><b>7th Floor, Tower 1-A, India Land Tech Park</b></strong></p> 
+		           <p><strong><b>Keeranatham Village</b></strong></p> 
+		           <p><strong><b>Saravanampatti.</b></strong></p> 
+		           <p><strong><b>Coimbatore- 641035.</b></strong></p>
+		           <p><strong><b>Documents to Carry :</b></strong></p> 
+		           <p style="padding-left:18px;line-height: 200%;"><b style="font-size:27px">.</b><span style="padding-left:10px">Updated Profile</span></p>
+		           <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Interview Call Letter.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Any ID Proof.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Passport Size Photo. </span></p>
+				   <p><strong>NOTE:</strong></p>
+				   <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Make sure that your Mobile Device is in Silent mode inside the office premises.</mark> </span></p>
+				    <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Further Queries dial 0422-4037121 between 9:00 am-6:00 pm during Week days.(Except National Holidays)</mark> </span></p>
+				     <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Laptop and any other electronic devices other than mobile phones are prohibited inside the campus.</mark> </span></p>
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+
+		<record id="email_template_applicant_schedule" model="mail.template">
+			<field name="name">Applicant: Schedule</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Scheduled for </field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p> Your Application is shortlisted</p>  
+			<p>Please find the below details.</p>
+			<p><strong>Interview Details:</strong></p>
+			
+			 <table width="500" cellspacing="1" cellpadding="1" border="0" height="73">
+		            <tbody>
+		            <tr>
+		            	<td><b><strong>Company Link</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href="www.pptssolutions.com"><b><u>www.pptssolutions.com</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>MAP</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href=" https://goo.gl/maps/85YKh56jZEt"><b><u>  https://goo.gl/maps/85YKh56jZEt</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>WORK LOCATION</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b>Coimbatore</b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>DATE OF INTERVIEW</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Time</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Applicant Details</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><span><b><a href="${ctx['link']}">Fill this link</a></b></span></td>
+		            </tr>
+		                
+		                </tbody></table>
+		           <p><strong><b>VENUE:</b></strong></p> 
+		           <p><strong><b>Point Perfect Transcription Services [India] Pvt.Ltd</b></strong></p> 
+		           <p><strong><b>7th Floor, Tower 1-A, India Land Tech Park</b></strong></p> 
+		           <p><strong><b>Keeranatham Village</b></strong></p> 
+		           <p><strong><b>Saravanampatti.</b></strong></p> 
+		           <p><strong><b>Coimbatore- 641035.</b></strong></p>
+		           <p><strong><b>Documents to Carry :</b></strong></p> 
+		           <p style="padding-left:18px;line-height: 200%;"><b style="font-size:27px">.</b><span style="padding-left:10px">Updated Profile</span></p>
+		           <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Interview Call Letter.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Any ID Proof.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Passport Size Photo. </span></p>
+				   <p><strong>NOTE:</strong></p>
+				   <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Make sure that your Mobile Device is in Silent mode inside the office premises.</mark> </span></p>
+				    <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Further Queries dial 0422-4037121 between 9:00 am-6:00 pm during Week days.(Except National Holidays)</mark> </span></p>
+				     <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Laptop and any other electronic devices other than mobile phones are prohibited inside the campus.</mark> </span></p>
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_manager_discussion" model="mail.template">
+			<field name="name">Applicant: Manager Discussion</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Manager Discussion</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p>Thank you for taking the time to talk to us about the ${object.job_id.name} position. </p>  
+			<p>As a next step, we’d like to invite you to an interview with our Manager where you’ll have the chance to further discussion. It’ll give you the chance to better understand what the position entails and showcase your skills.</p>
+			<p>Please find the below details.</p>
+			<p><strong>Interview Details:</strong></p>
+			
+			 <table width="500" cellspacing="1" cellpadding="1" border="0" height="73">
+		            <tbody>
+		            <tr>
+		            	<td><b><strong>Company Link</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href="www.pptssolutions.com"><b><u>www.pptssolutions.com</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>MAP</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href=" https://goo.gl/maps/85YKh56jZEt"><b><u>  https://goo.gl/maps/85YKh56jZEt</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>WORK LOCATION</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b>Coimbatore</b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>DATE OF INTERVIEW</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Time</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		                
+		                </tbody></table>
+		           <p><strong><b>VENUE:</b></strong></p> 
+		           <p><strong><b>Point Perfect Transcription Services [India] Pvt.Ltd</b></strong></p> 
+		           <p><strong><b>7th Floor, Tower 1-A, India Land Tech Park</b></strong></p> 
+		           <p><strong><b>Keeranatham Village</b></strong></p> 
+		           <p><strong><b>Saravanampatti.</b></strong></p> 
+		           <p><strong><b>Coimbatore- 641035.</b></strong></p>
+		           <p><strong><b>Documents to Carry :</b></strong></p> 
+		           <p style="padding-left:18px;line-height: 200%;"><b style="font-size:27px">.</b><span style="padding-left:10px">Updated Profile</span></p>
+		           <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Interview Call Letter.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Any ID Proof.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Passport Size Photo. </span></p>
+				   <p><strong>NOTE:</strong></p>
+				   <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Make sure that your Mobile Device is in Silent mode inside the office premises.</mark> </span></p>
+				    <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Further Queries dial 0422-4037121 between 9:00 am-6:00 pm during Week days.(Except National Holidays)</mark> </span></p>
+				     <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Laptop and any other electronic devices other than mobile phones are prohibited inside the campus.</mark> </span></p>
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_final_discussion" model="mail.template">
+			<field name="name">Applicant: Final Discussion</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Final Discussion</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p> Dear <strong>${object.name}</strong>,</p>
+			<p>Thank you for taking the time to talk to us about the ${object.job_id.name} position. </p>  
+			<p>As a next step, we’d like to invite you to an interview with our Manager where you’ll have the chance to further discussion. It’ll give you the chance to better understand what the position entails and showcase your skills.</p>
+			<p>Please find the below details.</p>
+			<p><strong>Interview Details:</strong></p>
+			
+			 <table width="500" cellspacing="1" cellpadding="1" border="0" height="73">
+		            <tbody>
+		            <tr>
+		            	<td><b><strong>Company Link</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href="www.pptssolutions.com"><b><u>www.pptssolutions.com</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>MAP</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="color:#0000FF;padding-left:25px"><a href=" https://goo.gl/maps/85YKh56jZEt"><b><u>  https://goo.gl/maps/85YKh56jZEt</u></b></a></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>WORK LOCATION</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b>Coimbatore</b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>DATE OF INTERVIEW</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Time</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		                
+		                </tbody></table>
+		           <p><strong><b>VENUE:</b></strong></p> 
+		           <p><strong><b>Point Perfect Transcription Services [India] Pvt.Ltd</b></strong></p> 
+		           <p><strong><b>7th Floor, Tower 1-A, India Land Tech Park</b></strong></p> 
+		           <p><strong><b>Keeranatham Village</b></strong></p> 
+		           <p><strong><b>Saravanampatti.</b></strong></p> 
+		           <p><strong><b>Coimbatore- 641035.</b></strong></p>
+		           <p><strong><b>Documents to Carry :</b></strong></p> 
+		           <p style="padding-left:18px;line-height: 200%;"><b style="font-size:27px">.</b><span style="padding-left:10px">Updated Profile</span></p>
+		           <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Interview Call Letter.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Any ID Proof.</span></p>
+				   <p style="padding-left:18px"><b style="font-size:27px">.</b><span style="padding-left:10px">Passport Size Photo. </span></p>
+				   <p><strong>NOTE:</strong></p>
+				   <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Make sure that your Mobile Device is in Silent mode inside the office premises.</mark> </span></p>
+				    <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Further Queries dial 0422-4037121 between 9:00 am-6:00 pm during Week days.(Except National Holidays)</mark> </span></p>
+				     <p style="margin-left:10%"><b style="font-size:27px">.</b><span style="padding-left:10px"><mark>Laptop and any other electronic devices other than mobile phones are prohibited inside the campus.</mark> </span></p>
+			<p>Regards,</p>
+			<p>HR - Talent Acquisition Team</p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="email_template_data_offer_letter" model="mail.template">
+			<field name="name">Applicant: Offer letter for the post of (Designation)</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Offer letter for the post of ${object.job_id.name or ''}</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			<p>To</p>
+			<p>Address</p>
+			<p><b><u>Sub: Offer letter for the post of ${object.job_id.name or ''} </u></b></p>
+			<p>Dear ${object.name}</p>
+			<p>We take great pleasure in inviting you to join the family of Point Perfect Transcription Services (India) Private Limited. Your terms of employment would be as follows: </p>
+			<table width="500" cellspacing="1" cellpadding="1" border="0" height="73">
+		            <tbody>
+		            <tr>
+		            	<td><b><strong>Designation</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b>${object.job_id.name or ''}</strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Monthly CTC</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b> CTC.</b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Date of Joining</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b></b></strong></td>
+		            </tr>
+		            <tr>
+		            	<td><b><strong>Probation Period</strong></td>
+		            	<td text-align:center;><strong>:</strong></td>
+		            	<td style="padding-left:25px"><strong><b>6 Months from Date of Joining</b></strong></td>
+		            </tr>
+		                
+		                </tbody></table>
+		    <p>In case of any further information required on your job profile, salary, or any policy, kindly contact the undersigned. This is a letter of offer and your formal letter of appointment shall be provided at the time of your joining. As a part of our joining process, you are requested to bring the following documents on the day of joining. </p>
+		    <p>Documents to be submitted: </p>  
+		    <p><b style="font-size:27px">.</b><span style="padding-left:10px">All Academic certificates – One photocopy of each  </span></p>
+		    <p><b style="font-size:27px">.</b><span style="padding-left:10px">Offer, Appointment, Confirmation, Promotions (If any), Service/Relieving Certificate, Pay Slip(s) and No due certificate from all your previous employers. </span></p>
+		    <p ><b style="font-size:27px">.</b><span style="padding-left:10px">One address proof and Id proof   </span></p>          
+		    <p><b style="font-size:27px">.</b><span style="padding-left:10px">Four passport size and two stamp size photographs   </span></p>          
+		    <p ><b style="font-size:27px">.</b><span style="padding-left:10px">Medical Fitness Certificate   </span></p>
+		    <p>We look forward to you having a long and fruitful relationship with Point Perfect Transcription Services India Private Limited.</p>
+		    <p>Please note that the offer of appointment is subject to satisfactory completion of your reference check and verification of the documents submitted by you.<p/>
+		                        
+			<p>With Best Regards,,</p>
+			<p><strong>Manager - HRD</strong></p>
+			
+            ]]></field>
+		</record>
+		
+		<record id="applicant_email_template_survey" model="mail.template">
+			<field name="name">Survey - Send by Email</field>
+			<field name="model_id" ref="ppts_recruitment_enhancement.model_hr_applicant" />
+			<field name="subject">Survey</field>
+			<field name="auto_delete" eval="False" />
+			<field name="body_html">
+                <![CDATA[
+						<p>Hello,</p>
+						<p>Please kindly fill the survey</p>
+						<p><a style="margin-left: 85px; padding:5px 10px; border-radius: 3px; background-color:#875A7B; text-align:center; text-decoration:none; color:#F7FBFD;" href="${ctx['survey_url']}">Please, click here to start survey</a></p>
+						<p>Thanks for your participation!</p>
+                ]]>
+			</field>
+		</record>
+		
+	</data>
+</odoo>

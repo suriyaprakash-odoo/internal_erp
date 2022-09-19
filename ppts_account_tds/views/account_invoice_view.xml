@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<template id="assets_backend" name="account assets"
+			inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript"
+					src="/ppts_account_tds/static/src/js/account_payment_field.js"></script>
+				<script type="text/javascript"
+					src="/ppts_account_tds/static/src/js/account_journal_field.js"></script>
+			</xpath>
+		</template>
+
+		<record id="view_account_invoice_form_inherit" model="ir.ui.view">
+			<field name="name">account.invoice.form.tds</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='action_invoice_open']" position="after">
+					<button name="gen_tds" type="object" string="Generate TDS" class="btn btn-danger" 
+						attrs="{'invisible':[('state','!=','draft')]}"/>
+					<button name="clear_tds" type="object" string="Clear TDS" class="btn btn-warning" 
+						attrs="{'invisible':[('state','!=','draft')]}" />
+				</xpath>
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="domain_section_id" invisible="1"/>
+					<field name="is_tds" />
+					<field name="tds_section_id" options="{'no_create':1,'no_create_edit':1}"
+					attrs="{'invisible':[('is_tds','=',False)],'required':[('is_tds','=',True)]}" 
+					domain="[('id', '=', domain_section_id)]"/>
+					<field name="is_tds_reconcile" invisible="1" />
+					<span style="font-weight: bold;" attrs="{'invisible':[('is_tds','=',False)],'required':[('is_tds','=',True)]}">Deduct TDS from Base Amount</span>
+					<field name="is_base_amount" nolabel="1" attrs="{'invisible':[('is_tds','=',False)],'required':[('is_tds','=',True)]}" />
+				</xpath>
+				<xpath expr="//field[@name='invoice_line_ids']"	position="inside">
+					<tree string="Bill lines">
+                        <field name="sequence" widget="handle"/>
+                        <field name="product_id" context="{'partner_id': parent.partner_id}" domain="[('purchase_ok','=',True)]"/>
+                        <field name="name"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="account_id" groups="account.group_account_user" domain="[('company_id', '=', parent.company_id), ('internal_type', '=', 'other'), ('deprecated', '=', False)]"/>
+                        <field name="account_analytic_id" groups="analytic.group_analytic_accounting" domain="[('company_id', '=', parent.company_id)]" context="{'default_partner_id': parent.partner_id}"/>
+                        <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        <field name="quantity"/>
+                        <field name="uom_id" groups="product.group_uom"/>
+                        <field name="price_unit"/>
+                        <field name="discount" groups="base.group_no_one"/>
+                        <field name="invoice_line_tax_ids" widget="many2many_tags" options="{'no_create': True}" context="{'type':parent.type}" domain="[('type_tax_use','=','purchase'),('company_id', '=', parent.company_id)]"/>
+                        <field name="price_subtotal"/>
+                        <field name="currency_id" invisible="1"/>
+                    </tree>
+					<form>
+						<group>
+							<group>
+								<field name="product_id" />
+								<field name="name" />
+								<field name="quantity" />
+								<field name="price_unit" />
+								<field name="is_apply" />
+								<field name="is_gen" invisible="1" />
+							</group>
+							<group>
+								<field name="analytic_tag_ids" widget="many2many_tags"/>
+								<field name="account_id" />
+								<field name="invoice_line_tax_ids" widget="many2many_tags"/>
+								<field name="account_analytic_id" />
+								<field name="amount_tds" />
+							</group>
+						</group>
+						<group string="TDS">
+						<field name="tds_invoice_ids" widget="one2many_list" nolabel="1">
+							<form string="TDS Payment" create="false" edit="false"	delete="false">
+								<group>
+									<group>
+										<field name="date" readonly="1"/>
+										<field name="tds_section_id" readonly="1"/>
+										<field name="amount" readonly="1"/>
+										<field name="tds_payable" readonly="1"/>
+										<field name="partner_id" readonly="1"/>
+										<field name="tds_payment_line_ids" create="false" edit="false" delete="false">
+											<form string="TDS Payment Line" create="false" edit="false" delete="false">
+												<group>
+													<group>
+														<field name="tax_type" readonly="1"/>
+														<field name="debit" readonly="1"/>
+														<field name="rate" readonly="1"/>
+													</group>
+													<group>
+														<field name="rate" readonly="1"/>
+														<field name="credit" readonly="1"/>
+													</group>
+												</group>
+											</form>
+											<tree string="TDS Payment Line" create="false"
+												edit="false" delete="false">
+												<field name="tax_type" readonly="1"/>
+												<field name="rate" readonly="1"/>
+												<field name="debit" readonly="1"/>
+												<field name="credit" readonly="1"/>
+												<field name="base" readonly="1"/>
+											</tree>
+										</field>
+									</group>
+									<group>
+										<field name="name" readonly="1"/>
+										<field name="account_id" readonly="1"/>
+										<field name="tds_amount" readonly="1"/>
+										<field name="tds_deduct" readonly="1"/>
+									</group>
+								</group>
+							</form>
+							<tree string="TDS Payment" create="false" edit="false" delete="false">
+								<field name="name" />
+								<field name="partner_id" />
+								<field name="tds_section_id" />
+								<field name="account_id" />
+								<field name="amount" />
+								<field name="bal_amount" />
+								<field name="tds_amount" />
+								<field name="tds_payable" />
+								<field name="state" />
+							</tree>
+						</field>
+						</group>
+					</form>
+				</xpath>
+				<xpath expr="//form/sheet/notebook/page/group" position="inside">
+					<group>
+						<field name="tds_reconcile_ids" widget="one2many_list" nolabel="1" invisible="1" >
+							<tree editable="bottom" string="TDS Payments" create="false" delete="false">
+								<field name="name" readonly="1"/>
+								<field name="code" readonly="1"/>
+								<field name="tds_amount" readonly="1"/>
+								<field name="reconcile_amount" />
+								<field name="reconciled" invisible="1" readonly="1"/>
+								<field name="invoice_state" invisible="1" readonly="1"/>
+								<field name="bal_amount" readonly="1"/>
+								<button name="add_tds" type="object" string="Add" class="btn btn-success" attrs="{'invisible':[('invoice_state','=',True)]}"/>
+								<button name="unreconcile_tds" type="object" string="Unreconcile" class="btn btn-danger" attrs="{'invisible':[('invoice_state','=',True)]}"/>
+							</tree>
+						</field>
+						<field name="reconciled_ids" widget="one2many_list" nolabel="1" invisible="1" >
+							<tree create="false" edit="false" delete="false">
+								<field name="name" />
+								<field name="reconcile_amount" />
+								<button name="unreconcile_tds" type="object" string="Unreconcile" class="btn btn-danger" />
+							</tree>
+							<form create="false" delete="false">
+								<group>
+									<group>
+										<field name="name" readonly="1"/>
+										<field name="reconcile_amount" readonly="1"/>
+									</group>
+								</group>
+							</form>
+						</field>
+						<group>
+							<field name="tds_widget" widget="tds" colspan="2"
+								nolabel="1" />
+						</group>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='amount_tax']" position="after">
+					<field name="amount_tds" />
+					<field name="amount_tds_residual" invisible="1"/>
+					<field name="tds_journal_widget" widget="tds_journal"
+						colspan="2" nolabel="1" />
+				</xpath>
+				<xpath expr="//field[@name='fiscal_position_id']" position="before">
+					<field name="without_pan" />
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="view_account_invoice_tree_inherit" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.tree.tds</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='origin']" position="after">
+                    <field name="amount_tds"/>
+               	</xpath>
+        	</field>
+    	</record>   
+		
+	</data>
+</odoo>
+

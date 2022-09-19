@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="partner_set_campaign_form" model="ir.ui.view">
+            <field name="name">crm.lead.lost.form</field>
+            <field name="model">partner.campaign</field>
+            <field name="arch" type="xml">
+                <form string="Set Campaign">
+                    <group class="oe_title">
+                        <field name="crm_campaign_id" domain="[('model','=','res.partner')]" options="{'no_create' : True,'no_edit' : True,'no_open':True}" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_set_campaigns" string="Submit" type="object" class="btn btn-sm btn-primary"/>
+                        <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+ 
+        <record id="partner_set_campaign" model="ir.actions.act_window">
+            <field name="name">Set Campaign</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.campaign</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="partner_set_campaign_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

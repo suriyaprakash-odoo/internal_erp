@@ -1,0 +1,1363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="assets_common" name="planner common assets"
+		inherit_id="web.assets_common">
+		<xpath expr="." position="inside">
+
+			<!-- <script type="text/javascript" src="/ppts_experience/static/js/jQuery.js"></script> -->
+			<script type="text/javascript" src="/ppts_experience/static/js/jquery-ui.js"></script>
+			<!-- <script type="text/javascript" src="/ppts_experience/static/js/bootstrap-datepicker.js"></script> -->
+			<script type="text/javascript" src="/ppts_experience/static/js/job.js"></script>
+
+		</xpath>
+	</template>
+	
+    <template id="sfinished_inherit" name="Survey Finished"
+		inherit_id='survey.sfinished'>
+		<xpath expr='//div/div/div/div[3]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+	</template>
+
+	<!-- <template id="detail_ppts_experience" name="detail"
+		inherit_id='website_hr_recruitment.detail'>
+		<xpath expr='//div[@id="wrap"]' position='inside'>
+			<style>
+				.navbar-default{
+				display:none
+				}
+			</style>
+			<script>
+				$(document).ready(function(){
+				$("footer").css("display","none");
+				});
+			</script>
+		</xpath>
+	</template> -->
+
+	<template id="mprf_request" name="MPRF Request">
+		<style>
+			
+			.container {
+				width: 100%;
+			}
+			.mprf_form {
+				width: 90%;
+				background-color: #f8f8f8;
+				margin :20px;
+			}
+			.mprf_form:hover {
+				box-shadow: 0 0 7px 0 rgba(0,0,0,.36);
+			}			
+			.mprf_submit:hover {
+				background-image: linear-gradient(to right, #e54f25 0%, #e57925 100%) !important;
+			}
+
+
+		</style>
+	    <t t-call="website.layout">
+	        <t t-set="additional_title">MPRF Request</t>
+	        <div id="wrap">
+	            <div class="oe_structure"/>
+	            <section class="mb16 bg-white">
+	            	<form action="/mprfsubmit" method="post" class="s_website_form form-horizontal container-fluid mt32" data-model_name="mprf.request" data-success_page="/mprf-request-thank-you">
+	                <div class="container">
+	                	<div>
+	                		<div class="col-xs-12 mprf_form">
+	                			<h3 class="text-center">MPRF Request</h3>
+			                    <div class="col-xs-6">	                    	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="department">Department</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="department_id" id="department" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Select Department</option>
+											<t t-foreach="dept" t-as="depts">
+												<option t-att-value="depts.id">
+													<t t-esc="depts.name" />
+												</option>
+											</t>
+										</select>
+										</div>
+									</div>	                  	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6 ">
+											<label class="control-label" for="nop">Number of Positions</label>
+										</div>
+										<div class="col-xs-6">
+											<input type="number" class="form-control o_website_form_input"
+												name="num_of_positions" placeholder="Number of Positions" style="border:1px solid #df6512;" min="1" max="2"/>
+										</div>
+									</div>	                	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6 ">
+											<label class="control-label" for="req_exp">Experience(in years)</label>
+										</div>
+										<div class="col-xs-2">
+											<select name="from_exp" style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+												<option value="">-</option>
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</div>
+										<div class="col-xs-2" style="height:28px;margin-top:6px;text-align:center;">
+											<span>To</span>
+										</div>
+										<div class="col-xs-2">
+											<select name="to_exp" style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+												<option value="">-</option>
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</div>
+									</div>							                    	
+									<div class="form-group form-field">
+										<div class="col-xs-6">
+											<label class="control-label" for="manpower_reason">Reason for Manpower</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="manpower_reason" id="manpower_reason" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Reason for Manpower</option>
+											<t t-foreach="manpower_reason" t-as="reason">
+												<option t-att-value="reason.id">
+													<t t-esc="reason.name" />
+												</option>
+											</t>
+										</select>
+										</div>
+									</div>								                    	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="qualification">Qualification</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="qualification_required" id="qualification" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Expexted Qualifications</option>
+											<t t-foreach="qualification" t-as="qualifications">
+												<option t-att-value="qualifications.id">
+													<t t-esc="qualifications.name" />
+												</option>
+											</t>
+										</select>
+										</div>
+									</div>								                    	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="reporting_to">Reporting To</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="reporting_to" id="reporting_to" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Reporting To</option>
+												<t t-foreach="reporting_to" t-as="reporting">
+													<option t-att-value="reporting.id">
+														<t t-esc="reporting.name" />
+													</option>
+												</t>
+											</select>
+										</div>
+									</div>	                	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6 ">
+											<label class="control-label" for="budget">Budget(in CTC/years)</label>
+										</div>
+										<div class="col-xs-6" style="display:flex;">
+											<input type="text" class="form-control o_website_form_input"
+												name="budget_from"  style="border:1px solid #df6512;width:45%;"/>
+											<span style="padding:10px;"> - </span>
+											<input type="text" class="form-control o_website_form_input"
+												name="budget_to" style="border:1px solid #df6512;width:45%;"/>
+										</div>
+									</div>                 	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="employment_type">Employment Type</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="employement_type" id="emp_type" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Employment Type</option>
+												<t t-foreach="emp_type" t-as="type">
+													<option t-att-value="type.id">
+														<t t-esc="type.name" />
+													</option>
+												</t>
+											</select>
+										</div>
+									</div>                  	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6 ">
+											<label class="control-label" for="req_exp">T/P/C Period</label>
+										</div>
+										<div class="col-xs-3">
+											<select name="period_count" style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+												<option value="">-</option>
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</div>
+										<div class="col-xs-3">
+											<select name="period_type" style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+												<option value="">-</option>
+												<option value="years">Years</option>
+												<option value="months">Months</option>
+											</select>
+										</div>
+									</div>
+			                    </div>
+			                    <div class="col-xs-6">
+			                    	<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="jobs">Job Position</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="job_position_id" id="jobs" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Select Job</option>
+											<t t-foreach="jobs" t-as="job">
+												<option t-att-value="job.id">
+													<t t-esc="job.name" />
+												</option>
+											</t>
+										</select>
+										</div>
+									</div>	                 	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="doj">Tentative DOJ</label>
+										</div>
+										<div class="col-xs-6">
+											<input type="date" class="form-control o_website_form_input"
+												name="tentative_doj" style="border:1px solid #df6512;"/>
+										</div>
+									</div>                	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="gender">Gender</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="gender" style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+												<option value="">Select Gender</option>
+												<option value="male">Male</option>
+												<option value="female">Female</option>
+												<option value="others">Others</option>										
+											</select>
+										</div>
+									</div>								                    	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="skills">Key Skills/Abilities</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="skills_required" id="skills" required="True" class="form-control" style="border:1px solid #df6512;" >
+											<option value="" selected="selected">Skills</option>
+											<t t-foreach="skills" t-as="skill">
+												<option t-att-value="skill.id">
+													<t t-esc="skill.name" />
+												</option>
+											</t>
+										</select>
+										</div>
+									</div>	                 	
+									<div class="form-group form-field">
+										<div class="col-xs-6">
+											<label class="control-label" for="other_skills">Other skills,if any</label>
+										</div>
+										<div class="col-xs-6">
+											<input type="text" class="form-control o_website_form_input"
+												name="other_skills" placeholder="Other skills,if any" style="border:1px solid #df6512;"/>
+										</div>
+									</div>                  	
+									<div class="form-group form-field o_website_form_required_custom">
+									</div>								                    	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="requested_by">Requested By</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="requested_by" id="requested_by" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Requested By</option>
+												<t t-foreach="requested_by" t-as="requested">
+													<option t-att-value="requested.id">
+														<t t-esc="requested.name" />
+													</option>
+												</t>
+											</select>
+										</div>
+									</div>							                    	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="job_sen_title">Designation</label>
+										</div>
+										<div class="col-xs-6">
+											<select name="designation" id="job_sen_title" required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Designation</option>
+												<t t-foreach="job_sen_title" t-as="sen_title">
+													<option t-att-value="sen_title.id">
+														<t t-esc="sen_title.name" />
+													</option>
+												</t>
+											</select>
+										</div>
+									</div>	                  	
+									<div class="form-group form-field o_website_form_required_custom">
+										<div class="col-xs-6">
+											<label class="control-label" for="requested_date">Requested Date</label>
+										</div>
+										<div class="col-xs-6">
+											<input type="date" class="form-control o_website_form_input"
+												name="requested_date" style="border:1px solid #df6512;"/>
+										</div>
+									</div>
+			                    </div>
+			                    <div class='col-md-12' style="width:105%;margin-left:-30px;">
+				                    <div class="col-xs-3 o_website_form_required_custom" style="margin-top:15px;margin-left:15px;">
+		                    			<label class="control-label" for="job_description">Job Description</label>
+			                    	</div>
+			                    	<div class="col-xs-9" style="margin-top:15px;margin-left:-7px;width:74%;position:relative;">
+			                    		<textarea type="text" class="form-control o_website_form_input"
+												name="job_description" style="border:1px solid #df6512;"/>
+			                    	</div>
+			                    </div>
+		                    	<div class="col-md-12" style="position:relative;text-align:center;margin-left:0px;margin-top:15px;margin-bottom:15px;">
+		                            <button type="submit" class="btn btn-default mprf_submit" style="background-color:#df6512;border-color:#df6512;border-radius:23px;color: white;width: 150px;box-shadow: 1px 2px 3px 2px rgb(202, 202, 202);background-image: linear-gradient(to right, #e57925 0%, #e54f25 100%);">Submit</button>
+                                	<span id="o_website_form_result"></span>
+		                        </div>
+			                </div>
+		                </div>
+	                </div>
+	           		</form>
+	            </section>
+	        </div>
+	    </t>
+	</template>
+
+	<template id="thankyou_mprf_request" name="MPRF Request Submitted">
+		<t t-call="website.layout">
+			<div id="wrap" class="oe_structure oe_empty">
+				<section class="mt16 mb128">
+					<div class="container" style="text-align:center">
+						<div class="row">
+							<div class="col-md-12 mt16 mb32">
+								<h1 class="text-center">Thank You!</h1>
+								<h3>Your MPRF Request has been submitted.</h3>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</t>
+	</template>
+
+	<template id="index_ppts_experience" name="Jobs"
+		inherit_id='website_hr_recruitment.index'>
+		<xpath expr='//div[@id="jobs_grid"]' position='before'>
+			<style>
+				.main-block {
+				width: 50%;
+				margin-top:50px;
+				}
+
+				.block {
+				background-color: #f8f8f8;
+				width: 100%;
+				height: 400px;
+				position: relative;
+				border: dashed 2px;
+    			border-color: #c9d3f7;
+				}
+
+				.block-inner {
+				background-color: #ffffff;
+			    width: 100%;
+			    height: 370px;
+			    position: relative;
+			    margin: 5px -1px;
+			    margin-top: 12px;
+				}
+
+				.block:hover {
+				box-shadow: 0 0 7px 0 rgba(0,0,0,.36);
+				}
+				
+				.top {    
+				background-color: #f1f1f1;
+				width: 105%;
+    			margin-left: -15px;
+    			padding-top: 20px;
+				}
+
+				.bottom {
+				background-color: #ffffff;
+				padding:10px;
+				}
+
+				.container {
+				width: 90%;
+				}
+
+				.view-more-btn{
+				position: absolute;
+				bottom: 15px;
+				}
+
+				.view-more-btn:hover{
+				background-image: linear-gradient(to right, #e54f25 0%, #e57925 100%) !important;
+				}
+
+				.view-job-details{
+				max-height: 250px;
+				overflow-x: auto;
+				}
+
+				ul li{
+					display:inline;
+				}
+				.block-top{
+					position: relative;
+				    display: block;
+				    margin-top: 21px;
+				}
+			</style>
+			<div class="wrap" name='job_openings'>
+				<div class="container">
+					<div class="col-md-12">
+						<t t-foreach="jobs" t-as="depart">
+							<div class="main-block col-xs-12">
+								<div class="block equal-height col-xs-6">
+									<div class="block-inner equal-height col-xs-12">
+										<!-- <div class="top"> -->
+										<div style="margin-left:-35px;">
+											<div class='block-top'>
+												<span t-esc="depart.name" style="font-size: 17px;font-weight: 600;color: #ffffff;display: block;padding: 10px;background: #e67926;width: 80%;margin-left: -15px;background-image: linear-gradient(to right, #e57925 0%, #e54f25 100%);" />
+												<span style="border-top: 15px solid #e54f25;border-left: 20px solid transparent;width: 13px;min-height: 0px;position: absolute;bottom: -15px;left: -15px;"></span>
+												<span style="border-top: 44px solid #e54f25;border-right: 20px solid transparent;width: 20px;min-height: 40px;display: block;position: absolute;top: 0;right:7.3em;"></span>
+											</div>											
+											<div style="clear:both"></div>
+										</div>
+										<div class="bottom">
+											<ul class="view-job-details">
+												<li>
+													<label>Experience:</label>
+													<t t-if="depart.exp_in_yr">
+														<span t-esc="depart.exp_in_yr" />
+													</t>
+													<t t-if="depart.exp_in_month">											
+														To
+														<span t-esc="depart.exp_in_month" />
+													</t>
+												</li><br></br>
+												<li>
+													<label>Qualification:</label>
+													<span>B.Tech</span>
+												</li><br></br>
+												<li>
+													<label>Job Information:</label>
+													<span t-esc="depart.description" />
+												</li><br></br>
+											</ul>
+											<div class="view-more">
+												<a class="btn btn-primary view-more-btn" style="background-color:#df6512;border-color:#df6512;border-radius:23px;color: white;width: 150px;box-shadow: 1px 2px 3px 2px rgb(202, 202, 202);background-image: linear-gradient(to right, #e57925 0%, #e54f25 100%);" title="View more"
+													t-attf-href="/jobs/detail/#{ slug(depart) }">
+													<span style="border:2px solid #fa5c5dfont-size:17px;font-weight:600;">View More</span>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</t>
+					</div>
+				</div>
+			</div>
+			<br/><br/><br/>
+		</xpath>
+
+		<xpath expr='//section/div' position='attributes'>
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//div[@id="jobs_grid"]' position='replace'>
+		</xpath>
+	</template>
+
+	<template id="apply_experience_inherit" inherit_id='website_hr_recruitment.apply'>
+		<!-- <xpath expr='//form/div[5]/div[2]' position='replace'>
+			<div class="col-md-7 col-sm-8">
+				<input type="file" class="form-control o_website_form_input"
+					id="inputFileToLoad" name="Resume" />
+			</div>
+		</xpath> -->
+		<!-- <xpath expr='//form/div[1]/div[1]' position='replace'>
+			<div class="col-md-3 col-sm-4 text-right">
+				<label class="control-label" for="partner_name">First Name</label>
+			</div>
+		</xpath> -->
+		<!-- <xpath expr='//form/div[2]' position='before'>
+			<div class="form-group form-field">
+				<div class="col-md-3 col-sm-4 text-right">
+					<label class="control-label" for="middlename">Middle Name</label>
+				</div>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control o_website_form_input"
+						name="middlename" />
+				</div>
+			</div>
+			<div class="form-group form-field o_website_form_required_custom">
+				<div class="col-md-3 col-sm-4 text-right">
+					<label class="control-label" for="lastname">Last Name</label>
+				</div>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control o_website_form_input"
+						name="lastname" required="" />
+				</div>
+			</div>
+		</xpath> -->
+
+		<!-- <xpath expr='//div[@id="wrap"]/h1' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//div[@id="wrap"]/h2' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath> -->
+
+		<!-- <xpath expr='//form/div[1]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//form/div[2]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//form/div[3]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//form/div[4]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//form/div[5]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath>
+
+		<xpath expr='//form/div[6]' position="attributes">
+			<attribute name="style">display:none</attribute>
+		</xpath> -->
+
+		<xpath expr="//h2" position="replace">
+			<h2 class="text-center text-muted"><span t-field="applicant_obj.job_id.name"/></h2>
+		</xpath>
+
+		<xpath expr='//form' position="replace">
+			<style>
+				.input_box{
+				font-family: inherit;
+				font-size: inherit;
+				line-height: inherit;
+				width: 100%;
+				display: inline-block;
+				margin-bottom: 5px;
+				border: 1px solid #df6512 !important;
+				border-top-style: none !important;
+				border-right-style: none
+				!important;
+				border-left-style: none !important;
+				outline: none;
+				}
+				.table-borderless tr,.table-borderless td{
+				border: 0 !important;
+				}
+				.js_submit:hover{
+				background-image: linear-gradient(to right, #e54f25 0%, #e57925 100%) !important;
+				}
+			</style>
+			<form action="/apply-form-update" method="post" class="s_website_form form-horizontal container-fluid mt32" data-model_name="hr.applicant" data-success_page="/form-updated-thank-you">
+				<div class = 'col-xs-12'>
+					<div class = 'col-xs-6'>
+						<div class="form-group form-field o_website_form_required_custom">
+							<div class="col-xs-6">
+								<label class="control-label" for="partner_name">First Name</label>
+							</div>
+							<div class="col-xs-6">
+								<input type="text" class="form-control o_website_form_input"
+									name="partner_name" t-att-value="applicant_obj.partner_name" style="border:1px solid #df6512;" />
+							</div>
+						</div>
+						<div class="form-group form-field">
+							<div class="col-xs-6">
+								<label class="control-label" for="middlename">Middle Name</label>
+							</div>
+							<div class="col-xs-6">
+								<input type="text" class="form-control o_website_form_input"
+									name="middlename" t-att-value="applicant_obj.middlename" style="border:1px solid #df6512;" />
+							</div>
+						</div>
+						<div class="form-group form-field o_website_form_required_custom">
+							<div class="col-xs-6">
+								<label class="control-label" for="lastname">Last Name</label>
+							</div>
+							<div class="col-xs-6">
+								<input type="text" class="form-control o_website_form_input"
+									name="lastname" t-att-value="applicant_obj.lastname" required="" style="border:1px solid #df6512;" />
+							</div>
+						</div>
+						<div class="form-group form-field o_website_form_required_custom">
+	                        <div class="col-xs-6">
+	                            <label class="control-label" for="email_from">Email</label>
+	                        </div>
+	                        <div class="col-xs-6">
+	                            <input type="email" class="form-control o_website_form_input" name="email_from" t-att-value="applicant_obj.email_from" required="" style="border:1px solid #df6512;" />
+	                        </div>
+	                    </div>
+	                    <div class="form-group form-field o_website_form_required_custom">
+	                        <div class="col-xs-6">
+	                            <label class="control-label" for="partner_phone">Phone Number</label>
+	                        </div>
+	                        <div class="col-xs-6">
+	                            <input type="text" class="form-control o_website_form_input" name="partner_phone" t-att-value="applicant_obj.partner_phone" required="" style="border:1px solid #df6512;" />
+	                        </div>
+	                    </div>
+	                    <div class="form-group form-field">
+	                        <div class="col-xs-6">
+	                            <label class="control-label" for="">Permanent Address</label>
+	                        </div>
+	                        <div class="col-xs-6">
+	                            <input type="text" class="form-control o_website_form_input" name="applicant_street" style="border:1px solid #df6512;" placeholder="Street..." />
+	                            <input type="text" class="form-control o_website_form_input" name="p_resi" style="border:1px solid #df6512;margin-top: 5px;" placeholder="Street 2..." />
+	                            <input type="text" class="form-control o_website_form_input" name="p_city" style="border:1px solid #df6512;width: 80px;float: left;margin-top: 5px;" placeholder="City" />
+	                            <select class="form-control o_website_form_input"
+									style="width: 80px;float: left;margin-left: 3px;margin-right: 3px;margin-top: 5px;height: 33px;border-radius: 3px;border: 1px solid #df6512;" name="permanent_state" >
+									<option value="">State</option>
+									<t t-foreach="states" t-as="state">
+										<option t-attf-value="#{ state.id }" t-field="state.name"></option>
+									</t>
+								</select>
+	                            <input type="text" class="form-control o_website_form_input" name="p_pin" style="border:1px solid #df6512;width: 80px;float: left;margin-top: 5px;margin-bottom: 5px;" placeholder="Pincode" />
+	                            <select class="form-control o_website_form_input"
+									style="margin-top: 5px;height: 33px;border-radius: 3px;border: 1px solid #df6512;" name="p_country" >
+									<option value="">Country</option>
+									<t t-foreach="country" t-as="countries">
+										<option t-attf-value="#{ countries.id }" t-field="countries.name"></option>
+									</t>
+								</select>
+	                        </div>
+	                    </div>
+	                    <!-- <div class="form-group form-field o_website_form_required_custom">
+	                      	<div class="col-xs-6">
+		                        <label class="control-label" for="Resume">Resume</label>
+	                      	</div>
+	                      	<div class="col-xs-6">
+	                        	<input type="file" class="form-control o_website_form_input" id="inputFileToLoad" name="Resume" style="border:1px solid #df6512;" />
+	                      	</div>
+	                    </div> -->
+					</div>
+					<div class = 'col-xs-6'>
+						<div class="form-group form-field o_website_form_required_custom">
+							<div class="col-xs-6">
+								<label for="tot_exp">Total Experience</label>
+							</div>
+							<div class="col-xs-6">
+								<select name="tot_exp" style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+									<option value="">Select Experience*</option>
+									<option value="fresher">Fresher</option>
+									<option value="below1">Below 1 Year</option>
+									<option value="1to2">1-2 Years</option>
+									<option value="2to4">2-4 Years</option>
+									<option value="4to6">4-6 Years</option>
+									<option value="6above">Above 6 Years</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group form-field o_website_form_required_custom">
+							<div class="col-xs-6">
+								<label for="relevant_exp">Relevant Experience</label>
+							</div>
+							<div class="col-xs-6">
+								<input type="text" class="form-control o_website_form_input"
+									name="relevant_exp" style="border:1px solid #df6512;" />
+							</div>
+						</div>
+						<div class="form-group form-field o_website_form_required_custom">
+							<div class="col-xs-6">
+								<label for="notice_period">Notice Period</label>
+							</div>
+							<div class="col-xs-6">
+								<input type="text" class="form-control o_website_form_input"
+									name="notice_period" style="border:1px solid #df6512;" />
+							</div>
+						</div>
+						<div class="form-group form-field">
+	                        <div class="col-xs-6">
+	                            <label class="control-label" for="applicant_summary">Short Introduction</label>
+	                        </div>
+	                        <div class="col-xs-6">
+	                            <textarea class="form-control o_website_form_input" name="applicant_summary" style="border:1px solid #df6512;height:75px;"></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="form-group form-field">
+	                        <div class="col-xs-6">
+	                            <label class="control-label" for="">Present Address</label>
+	                        </div>
+	                        <div class="col-xs-6">
+	                            <input type="text" class="form-control o_website_form_input" name="present_applicant_street" style="border:1px solid #df6512;" placeholder="Street..." />
+	                            <input type="text" class="form-control o_website_form_input" name="resi" style="border:1px solid #df6512;margin-top: 5px;" placeholder="Street 2..." />
+	                            <input type="text" class="form-control o_website_form_input" name="city" style="border:1px solid #df6512;width: 80px;float: left;margin-top: 5px;" placeholder="City" />
+	                            <select class="form-control o_website_form_input"
+									style="width: 80px;float: left;margin-left: 3px;margin-right: 3px;margin-top: 5px;height: 33px;border-radius: 3px;border: 1px solid #df6512;" name="present_state" >
+									<option value="">State</option>
+									<t t-foreach="states" t-as="state">
+										<option t-attf-value="#{ state.id }" t-field="state.name"></option>
+									</t>
+								</select>
+	                            <input type="text" class="form-control o_website_form_input" name="pin" style="border:1px solid #df6512;width: 80px;float: left;margin-top: 5px;margin-bottom: 5px;" placeholder="Pincode" />
+	                            <select class="form-control o_website_form_input"
+									style="margin-top: 5px;height: 33px;border-radius: 3px;border: 1px solid #df6512;" name="present_country" >
+									<option value="">Country</option>
+									<t t-foreach="country" t-as="countries">
+										<option t-attf-value="#{ countries.id }" t-field="countries.name"></option>
+									</t>
+								</select>
+	                        </div>
+	                    </div>
+					</div>
+					<div class="col-xs-12">
+						<h4>
+							<strong>
+								<i>Academic Experiences</i>
+							</strong>
+						</h4>
+						<table class="table table-borderless academic_exp">
+							<tr>
+								<th style='display:none'>Tree Id</th>
+								<th>Degree</th>
+								<th>Field of study</th>
+								<th>Institution</th>
+								<th>Percentage</th>
+								<th>Year of Passing</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td style='display:none'>
+									<input class="input_box form_academic_exp_tree_id" value="0"
+										type="text" />
+								</td>
+								<td>
+									<input class="input_box form_academic_degree" value=""
+										type="text" placeholder="Degree" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_academic_field_of_study"
+										value="" type="text" placeholder="Field of study" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_academic_institution" value=""
+										type="text" placeholder="Institution" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_academic_percentage" value=""
+										type="text" placeholder="Percentage" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_academic_year_of_passing"
+										value="" placeholder="Year of Passing" type="text" style="border:none" />
+								</td>
+								<td class="website_trash">
+									<i class="fa fa-trash"></i>
+								</td>
+							</tr>
+						</table>
+						<a class="btn btn-info col-xs-1 add_more_academic"
+							style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+							<i class="fa fa-plus"></i>
+						</a>
+					</div>
+					<div class="col-xs-12" style="display:none;">
+						<div class="col-xs-2">
+							<span>Academic dict</span>
+						</div>
+						<div class="col-xs-10">
+							<textarea class="input_box academic_info_arr" name="academic_info_dict"
+								value="" type="text" style="border:none" />
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<h4>
+							<strong>
+								<i>Professional Experiences</i>
+							</strong>
+						</h4>
+						<table class="table table-borderless professional_exp">
+							<tr>
+								<th style='display:none'>Tree Id</th>
+								<th>Position</th>
+								<th>Organization</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td style='display:none'>
+									<input class="input_box form_professional_exp_tree_id"
+										value="0" type="text" />
+								</td>
+								<td>
+									<input class="input_box form_professional_exp_position"
+										value="" type="text" placeholder="Position" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_professional_exp_organization"
+										value="" type="text" placeholder="Organization" style="border:none" />
+								</td>
+								<td>
+									<input
+										class="input_box form_professional_exp_start_date"
+										value="" type="date" style="border:none" />
+								</td>
+								<td>
+									<input
+										class="input_box form_professional_exp_end_date"
+										value="" type="date" style="border:none" />
+								</td>
+								<td class="website_trash">
+									<i class="fa fa-trash"></i>
+								</td>
+							</tr>
+						</table>
+						<a class="btn btn-info col-xs-1 add_more_professional"
+							style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+							<i class="fa fa-plus"></i>
+						</a>
+					</div>
+					<div class="col-xs-12" style="display:none;">
+						<div class="col-xs-2">
+							<span>Professional dict</span>
+						</div>
+						<div class="col-xs-10">
+							<textarea class="input_box professional_info_arr" name="professional_info_dict"
+								value="" type="text" style="border:none" />
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<h4>
+							<strong>
+								<i>Certifications</i>
+							</strong>
+						</h4>
+						<table class="table table-borderless certification_exp">
+							<tr>
+								<th style='display:none'>Tree Id</th>
+								<th>Certifications</th>
+								<th>Issued By</th>
+								<th>State Issued</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td style='display:none'>
+									<input class="input_box form_certification_exp_tree_id"
+										value="0" type="text" />
+								</td>
+								<td>
+									<input class="input_box form_certification_exp_certificate"
+										value="" type="text" placeholder="Certifications" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_certification_exp_issued_by"
+										value="" type="text" placeholder="Issued By" style="border:none" />
+								</td>
+								<td>
+									<select class="input_box form_certification_exp_state_issued"
+										style="border:none;height: 23px;">
+										<option value="">State Issued</option>
+										<t t-foreach="states" t-as="state">
+											<option t-attf-value="#{ state.id }" t-field="state.name"></option>
+										</t>
+									</select>
+								</td>
+
+								<td>
+									<input
+										class="input_box form_certification_exp_start_date"
+										value="" type="date" style="border:none" />
+								</td>
+								<td>
+									<input
+										class="input_box form_certification_exp_end_date"
+										value="" type="date" style="border:none" />
+								</td>
+								<td class="website_trash">
+									<i class="fa fa-trash"></i>
+								</td>
+							</tr>
+						</table>
+						<a class="btn btn-info col-xs-1 add_more_certification"
+							style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+							<i class="fa fa-plus"></i>
+						</a>
+					</div>
+					<div class="col-xs-12" style='display:none'>
+						<div class="col-xs-2">
+							<span>Certification dict</span>
+						</div>
+						<div class="col-xs-10">
+							<textarea class="input_box certification_info_arr" name="certification_info_dict"
+								value="" type="text" style='display:none' />
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<h4>
+							<strong>
+								<i>References</i>
+							</strong>
+						</h4>
+						<table class="table table-borderless referance">
+							<tr>
+								<th style='display:none'>Tree Id</th>
+								<th>Name</th>
+								<th>Relationship</th>
+								<th>No.of years known</th>
+								<th>Occupation</th>
+								<th>Email-ID</th>
+								<th>Phone Number</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td style='display:none'>
+									<input class="input_box form_references_tree_id" value="0"
+										type="text" />
+								</td>
+								<td>
+									<input class="input_box form_references_name" value=""
+										type="text" placeholder="Name" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_references_relationship"
+										value="" type="text" placeholder="Relationship" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_references_no_years" value=""
+										type="text" placeholder="No of Years" style="border:none" />
+								</td>
+
+								<td>
+									<input class="input_box form_references_occupation" value=""
+										type="text" placeholder="Occupation" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_references_annual_income"
+										value="" type="text" placeholder="Email-ID" style="border:none" />
+								</td>
+								<td>
+									<input class="input_box form_references_phone_number"
+										value="" type="text" placeholder="Phone Number" style="border:none" />
+								</td>
+								<td class="website_trash">
+									<i class="fa fa-trash"></i>
+								</td>
+							</tr>
+						</table>
+						<a class="btn btn-info col-xs-1 add_more_referances"
+							style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+							<i class="fa fa-plus"></i>
+						</a>
+					</div>
+					<div class="col-xs-12" style='display:none'>
+						<div class="col-xs-2">
+							<span>References dict</span>
+						</div>
+						<div class="col-xs-10">
+							<textarea class="input_box references_info_arr" name="references_info_dict"
+								value="" type="text" style='display:none' />
+						</div>
+					</div>
+					<div class="form-group form-field o_website_form_required_custom">
+						<label class="col-md-3 col-sm-4" for="g-recaptcha-response"></label>
+						<div class="col-md-7 col-sm-8">
+							<span class="o_website_form_recaptcha" />
+						</div>
+					</div>
+					<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7"
+						style="margin-left: 33%;">
+						<button class="btn btn-primary btn-lg js_submit" style="background-color:#df6512;border-color:#df6512;border-radius:23px;color: white;width: 150px;box-shadow: 1px 2px 3px 2px rgb(202, 202, 202);background-image: linear-gradient(to right, #e57925 0%, #e54f25 100%);">
+							<i>Submit</i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</xpath>
+
+		<!-- <xpath expr='//form/div[5]' position='after'>
+			<div class="form-group form-field o_website_form_required_custom">
+				<div class="col-md-3 col-sm-4 text-right">
+					<label for="tot_exp">Total Experience</label>
+				</div>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control o_website_form_input"
+						name="tot_exp" />
+				</div>
+			</div>
+			<div class="form-group form-field o_website_form_required_custom">
+				<div class="col-md-3 col-sm-4 text-right">
+					<label for="relevant_exp">Relevant Experience</label>
+				</div>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control o_website_form_input"
+						name="relevant_exp" />
+				</div>
+			</div>
+			<div class="form-group form-field o_website_form_required_custom">
+				<div class="col-md-3 col-sm-4 text-right">
+					<label for="notice_period">Notice Period</label>
+				</div>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control o_website_form_input"
+						name="notice_period" />
+				</div>
+			</div>
+			<div class="form-group form-field">
+				<div class="col-md-3 col-sm-4 text-right">
+					<label class="control-label" for="applicant_summary">Short Introduction</label>
+				</div>
+				<div class="col-md-7 col-sm-8">
+					<textarea class="form-control o_website_form_input" name="applicant_summary"></textarea>
+				</div>
+			</div>
+
+		</xpath> -->
+		<!-- <xpath expr='//form/div[11]' position='after'>
+			<style>
+				.input_box{
+				font-family: inherit;
+				font-size: inherit;
+				line-height: inherit;
+				width: 100%;
+				display: inline-block;
+				margin-bottom: 5px;
+				border: 1px solid #cfcfcf !important;
+				border-top-style: none !important;
+				border-right-style: none
+				!important;
+				border-left-style: none !important;
+				outline: none;
+				}
+				.table-borderless tr,.table-borderless td{
+				border: 0 !important;
+				}
+			</style>
+			<div class="col-xs-12">
+				<h4>
+					<strong>
+						<i>Academic Experiences</i>
+					</strong>
+				</h4>
+				<table class="table table-borderless academic_exp">
+					<tr>
+						<th style='display:none'>Tree Id</th>
+						<th>Degree</th>
+						<th>Field of study</th>
+						<th>Institution</th>
+						<th>Percentage</th>
+						<th>Year of Passing</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td style='display:none'>
+							<input class="input_box form_academic_exp_tree_id" value="0"
+								type="text" />
+						</td>
+						<td>
+							<input class="input_box form_academic_degree" value=""
+								type="text" placeholder="Degree" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_academic_field_of_study"
+								value="" type="text" placeholder="Field of study" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_academic_institution" value=""
+								type="text" placeholder="Institution" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_academic_percentage" value=""
+								type="text" placeholder="Percentage" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_academic_year_of_passing"
+								value="" placeholder="Year of Passing" type="text" style="border:none" />
+						</td>
+						<td class="website_trash">
+							<i class="fa fa-trash"></i>
+						</td>
+					</tr>
+				</table>
+				<a class="btn btn-info col-xs-1 add_more_academic"
+					style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+					<i class="fa fa-plus"></i>
+				</a>
+			</div>
+			<div class="col-xs-12" style="display:none;">
+				<div class="col-xs-2">
+					<span>Academic dict</span>
+				</div>
+				<div class="col-xs-10">
+					<textarea class="input_box academic_info_arr" name="academic_info_dict"
+						value="" type="text" style="border:none" />
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<h4>
+					<strong>
+						<i>Professional Experiences</i>
+					</strong>
+				</h4>
+				<table class="table table-borderless professional_exp">
+					<tr>
+						<th style='display:none'>Tree Id</th>
+						<th>Position</th>
+						<th>Organization</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td style='display:none'>
+							<input class="input_box form_professional_exp_tree_id"
+								value="0" type="text" />
+						</td>
+						<td>
+							<input class="input_box form_professional_exp_position"
+								value="" type="text" placeholder="Position" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_professional_exp_organization"
+								value="" type="text" placeholder="Organization" style="border:none" />
+						</td>
+						<td>
+							<input
+								class="input_box form_professional_exp_start_date datepicker_custom"
+								value="" type="text" style="border:none" />
+						</td>
+						<td>
+							<input
+								class="input_box form_professional_exp_end_date datepicker_custom"
+								value="" type="text" style="border:none" />
+						</td>
+						<td class="website_trash">
+							<i class="fa fa-trash"></i>
+						</td>
+					</tr>
+				</table>
+				<a class="btn btn-info col-xs-1 add_more_professional"
+					style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+					<i class="fa fa-plus"></i>
+				</a>
+			</div>
+			<div class="col-xs-12" style="display:none;">
+				<div class="col-xs-2">
+					<span>Professional dict</span>
+				</div>
+				<div class="col-xs-10">
+					<textarea class="input_box professional_info_arr" name="professional_info_dict"
+						value="" type="text" style="border:none" />
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<h4>
+					<strong>
+						<i>Certifications</i>
+					</strong>
+				</h4>
+				<table class="table table-borderless certification_exp">
+					<tr>
+						<th style='display:none'>Tree Id</th>
+						<th>Certifications</th>
+						<th>Issued By</th>
+						<th>State Issued</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td style='display:none'>
+							<input class="input_box form_certification_exp_tree_id"
+								value="0" type="text" />
+						</td>
+						<td>
+							<input class="input_box form_certification_exp_certificate"
+								value="" type="text" placeholder="Certifications" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_certification_exp_issued_by"
+								value="" type="text" placeholder="Issued By" style="border:none" />
+						</td>
+						<td>
+							<select class="input_box form_certification_exp_state_issued"
+								style="border:none">
+								<option value="">Select</option>
+								<t t-foreach="states" t-as="state">
+									<option t-attf-value="#{ state.id }" t-field="state.name"></option>
+								</t>
+							</select>
+						</td>
+
+						<td>
+							<input
+								class="input_box form_certification_exp_start_date datepicker_custom"
+								value="" type="text" style="border:none" />
+						</td>
+						<td>
+							<input
+								class="input_box form_certification_exp_end_date datepicker_custom"
+								value="" type="text" style="border:none" />
+						</td>
+						<td class="website_trash">
+							<i class="fa fa-trash"></i>
+						</td>
+					</tr>
+				</table>
+				<a class="btn btn-info col-xs-1 add_more_certification"
+					style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+					<i class="fa fa-plus"></i>
+				</a>
+			</div>
+			<div class="col-xs-12" style='display:none'>
+				<div class="col-xs-2">
+					<span>Certification dict</span>
+				</div>
+				<div class="col-xs-10">
+					<textarea class="input_box certification_info_arr" name="certification_info_dict"
+						value="" type="text" style='display:none' />
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<h4>
+					<strong>
+						<i>References</i>
+					</strong>
+				</h4>
+				<table class="table table-borderless referance">
+					<tr>
+						<th style='display:none'>Tree Id</th>
+						<th>Name</th>
+						<th>Relationship</th>
+						<th>No.of years known</th>
+						<th>Occupation</th>
+						<th>Email-ID</th>
+						<th>Phone Number</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td style='display:none'>
+							<input class="input_box form_references_tree_id" value="0"
+								type="text" />
+						</td>
+						<td>
+							<input class="input_box form_references_name" value=""
+								type="text" placeholder="Name" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_references_relationship"
+								value="" type="text" placeholder="Relationship" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_references_no_years" value=""
+								type="text" placeholder="No Years" style="border:none" />
+						</td>
+
+						<td>
+							<input class="input_box form_references_occupation" value=""
+								type="text" placeholder="Occupation" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_references_annual_income"
+								value="" type="text" placeholder="Email-ID" style="border:none" />
+						</td>
+						<td>
+							<input class="input_box form_references_phone_number"
+								value="" type="text" placeholder="Phone Number" style="border:none" />
+						</td>
+						<td class="website_trash">
+							<i class="fa fa-trash"></i>
+						</td>
+					</tr>
+				</table>
+				<a class="btn btn-info col-xs-1 add_more_referances"
+					style="display:block;width:3%;color: #000;background-color: #e3e3e3;border-color: #e3e3e3;">
+					<i class="fa fa-plus"></i>
+				</a>
+			</div>
+			<div class="col-xs-12" style='display:none'>
+				<div class="col-xs-2">
+					<span>References dict</span>
+				</div>
+				<div class="col-xs-10">
+					<textarea class="input_box references_info_arr" name="references_info_dict"
+						value="" type="text" style='display:none' />
+				</div>
+			</div>
+			
+
+			<div class="form-group form-field o_website_form_required_custom">
+				<label class="col-md-3 col-sm-4" for="g-recaptcha-response"></label>
+				<div class="col-md-7 col-sm-8">
+					<span class="o_website_form_recaptcha" />
+				</div>
+			</div>
+			<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7"
+				style="margin-left: 33%;">
+				<a class="btn btn-primary btn-lg js_submit">
+					<i>Submit</i>
+				</a>
+			</div>
+		</xpath> -->
+
+
+	</template>
+
+	<template id="thankyou_applicant_form_update" name="Applcant form update">
+		<t t-call="website.layout">
+			<div id="wrap" class="oe_structure oe_empty">
+				<section class="mt16 mb128">
+					<div class="container" style="text-align:center">
+						<div class="row">
+							<div class="col-md-12 mt16 mb32">
+								<h1 class="text-center">Thank You!</h1>
+								<h3>Your application has been updated.</h3>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</t>
+	</template>
+
+</odoo>

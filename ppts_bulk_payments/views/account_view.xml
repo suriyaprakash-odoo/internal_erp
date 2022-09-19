@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   	<record id="view_move_form_inherits" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="after">
+				<field name="statement_status"/>
+				<button name="remove_check" string="Remove Check" type="object" class="icon-class" icon="fa-exchange" attrs="{'invisible':[('statement_status','=',False)]}" confirm="Warning!     You are about to unreconcile the BRS line.Unreconciling may cause mismatch in the BRS Starting/Ending balance which is already reconciled in BRS. Still do you want to continue?" groups="ppts_imporvements.group_brs_status_reverse"/>
+        	</xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='account_id']" position="after">
+                <field name="date"/>
+            </xpath>
+
+          <!--   <xpath expr="//field[@name='line_ids']/tree/field[@name='date_maturity']" position="replace">
+                <field name="date_maturity" invisible="1"/>
+	      	</xpath> -->
+        </field>
+        </record>
+            
+      	<record id="view_move_line_form_inherits" model="ir.ui.view">
+      	  <field name="name">account.move.line.form</field>
+	      <field name="model">account.move.line</field>
+	      <field eval="2" name="priority"/>
+	      <field name="inherit_id" ref="account.view_move_line_form"/>
+	      <field name="arch" type="xml">
+	      	  <xpath expr="//field[@name='date']" position="after">
+	      	 	<field name="seq_no"/>
+	      	</xpath>
+	      </field>
+	      </record>
+
+          <record id="view_move_line_form_inherited" model="ir.ui.view">
+            <field name="name">account.move.line.tree.inherit</field>
+            <field name="model">account.move.line</field>
+            <field eval="1" name="priority"/>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='credit']" position="after">
+		      	 	<field name="statement_status"/>
+		      	</xpath>
+            </field>
+        </record>	      
+	      
+	    <!-- ACCT WINDOW FOR : Customer | Credit Notes --> 
+        <!-- <record id="action_invoice_tree1_view1_inherit" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account.invoice_tree"/>
+            <field name="act_window_id" ref="action_invoice_tree_refund"/>
+        </record>
+        
+        <record id="action_invoice_tree1_view2_inherit" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_tree_refund"/>
+        </record> -->
+        
+	 <!-- <record id="action_invoice_tree_refund" model="ir.actions.act_window">
+            <field name="name">Customer | Credit Notes</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_refund')]</field>
+            <field name="context">{'default_type':'out_refund', 'type':'out_refund', 'journal_type': 'sale_refund'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a customer invoice.
+              </p><p>
+                Odoo's electronic invoicing allows to ease and fasten the
+                collection of customer payments. Your customer receives the
+                invoice by email and he can pay online and/or import it
+                in his own system.
+              </p><p>
+                The discussions with your customer are automatically displayed at
+                the bottom of each invoice.
+              </p>
+            </field>
+        </record>
+	    <menuitem action="action_invoice_tree_refund" id="menu_action_invoice_tree_refund" parent="account.menu_finance_receivables" sequence="2"/>
+	      -->
+	<!-- ACCT WINDOW FOR : Vendor | Debit Notes -->
+	
+	 <!-- <record id="action_invoice_vendor_refund" model="ir.actions.act_window">
+            <field name="name">Vendor | Debit Notes</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','in_refund')]</field>
+            <field name="context">{'default_type': 'in_refund', 'type': 'in_refund', 'journal_type': 'purchase_refund'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record a new vendor bill.
+              </p><p>
+                You can control the invoice from your vendor according to
+                what you purchased or received.
+              </p>
+            </field>
+        </record> -->
+        <!-- <menuitem action="action_invoice_vendor_refund" id="menu_action_invoice_vendor_refund" parent="account.menu_finance_payables" sequence="2"/> -->
+         
+         
+          <!-- Customer Invoice Acct Window Inherited  -->
+         <!-- <record id="action_invoice_tree1_view1_inherit1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account.invoice_tree"/>
+            <field name="act_window_id" ref="action_invoice_tree1_inherits"/>
+        </record>
+        
+        <record id="action_invoice_tree1_view2_inherit1" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_tree1_inherits"/>
+        </record>   -->
+       
+      <!-- <record id="action_invoice_tree1_inherits" model="ir.actions.act_window">
+            <field name="name">Customer Invoices</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice')]</field>
+            <field name="context">{'default_type':'out_invoice', 'type':'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="inherit_id" ref="account.action_invoice_tree1"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a customer invoice.
+              </p><p>
+                Odoo's electronic invoicing allows to ease and fasten the
+                collection of customer payments. Your customer receives the
+                invoice by email and he can pay online and/or import it
+                in his own system.
+              </p><p>
+                The discussions with your customer are automatically displayed at
+                the bottom of each invoice.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_invoice_tree1_inherits" id="account.menu_action_invoice_tree1" parent="account.menu_finance_receivables" sequence="1"/>
+         -->
+        <!-- Vendor Bills Acct Window Inherited -->
+      <!-- <record id="action_invoice_tree2_inherits" model="ir.actions.act_window">
+            <field name="name">Vendor Bills</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','in_invoice')]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'journal_type': 'purchase'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="inherit_id" ref="account.action_invoice_tree2"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record a new vendor bill.
+              </p><p>
+                You can control the invoice from your vendor according to
+                what you purchased or received.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_invoice_tree2_inherits" id="account.menu_action_invoice_tree2" parent="account.menu_finance_payables" sequence="1"/>
+    	
+        <record id="view_account_form_inherit_type" model="ir.ui.view">
+            <field name="name">account.account.type.inherit</field>
+            <field name="model">account.account.type</field>
+            <field name="inherit_id" ref="account.view_account_type_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='type']" position="after">
+	            	<field name="is_visible"/>
+	            </xpath>
+            </field>
+        </record> -->
+
+	<!-- Show account type in accounting configuration -->
+	<!-- <menuitem action="account.action_account_type_form" id="menu_action_account_type_form" parent="account.account_account_menu"/> -->
+	   
+   <!-- <act_window
+            id="account.action_move_line_select_posted"
+            name="Journal Items (posted)"
+            context="{'search_default_account_id': [active_id], 'search_default_posted': 1}"
+            res_model="account.move.line"
+            src_model="account.account"/> -->
+
+   <!-- Group Creation For BRS Status Button -->  
+     <!-- <record id="group_brs_status_reverse" model="res.groups">
+	        <field name="name">BRS State Unreconcile</field>
+	        <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+   	</record> -->
+   	<!-- End -->
+   	
+	   <!-- <template id="assets_backend" name="ppts_imporvements assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/ppts_imporvements/static/src/css/button_image.css"/>
+            </xpath>
+        </template> -->
+</odoo>

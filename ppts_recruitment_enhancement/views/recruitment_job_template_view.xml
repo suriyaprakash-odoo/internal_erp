@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="job_seniority_form_view" model="ir.ui.view">
+		<field name="name">Job Seniority Titles</field>
+		<field name="model">hr.job.seniority.title</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+						</group>
+						<group>
+							<field name="sequence" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="job_seniority_tree_view">
+		<field name="name">Job Seniority Titles</field>
+		<field name="model">hr.job.seniority.title</field>
+		<field name="arch" type="xml">
+			<tree string="Job Seniority Titles">
+				<field name="name" />
+				<field name="sequence" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="hr_job_seniority_action"
+		model="ir.actions.act_window">
+		<field name="name">Job Seniority Titles</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">hr.job.seniority.title</field>
+		<field name="view_id" ref="job_seniority_tree_view" />
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+	<record id="job_template_form_view" model="ir.ui.view">
+		<field name="name">Job Template</field>
+		<field name="model">hr.job.template</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+						</group>
+						<group>
+							<field name="active_state" />
+						</group>
+					</group>
+
+					<group>
+						<field name="introduction" />
+						<field name="job_description" />
+						<field name="department_id"/>
+						<field name="sign_document_id" /> 
+					</group>
+
+					<group>
+						<group>
+							<field name="email_template_id" />
+							<field name="job_seniority_id" widget="many2many_tags" />
+						</group>
+						<group>
+							<field name="interviewer_survey_id" />
+							<field name="application_survey_id" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="job_template_tree_view">
+		<field name="name">Job Template</field>
+		<field name="model">hr.job.template</field>
+		<field name="arch" type="xml">
+			<tree string="Job Template">
+				<field name="name" />
+				<field name="application_survey_id" />
+				<field name="interviewer_survey_id" />
+				<field name="job_seniority_id" />
+				<field name="active_state" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="hr_recruitment_job_template"
+		model="ir.actions.act_window">
+		<field name="name">Job Template</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">hr.job.template</field>
+		<field name="view_id" ref="job_template_tree_view" />
+		<field name="view_mode">tree,form</field>
+	</record>
+
+</odoo>

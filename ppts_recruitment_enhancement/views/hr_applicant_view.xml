@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<!-- Stage Form View inherit -->
+		<record model="ir.ui.view"
+			id="hr_recruitment_stage_form_inherited">
+			<field name="name">hr.recruitment.stage.form</field>
+			<field name="model">hr.recruitment.stage</field>
+			<field name="inherit_id"
+				ref="hr_recruitment.hr_recruitment_stage_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='sequence']" position="before">
+					<field name="stage_code" />
+				</xpath>
+				<xpath expr="//field[@name='template_id']" position="after">
+					<field name="survey_id" />
+				</xpath>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="crm_case_form_view_job">
+			<field name="name">Jobs - Recruitment Form</field>
+			<field name="model">hr.applicant</field>
+			<field name="inherit_id"
+				ref="hr_recruitment.crm_case_form_view_job" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[@class='oe_button_box']" position="after">
+					<div class="oe_title">
+						<h1>
+							<field name="sequence_id" />
+						</h1>
+					</div>
+				</xpath>
+				<xpath expr="//button[@name='create_employee_from_applicant']"
+					position="before">
+<!-- 					<button name="send_l1_tech_round"
+						string="L1 Technique Round" type="object"
+						attrs="{'invisible':['|','|',('l1_round','=',True),('l2_round','=',True),('manager','=',True)]}"
+						groups="ppts_recruitment_enhancement.group_l1_round_approval" />
+					<button name="send_l2_tech_round"
+						string="L2 Technique Round" type="object"
+						attrs="{'invisible':['|',('l2_round','=',True),('manager','=',True)]}"
+						groups="ppts_recruitment_enhancement.group_l2_round_approval" />
+					<button name="send_manager_round" string="Manager Round"
+						type="object" attrs="{'invisible':[('manager','=',True)]}"
+						groups="ppts_recruitment_enhancement.group_manager_access_approval" />
+					<button name="send_final_discussion"
+						string="Final Discussion" type="object"
+						attrs="{'invisible':[('stage_check','!=','Manager 
+					Round Selected')]}"
+						groups="ppts_recruitment_enhancement.group_final_discussion" />
+					<button name="approve1" string="Approve" type="object"
+						attrs="{'invisible':[('stage_check','!=','L1 
+					Technique Round')]}"
+						groups="ppts_recruitment_enhancement.group_l1_approval" />
+					<button name="approve2" string="Approve" type="object"
+						attrs="{'invisible':[('stage_check','!=','L2 
+					Technique Round')]}"
+						groups="ppts_recruitment_enhancement.group_l2_approval" />
+					<button name="approve3" string="Approve" type="object"
+						attrs="{'invisible':[('stage_check','!=','Manager 
+					Round')]}"
+						groups="ppts_recruitment_enhancement.group_final_approval" />
+					<button name="send_offer_letter" string="Send Offer Letter"
+						type="object"
+						attrs="{'invisible':[('stage_check','not in',('Offer Letter','Final Discussion'))]}"
+						groups="ppts_recruitment_enhancement.group_offer_letter" />
+					<button name="onboarding" string="Onboarding" type="object"
+						attrs="{'invisible':[('stage_check','!=','Offer 
+					Letter')]}"
+						groups="ppts_recruitment_enhancement.group_onboarding" /> -->
+					
+					<!-- <button name="send_offer_letter" string="Send Offer Letter"
+						type="object"
+						groups="ppts_recruitment_enhancement.group_offer_letter" />	 -->
+				</xpath>
+				<xpath expr="//button[@name='create_employee_from_applicant']"
+					position="replace">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='stage_id']" position="replace">
+					<field name="stage_id" widget="statusbar" clickable="True"
+						options="{'fold_field': 'fold'}"
+						attrs="{'invisible': [('active', '=', False),('active', '=', False),('emp_id', '=', False)]}" />
+				</xpath>
+				<xpath expr="//field[@name='type_id']" position="after">
+					<field name="stage_check" invisible="1" />
+					<field name="l1_round" invisible="1" />
+					<field name="l2_round" invisible="1" />
+					<field name="manager" invisible="1" />
+				</xpath>
+				<xpath expr="//field[@name='partner_id']"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<!-- <xpath expr="//label[@for='name']" position="replace"> <label for="partner_name" 
+					string="Name" class="oe_edit_only" /> </xpath> -->
+				<!-- <xpath expr="//field[@name='partner_name']" position="attributes"> 
+					<attribute name="class">oe_edit_only</attribute> </xpath> -->
+				<!-- <xpath expr="//field[@name='partner_name']" position="attributes"> 
+					<attribute name="invisible">1</attribute> </xpath> -->
+				<!-- <xpath expr="//label[@for='categ_ids']" position="attributes"> <attribute 
+					name="invisible">1</attribute> </xpath> -->
+				<xpath expr="//h2[@class='o_row']/div[2]"
+					position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<!-- <xpath expr="//h2[@class='o_row']" position="after"> <div class="o_row 
+					oe_edit_only"> <div> <label for="middle_name" /> <field name="middle_name"/> 
+					</div> </div> <div class="o_row oe_edit_only"> <div> <label for="last_name" 
+					/> <field name="last_name"/> </div> </div> </xpath> -->
+			</field>			
+		</record>
+		
+	<record id="crm_case_form_view_job_inherit" model="ir.ui.view">
+		<field name="name">hr.applicant</field>
+		<field name="model">hr.applicant</field>
+		<field name="inherit_id" ref="hr_recruitment_survey.crm_case_form_view_job_inherit" />
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_start_survey']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_print_survey']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_makeMeeting']" position="after">
+                <button name="action_hr_start_survey"
+                    class="oe_stat_button"
+                    icon="fa-user"
+                    type="object"
+                    help="Answer related job question" attrs = "{'invisible': [('stage_change_flag', '!=', 'scheduled')]}" >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Start HR</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_hr_print_survey"
+                    class="oe_stat_button"
+                    icon="fa-print"
+                    type="object"
+                    help="Print interview report" attrs = "{'invisible': [('stage_change_flag', 'not in', ('scheduled','man','final'))]}" >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Print HR</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_tech_start_survey"
+                    class="oe_stat_button"
+                    icon="fa-user"
+                    type="object"
+                    help="Answer related job question" attrs = "{'invisible': [('stage_change_flag', '!=', 'tech')]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Start Technical</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_tech_print_survey"
+                    class="oe_stat_button"
+                    icon="fa-print"
+                    type="object"
+                    help="Print interview report" attrs = "{'invisible': [('stage_change_flag', 'not in' , ('tech','man','final'))]}" >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Print Technical</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_manager_start_survey"
+                    class="oe_stat_button"
+                    icon="fa-user"
+                    type="object"
+                    help="Answer related job question" attrs = "{'invisible': [('stage_change_flag', '!=', 'man')]}" >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Start Manager</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_manager_print_survey"
+                    class="oe_stat_button"
+                    icon="fa-print"
+                    type="object"
+                    help="Print interview report" attrs = "{'invisible': [('stage_change_flag', 'not in', ('man','final'))]}" > 
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Print Manager</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_final_start_survey"
+                    class="oe_stat_button"
+                    icon="fa-user"
+                    type="object"
+                    help="Answer related job question" attrs = "{'invisible': [('stage_change_flag', '!=', 'final')]}" >
+                    <div class="o_field_widget o_stat_info" >
+                        <span class="o_stat_text">Start Final</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+                <button name="action_final_print_survey"
+                    class="oe_stat_button"
+                    icon="fa-print"
+                    type="object"
+                    help="Print interview report" attrs = "{'invisible': [('stage_change_flag', '!=', 'final')]}" >
+                    <div class="o_field_widget o_stat_info" >
+                        <span class="o_stat_text">Print Final</span>
+                        <span class="o_stat_text">Interview</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='survey_id']" position="before">
+                <field name="hr_discussion_survey" invisible="1"/>
+                <field name="tech_discussion_survey" invisible="1"/>
+                <field name="manager_discussion_survey" invisible="1"/>
+                <field name="final_discussion_survey" invisible="1"/>
+                <field name="hr_response_id" invisible="1"/>
+                <field name="tech_response_id" invisible="1"/>
+                <field name="man_response_id" invisible="1"/>
+                <field name="final_response_id" invisible="1"/>
+            </xpath>
+		</field>
+	</record>		
+		
+		
+	<record id="hr_applicant_template_inheirted_view" model="ir.ui.view">
+		<field name="name">hr.applicant</field>
+		<field name="model">hr.applicant</field>
+		<field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job" />
+		<field name="arch" type="xml">
+
+			<xpath expr="//button[@name='action_makeMeeting']" position="before">
+				<button name="action_applicant_schedule_send" class="oe_stat_button" icon="fa fa-calendar-plus-o" type="object" help="Schedule interview with this applicant" attrs = "{'invisible': [('stage_change_flag', '!=', 'new')]}">
+	                <div class="o_field_widget o_stat_info">
+	                    <span class="o_stat_text">Next Schedule</span>
+	                 </div>
+	            </button> 
+        	</xpath>
+
+			<xpath expr="//notebook/page[1]" position="after">
+				<page string="Personal Information">
+				<group>
+				<group>
+					<field name="sex_type" string="SEX" invisible="1"/>
+					<field name="gender_type" string="Sex" invisible="1"/>
+					<field name="date_birth"/>
+					<field name="age"/>
+					<field name="age_year" invisible="1"/>
+					<label for="permanent_address" string="Permanent Address"/>
+	                            <div class="o_address_format">
+	                                <field name="applicant_street" placeholder="Street..." class="o_address_street"/>
+	                                <field name="p_resi" placeholder="Street 2..." class="o_address_street"/>
+	                                <field name="p_city" placeholder="City" class="o_address_city"/>
+	                                <field name="permanent_state" class="o_address_state" placeholder="State" options='{"no_open": True}'/>                         
+	                                <field name="p_pin" placeholder="Pincode" class="o_address_zip"/>
+	                                <field name="p_country" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>                      
+	                            </div>
+	                             <field name="p_tel_no"/>
+								<field name="p_mobile"/>
+	                            <field name="p_e_mail"/>
+					<field name="status_type"/>
+					<field name="applicant_lang_ids" widget="one2many">
+					<tree editable="bottom"  string="Language">
+					    <field name="lang_id" />
+						<field name="check_box1" />
+						<field name="check_box2" />
+						<field name="check_box3" />			
+					</tree>
+					</field>
+					</group>
+					<group>
+					<field name="so_channel" invisible="1"/>
+					<field name="name_so" invisible="1"/>
+					<field name="present_check"/>
+					<label for="present_address" string="Present Address" attrs="{'invisible': [('present_check', '=',  True)]}"/>
+	                            <div class="o_address_format">
+	                                <field name="present_applicant_street" placeholder="Street..." class="o_address_street" attrs="{'invisible': [('present_check', '=',  True)]}"/>
+	                                <field name="resi" placeholder="Street 2..." class="o_address_street"  attrs="{'invisible': [('present_check', '=',  True)]}"/>
+	                                <field name="city" placeholder="City" class="o_address_city"  attrs="{'invisible': [('present_check', '=',  True)]}"/>
+	                                <field name="present_state" class="o_address_state" placeholder="State" options='{"no_open": True}' attrs="{'invisible': [('present_check', '=',  True)]}"/>                                                  
+	                                <field name="pin" placeholder="Pincode" class="o_address_zip"  attrs="{'invisible': [('present_check', '=',  True)]}"/>        
+	                                <field name="present_country" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'invisible': [('present_check', '=',  True)]}"/>                      
+	                      
+	                      </div>
+	                 				<!-- <field name="tel_no" attrs="{'invisible': [('present_check', '=',  True)]}"/> -->
+	                 				<field name="tel_no" invisible="1"/>
+									<field name="mobile" attrs="{'invisible': [('present_check', '=',  True)]}"/>
+	                                <field name="e_mail" attrs="{'invisible': [('present_check', '=',  True)]}"/>     				
+					</group>
+					<label for="family_history" string="Family History" />				
+					<field name="applicant_detail_ids" widget="one2many">
+					<tree editable="bottom"  string="Family">
+					 <field name="name" />
+					    <field name="relationship_applicant" />
+						<field name="date" />
+						<field name="occupation" />
+						<field name="annual_income" />			
+					</tree>
+					</field>				
+					</group>
+				</page>
+			</xpath>		
+			<xpath expr="//field[@name='email_from']" position="before">
+				<field name="applicant_applied" invisible="1"/>
+			</xpath>
+
+			<!-- <xpath expr="//field[@name='partner_phone']" position="replace">
+				<field name="partner_phone" string="Primary Number"/>
+			</xpath> -->
+			<xpath expr="//field[@name='partner_phone']" position="attributes">
+	            <attribute name="string">Primary Number</attribute>
+	        </xpath>
+	        <xpath expr="//field[@name='partner_mobile']" position="attributes">
+	            <attribute name="string">Secondary Number</attribute>
+	        </xpath>
+
+			<xpath expr="//field[@name='availability']" position="after">
+				<field name="negotiate"/>
+				<field name="shift_time"/>
+				<field name="selected_days"/>
+			</xpath>
+			<xpath expr="//notebook/page[2]" position="after">
+				<page string="Work History">
+				<field name="applicant_work_ids" widget="one2many">
+					<tree editable="bottom" create='false' string="Family">
+					 <field name="doc_name" />
+					    <field name="last_job" />
+						<field name="present_job" invisible="1"/>
+						<field name="second_job" />
+						<field name="sec_last_job" invisible="1"/>
+						<field name="third_job" />
+						<field name="th_last_job" invisible="1"/>	
+						<field name="fourth_job" />	
+						<field name="four_last_job" invisible="1"/>	
+						<field name="fifth_job" />	
+						<field name="fif_last_job" invisible="1" />				
+					</tree>
+					</field>
+				<label for="reference_details" string="References: (Please give details of 2 persons of your current organization[HR,TL,Managers]. Relations and friends cannot be referred) " />
+				<field name="applicant_reference_ids" widget="one2many">
+					<tree editable="bottom"  string="Family">
+					 <field name="name" />
+					    <field name="relationship_app" />
+						<field name="no_years" />
+						<field name="occupation" />
+						<field name="address_details" />
+						<field name="phone_no" />			
+					</tree>
+					</field>
+				
+				</page>
+			</xpath>				
+		</field>
+	</record> 		
+	
+	<record id="email_compose_message_wizard_form_inherit" model="ir.ui.view">
+		<field name="name">mail.compose.message.form.inherit</field>
+		<field name="model">mail.compose.message</field>
+		<field name="inherit_id" ref="mail.email_compose_message_wizard_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='subject']" position="after">
+				<field name="applicant" invisible="1"/>
+				<field name="activity_type_id" attrs="{'invisible': [('applicant', '!=', True)],'required': [('applicant', '=', True)]}"/>
+				<field name="schedule_date" attrs="{'invisible': [('applicant', '!=', True)],'required': [('applicant', '=', True)]}"/>
+			</xpath>
+		</field>
+	</record>
+
+	</data>
+</odoo>

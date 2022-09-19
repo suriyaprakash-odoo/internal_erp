@@ -1,0 +1,32 @@
+{
+    'name': 'Account TDS',
+    'version': '11.0.1.0.0',
+    'description': 'Account TDS',
+    'category': 'Account Tax',
+    'author': 'PPTS [India] Pvt.Ltd.',
+    'website': "http://www.pptssolutions.com",
+    'sequence': 10,
+    'depends': ['base','account','mail'],
+    'data': [
+        'security/ir.model.access.csv',
+        'report/tds_sql_report_view.xml',
+        'views/account_invoice_view.xml',
+        'views/account_payment_view.xml',
+        'views/account_tds_view.xml',
+        'views/res_conf_setting_view.xml',
+        'views/res_partner_view.xml',
+        'views/tds_payment_view.xml',
+        'views/account_move.xml',
+        'wizard/account_tds_wizard.xml',
+        'wizard/account_tds_helper_wizard.xml',
+        'wizard/add_tds.xml',
+        'wizard/tds_payment_wizard.xml'
+    ],
+    'qweb': [
+        "static/src/xml/account_payment.xml",
+    ],
+    'license': 'LGPL-3',
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_e_brc_no_update_form"
+			model="ir.ui.view">
+			<field name="name">e.brc.no.update.form</field>
+			<field name="model">e.brc.no.update</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="from_date" />
+								<field name="to_date" />
+							</group>
+							<group>
+								<field name="state" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Invoice Line">
+								<field name="header_line_ids">
+									<tree name="Invoice Line" editable="bottom">
+										<field name="invoice_id" invisible="1"/>
+										<field name="invoice_date" invisible="1"/>
+										<field name="customer_id" invisible="1"/>
+										<field name="amount_total" invisible="1"/>
+										<field name="dup_invoice_id" readonly="1"/>
+										<field name="dup_invoice_date" readonly="1"/>
+										<field name="dup_customer_id" readonly="1"/>
+										<field name="dup_amount_total" readonly="1" />
+										<field name="ebrc_no" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+					<footer>
+						<button string="Update" name="update_e_brc_no"
+							type="object" class="btn-primary" />
+						<button string="Cancel" class="btn-default"
+							special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record id="action_view_account_e_brc_no_update"
+			model="ir.actions.act_window">
+			<field name="name">e BRC No Update</field>
+			<field name="res_model">e.brc.no.update</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_account_e_brc_no_update_form" />
+			<field name="target">new</field>
+		</record>
+		<menuitem id="menu_action_e_brc_no_update"
+			name="e BRC Update" action="action_view_account_e_brc_no_update"
+			parent="account.menu_finance_entries_actions" sequence="30"
+			groups="account.group_account_user" />
+
+	</data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+          		
+          		<!-- Employee settings  form inherited  configuration -->
+
+		<record id="res_config_settings_form_overtime_enhancement" model="ir.ui.view">
+			<field name="name">res.config.settings.form</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="hr.res_config_settings_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='resource_calendar_id']" position="after">
+					<div class="mt16">
+						<label for="minimum_overtime_hours" style="margin-left: 1px;"/>
+						<br></br>
+						<field name="minimum_overtime_hours"/>
+					</div>
+				</xpath>			
+			</field>
+		</record>
+		
+		
+		
+	<record id="employee_form_view_inherit_appraisal_enhancement"
+	model="ir.ui.view">
+	<field name="name">hr.employee</field>
+	<field name="model">hr.employee</field>
+	<field name="inherit_id" ref="hr.view_employee_form" />
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='barcode']" position="after">
+			<field name="over_time_hours" />
+		</xpath>
+
+	</field>
+</record>	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</data>
+</odoo>

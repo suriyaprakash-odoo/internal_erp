@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- Employee View -->
+		<record id="view_employee_form_inherit_custom_employee"
+			model="ir.ui.view">
+			<field name="name">hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//page[@name='hr_settings']/group/group[1]"
+					position="after">
+					<group string="General Information">
+						<group>
+							<field name="employee_type" />
+							<field name="is_esi" />
+							<field name="is_pf" />
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+		<!-- Contract View -->
+		<record id="hr_contract_view_form_inherit_custom_employee"
+			model="ir.ui.view">
+			<field name="name">hr.contract.form</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id"
+				ref="hr_contract.hr_contract_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='type_id']" position="before">
+					<field name="employee_type" string="Employee Type"/>
+				</xpath>
+			</field>
+		</record>
+		<!-- contract Rule View -->
+		<record id="hr_contract_rule_view_form_inherit_custom_employee"
+			model="ir.ui.view">
+			<field name="name">hr.contract.rule.form</field>
+			<field name="model">hr.contract.rule</field>
+			<field name="inherit_id"
+				ref="ppts_contract_enhancement.hr_contract_rule_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//group[1]" position="before">
+					<group string="Employee Type">
+						<group>
+							<field name="employee_type" />
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

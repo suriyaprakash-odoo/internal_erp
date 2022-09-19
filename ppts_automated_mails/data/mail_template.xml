@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- // Email template -->
+
+		<record id="tenure_notification_email" model="mail.template">
+			<field name="name">Tenure Notification</field>
+			<field name="email_from">hr@pptservices.com</field>
+			<field name="subject">Congratulations on completion of ${ctx['total_tenure']|safe} year(s) with PPTS</field>
+			<field name="lang">${object.lang}</field>
+			<field name="email_to">${object.work_email}</field>
+			<field name="email_cc">pptfamily@pptservices.com</field>
+			<field name="model_id"
+				ref="ppts_automated_mails.model_hr_employee" />
+			<field name="auto_delete" eval="True" />
+			<field name="body_html">
+           <![CDATA[
+           
+			<p>Dear ${object.name},</p>
+			</br>
+			<p>We are glad to congratulate you on completing yet another successful tenure with  PPTS.</p>
+			<p>We appreciate all your hard work and valuable contribution to the organization throughout your tenure. </p>
+			<p>Each one of us is specially endowed with the skills to make some significant contributions for the success of the organisation, so you as an individual can make a difference. </p>
+			<p>Best wishes for yet another brighter and successful year ahead. wish you have a long term association with PPTS.</p>
+			</br></br>
+
+			<p>Best Regards</p>
+			<p>PPTS [India] Pvt.Ltd.</p>
+
+			]]>
+			</field>
+		</record>
+
+		<record id="birthday_notification_email" model="mail.template">
+			<field name="name">Birthday Notification</field>
+			<field name="email_from">hr@pptservices.com</field>
+			<field name="subject">Happy Birthday</field>
+			<field name="lang">${object.lang}</field>
+			<field name="email_to">${object.work_email}</field>
+			<field name="email_cc">pptfamily@pptservices.com</field>
+			<field name="model_id"
+				ref="ppts_automated_mails.model_hr_employee" />
+			<field name="auto_delete" eval="True" />
+			<field name="body_html">
+           <![CDATA[
+           
+			<p>Dear ${object.name},</p>
+			</br>
+			<p>On your Birthday</p>
+			<p><b style='color:red'>B</b>e yourself</p>
+			<p><b style='color:red'>I</b>nvite New Challenges</p>
+			<p><b style='color:red'>R</b>ecall past triumphs</p>
+			<p><b style='color:red'>T</b>rust your instincts</p>
+			<p><b style='color:red'>H</b>ave faith in your abilities</p>
+			<p><b style='color:red'>D</b>esire only the best</p>
+			<p><b style='color:red'>A</b>ffirm your strengths</p>
+			<p><b style='color:red'>Y</b>ou’ve got what it takes</p>
+
+			<p>Wish you a Happy Birthday!!</p>
+			
+			<p>We wish that you have a great year and accomplish all the fabulous goals you have set. </p>
+			<p>May the coming years be filled with happiness, peace, and love. </p>
+			<p>Have a Great day ahead. </p>
+
+			</br></br>
+
+			<p>Best Regards</p>
+			<p>PPTS [India] Pvt.Ltd.</p>
+
+			]]>
+			</field>
+		</record>
+
+		<record id="anniversary_notification_email" model="mail.template">
+			<field name="name">Anniversary Notification</field>
+			<field name="email_from">hr@pptservices.com</field>
+			<field name="subject">Hearty wishes on your wedding anniversary</field>
+			<field name="lang">${object.lang}</field>
+			<field name="email_to">${object.work_email}</field>
+			<field name="email_cc">pptfamily@pptservices.com</field>
+			<field name="model_id"
+				ref="ppts_automated_mails.model_hr_employee" />
+			<field name="auto_delete" eval="True" />
+			<field name="body_html">
+           <![CDATA[
+           
+			<p>Dear ${object.name},</p>
+			
+			</br>
+
+			<p><b>Happy Anniversary</b></p>
+
+			</br>
+
+			<p>Another year, another feeling of happiness </p>
+			<p>Congratulations, may you never be apart </p>
+			<p>For you’ve found the happiness and warmth of togetherness </p>
+			<p>Remember when your marriage knot was tied, how the joy you felt </p>
+			<p>United then and united still </p>
+			<p>May your vows be blessed through never ending years </p>
+			<p>Happy anniversary to you today </p>
+			<p>May all of your dreams come true </p>
+			<p>Happy anniversary to the two of you </p>
+			<p>And may you always live in ecstasy </p>
+			<p>And may all your endeavors find success</p> 
+			<p>So happy may you be on your anniversary </p>
+			<p>Wishing you both a day that’s filled with moments of </p>
+			<p>Love, happiness, with special dreams and memories </p>
+			<p>to cherish all your life! </p>
+			<p>Take care, good luck and God bless… </p>
+			<p>Happy anniversary to a wonderful couple….</p>
+
+			</br></br>
+
+			<p>Best Regards</p>
+			<p>PPTS [India] Pvt.Ltd.</p>
+
+			]]>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>

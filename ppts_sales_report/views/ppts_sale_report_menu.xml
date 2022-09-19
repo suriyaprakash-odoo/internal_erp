@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem id="ppts_sales_report_menu_parent" name="Sales Report" parent="account.menu_finance_reports" sequence="2" />
+	<menuitem id="ppts_sales_report_menu" name="Sales Report" parent="ppts_sales_report_menu_parent" sequence="1" action="ppts_sale_report_action" />
+</odoo>

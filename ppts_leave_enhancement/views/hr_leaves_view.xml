@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+      <!-- hr.holidays.form.inherit -->
+
+
+	<record id="holiday_form_view_inherit_leave_enhancement" model="ir.ui.view">
+		<field name="name">hr.holidays.form</field>
+		<field name="model">hr.holidays</field>
+		<field name="inherit_id" ref="hr_holidays.edit_holiday_new" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='holiday_status_id']" position="after">
+				<field name="request_unit_half" attrs="{'invisible':[('type','=','add')]}" />
+				<field name="duration_hours"  attrs="{'invisible':[('type','=','add')]}"/>
+			</xpath>
+			<xpath expr="//field[@name='date_to']" position="after">
+				<field name="request_date_from_period"
+					attrs="{'invisible': [('request_unit_half', '=', False)]}" />
+			</xpath>
+			
+		 	<xpath expr="//field[@name='date_to']" position="replace">
+				<field name="date_to" attrs="{'invisible': [('request_unit_half', '=', True)]}" />
+			</xpath>
+						
+		 	<xpath expr="//field[@name='date_from']" position="replace">
+				<field name="date_from" />
+			</xpath>
+			
+			
+								
+		</field>
+	</record>
+        
+                     
+</data>
+</odoo>
+
+
+
+                                  
+                                        
+                                        
+                                        

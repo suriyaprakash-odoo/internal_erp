@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Form View -->
+	<record id="ppts_gst_code_master_form" model="ir.ui.view">
+        <field name="name">ppts.gst.code.master</field>
+        <field name="model">ppts.gst.code.master</field>
+        <field name="arch" type="xml">
+            <form string="GST Code Master">
+            	<sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="ppts_gst_code_master_tree" model="ir.ui.view">
+        <field name="name">ppts.gst.code.master</field>
+        <field name="model">ppts.gst.code.master</field>
+        <field name="arch" type="xml">
+            <tree string="GST Code Tree">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+	<!-- Search View -->
+	<record id="ppts_gst_code_master_filter" model="ir.ui.view">
+        <field name="name">ppts.gst.code.master</field>
+        <field name="model">ppts.gst.code.master</field>
+        <field name="arch" type="xml">
+            <search string="Search GST Code">
+                <field name="name"/>
+                <group expand="0" string="Group By">
+                    <filter string="Name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action View -->
+    <record id="mma_ppts_gst_code_master" model="ir.actions.act_window">
+        <field name="name">GST Code</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ppts.gst.code.master</field>
+        <field name="view_id" ref="ppts_gst_code_master_tree"/>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="ppts_gst_code_master_filter"/>
+    </record>
+    
+    <!-- Menu Details -->
+
+    <menuitem id="mam_gst_code_master" name="GST Code" parent="account.menu_finance_configuration" sequence="1" action="mma_ppts_gst_code_master"/>
+
+</odoo>

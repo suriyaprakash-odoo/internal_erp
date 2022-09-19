@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Crm Industry -->
+
+	<record id="crm_industry_view_form" model="ir.ui.view">
+		<field name="name">Crm Industry</field>
+		<field name="model">crm.industry</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="name" required="True" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="crm_industry_view_tree">
+		<field name="name">crm.industry.tree</field>
+		<field name="model">crm.industry</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="crm_industry_action_menu" model="ir.actions.act_window">
+		<field name="name">Crm Industry</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">crm.industry</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click here to create an Expense Category
+			</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_crm_industry" action="crm_industry_action_menu"
+		name="Industry" parent="crm.menu_crm_config_lead" sequence="1"
+		groups="sales_team.group_sale_manager" />
+
+	<!-- Crm services -->
+
+	<record id="crm_services_view_form" model="ir.ui.view">
+		<field name="name">Crm Services</field>
+		<field name="model">crm.services</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="name" required="True" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="crm_services_view_tree">
+		<field name="name">crm.services.tree</field>
+		<field name="model">crm.services</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="crm_services_action_menu" model="ir.actions.act_window">
+		<field name="name">Crm Services</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">crm.services</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="context">{}</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click here to create an Expense Category
+			</p>
+		</field>
+	</record>
+
+	<menuitem id="menu_crm_services" action="crm_services_action_menu"
+		name="Services" parent="crm.menu_crm_config_lead" sequence="2"
+		groups="sales_team.group_sale_manager" />
+
+</odoo>   

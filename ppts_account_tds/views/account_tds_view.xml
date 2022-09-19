@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- tree -->
+		<record id="view_account_tds_tree" model="ir.ui.view">
+			<field name="name">account.tds.tree</field>
+			<field name="model">account.tds</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="TDS Tree">
+					<field name="name" />
+					<field name="account_id" />
+					<field name="tds_percentage" />
+					<field name="tds_exempt_limit" invisible="1"/>
+					<field name="sur_percentage" invisible="1"/>
+					<field name="sur_exempt_limit" invisible="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<!--form -->
+		<record id="view_account_tds_form" model="ir.ui.view">
+			<field name="name">account.tds.form</field>
+			<field name="model">account.tds</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="TDS Form">
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="action_change_rate" type="object"
+							class="oe_stat_button" icon="fa-exchange" string="Add Tax Rates" />
+						</div>
+						<h1>
+							<field name="name" />
+						</h1>
+						<group>
+							<group name="section_list" string="Section Details">
+								<field name="code" />
+								<field name="return_code" />
+								<field name="deduct_base" />
+								<field name="company_id" />
+							</group>
+							<group name="tax_rates" string="Current Rates">
+								<label for="tds_percentage"/>
+                                <div class="o_row">
+                                    <field name="tds_percentage" />
+                                    <span class="o_form_label oe_inline">%</span>
+                                </div>
+								<field name="tds_exempt_limit" invisible="1"/>
+								<field name="sur_percentage" invisible="1"/>
+								<field name="sur_exempt_limit" invisible="1"/>
+							</group>
+						</group>
+						<group>
+							<group name="accounting" string="Accounting">
+								<field name="account_id" />
+								<field name="payable_to_id" />
+							</group>
+						</group>
+						<group name="tds_line" string="History">
+							<div class="oe_inline">
+								<field name="tds_line_ids" string="TDS">
+									<form editable="bottom" create="false" edit="false" delete="false">
+										<group>
+											<field name="date_from" />
+										</group>
+										<group>
+											<group>
+												<label for="tds_percentage"/>
+					                             <div class="o_row">
+					                                 <field name="tds_percentage" />
+					                                 <span class="o_form_label oe_inline">%</span>
+					                             </div>
+					                             <field name="active_line" />
+												<field name="tds_exempt_limit" invisible="1"/>
+											</group>
+											<group>
+												<field name="sur_percentage" invisible="1"/>
+												<field name="sur_exempt_limit" invisible="1"/>
+											</group>
+										</group>
+									</form>
+									<tree create="false" editable="bottom" delete="false">
+										<field name="date_from" />
+										<field name="tds_percentage" />
+										<field name="active_line" />
+										<field name="tds_exempt_limit" invisible="1"/>
+										<field name="sur_percentage" invisible="1"/>
+										<field name="sur_exempt_limit" invisible="1"/>
+									</tree>
+								</field>
+							</div>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<!--search -->
+		<record id="view_account_tds_search" model="ir.ui.view">
+			<field name="name">account.tds.search</field>
+			<field name="model">account.tds</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="TDS Search">
+					<field name="company_id" />
+					<field name="account_id" />
+					<field name="deduct_base" />
+					<group expand="0" string="Group By">
+                        <filter string="Company" context="{'group_by':'company_id'}"/>
+                        <filter string="Account" context="{'group_by':'account_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_tds" model="ir.actions.act_window">
+			<field name="name">TDS Section(s)</field>
+			<field name="res_model">account.tds</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click here to create a record
+				</p>
+			</field>
+		</record>
+		
+		<!-- tree -->
+		<record id="view_account_deductee_type_tree" model="ir.ui.view">
+			<field name="name">account.tds.deductee.type.tree</field>
+			<field name="model">account.tds.deductee.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="TDS Dedutee Type Tree">
+					<field name="name" />
+					<field name="company_id" />
+					<field name="residential" invisible="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<!--form -->
+		<record id="view_account_deductee_type_form" model="ir.ui.view">
+			<field name="name">account.tds.deductee.type.form</field>
+			<field name="model">account.tds.deductee.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="TDS Dedutee Type Form">
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            	<field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        	</button>
+						</div>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="company_id" />
+							</group>
+							<group>
+								<field name="pan_check"/>
+								<field name="residential" invisible="1"/>
+							</group>
+						</group>
+						<group name="deductee_line" string="Deductee Line">
+							<div class="oe_inline">
+								<field name="tds_ids">
+									<form>
+										<h1>
+											<field name="name" />
+										</h1>
+										<group>
+											<group name="section_list" string="Section Details">
+												<field name="code" />
+												<field name="account_id" />
+												<field name="company_id" />
+												<field name="deduct_base" />
+											</group>
+											<group name="tax_rates" string="Tax Rates">
+												<field name="tds_percentage" />
+												<field name="tds_exempt_limit" />
+												<field name="sur_percentage" />
+												<field name="sur_exempt_limit" />
+											</group>
+										</group>
+										<group name="tds_line" string="History">
+											<div class="oe_inline">
+												<field name="tds_line_ids">
+													<form editable="bottom" create="false" edit="false" delete="false">
+														<group>
+															<field name="date_from" />
+														</group>
+														<group>
+															<group>
+																<field name="tds_percentage" />
+																<field name="tds_exempt_limit" />
+															</group>
+															<group>
+																<field name="sur_percentage" />
+																<field name="sur_exempt_limit" />
+															</group>
+														</group>
+													</form>
+													<tree create="false" edit="false" delete="false">
+														<field name="date_from" />
+														<field name="tds_percentage" />
+														<field name="tds_exempt_limit" />
+														<field name="sur_percentage" />
+														<field name="sur_exempt_limit" />
+													</tree>
+												</field>
+											</div>
+										</group>
+									</form>
+									<tree >
+										<field name="name" />
+									</tree>
+								</field>
+							</div>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<!--search -->
+		<record id="view_account_deductee_type_search" model="ir.ui.view">
+			<field name="name">account.tds.deductee.type.search</field>
+			<field name="model">account.tds.deductee.type</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="TDS Search">
+					<field name="name" />
+					<group expand="0" string="Group By">
+                        <filter string="Company" context="{'group_by':'company_id'}"/>
+                        <filter string="Name" context="{'group_by':'name'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_deductee_type" model="ir.actions.act_window">
+			<field name="name">TDS Deductee Type</field>
+			<field name="res_model">account.tds.deductee.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click here to create a record
+				</p>
+			</field>
+		</record>
+		
+	</data>
+</odoo>
+

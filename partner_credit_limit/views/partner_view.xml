@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_category_property_form" model="ir.ui.view">
+        <field name="name">partner.over.credit.limit.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <group name="acc_sale" position="inside">
+                <field name="credit_limit"/>
+                <field name="over_credit"/>
+            </group>
+
+            <!-- <xpath expr="//field[@name='name']" position="after">
+                <field name="partner_name" placeholder="Name"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="name" placeholder="Name" invisible="1"/>
+            </xpath> -->
+
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="code" placeholder="Code"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="customer_type_id"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[4]/group" position="after">
+                <group string="IT Info" attrs="{'invisible':[('supplier', '!=', True)]}">
+                    <field name="gst_no"/>
+                    <field name="division"/>
+                    <field name="range_val"/>
+                    <field name="pan_no"/>
+                    <field name="service_tax_no"/>
+                </group>
+                <group>
+                    
+                </group>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="view_partner_form_1" model="ir.ui.view">
+        <field name="name">partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="name" placeholder="Name" invisible="1"/>
+                <field name="partner_name" placeholder="Name"/>
+            </xpath>
+
+            <xpath expr="//field[@name='child_ids']/form/sheet/group[1]/group[2]/field[@name='name']" position="replace">
+                <field name="name" placeholder="Name" invisible="1"/>
+                <field name="partner_name" placeholder="Name" string="Name"/>
+            </xpath>
+
+            <!-- <xpath expr="//field[@name='name']" position="after">
+                <field name="name" placeholder="Name" invisible="1"/>
+            </xpath> -->
+
+            <!-- <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="code" placeholder="Code"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="customer_type_id"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[4]/group" position="after">
+                <group string="IT Info" attrs="{'invisible':[('supplier', '!=', True)]}">
+                    <field name="gst_no"/>
+                    <field name="division"/>
+                    <field name="range_val"/>
+                    <field name="pan_no"/>
+                    <field name="service_tax_no"/>
+                </group>
+                <group>
+                    
+                </group>
+            </xpath> -->
+
+
+        </field>
+    </record>
+
+    <record id="view_partner_tree_inherited" model="ir.ui.view">
+        <field name="name">partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+           
+            <xpath expr="//field[@name='display_name']" position="before">
+                <field name="code"/>
+            </xpath>
+           
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_inherited" model="ir.ui.view">
+        <field name="name">partner.filter.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+           
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code" string="Code" filter_domain="[('code','ilike',self)]"/>
+            </xpath>
+           
+        </field>
+    </record>
+
+    <!-- <record id="view_partner_property_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.property.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code" placeholder="Code"/>
+            </xpath>
+           
+        </field>
+    </record> -->
+
+</odoo>

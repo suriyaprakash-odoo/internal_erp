@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+		<record id="view_employee_form_additional_fields"
+			model="ir.ui.view">
+			<field name="name">hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='place_of_birth']" position="after">
+					<field name="birth_country" />
+					<field name="age" />
+				</xpath>
+				<xpath expr="//field[@name='job_id']" position="after">
+					<field name="job_seniority_id" />
+					<field name="contract_type" />
+				</xpath>
+				<xpath expr="//field[@name='identification_id']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='passport_id']" position="replace">
+				</xpath>
+				<xpath expr="//field[@name='category_ids']" position="after">
+					<group>
+						<group>
+							<!-- <field name="client_code" /> -->
+							<field name="identification_id" string="Employee Code" groups="hr.group_hr_user"/>
+						</group>
+						<group>
+							<field name="present_team" />
+							<field name="present_salary" />
+						</group>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='children']" position="after">
+					<field name="native" />
+					<field name="date_of_marriage" attrs="{'required':[('marital','in',('married','cohabitant','widower','divorced'))],'invisible':[('marital','not in',('married','cohabitant','widower','divorced'))]}"/>
+					<field name="religion" />
+					<field name="caste" />
+					<field name="community" />
+					<field name="mother_tounge" />
+					<field name="blood_group_id" />
+					<!-- <field name="blood_group" /> -->
+					<field name="identification_mark" />
+				</xpath>
+				<xpath expr="//group[@name='work_permit']" position="after">
+					<group string="Personal Interests" name="personal_interest">
+						<field name="hobbies" />
+						<field name="talents" />
+						<label for="accomodation_ids" string="Languages Known" />
+						<field name="lang_known_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="language_id" />
+								<field name="is_read" />
+								<field name="is_write" />
+								<field name="is_speak" />
+							</tree>
+						</field>
+					</group>
+					<group string="Passport Details" name="passport_details">
+						<field name="passport_id" />
+						<field name="pass_do_issue" />
+						<field name="pass_do_expiry" />
+						<field name="pass_place_issue" />
+						<field name="abroad_trip" />
+					</group>
+					<group string="Driving Licence Details" name="dl_details">
+						<field name="dl_no" />
+						<field name="dl_do_issue" />
+						<field name="dl_do_expiry" />
+						<field name="dl_place_issue" />
+						<field name="athorised_drive" />
+					</group>
+					<group string="Emergency Contact Details" name="emergency_details1">
+						<field name="accomodation_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="present_accom_address" />
+								<field name="room_mates" />
+								<field name="contact_no" />
+							</tree>
+						</field>
+					</group>
+					<group string="." name="emergency_details2">
+						<field name="guardian_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="guardian_name" />
+								<field name="relationship" />
+								<field name="emergency_address" />
+								<field name="contact_no" />
+							</tree>
+						</field>
+					</group>
+				</xpath>
+				<xpath expr="//page[@name='personal_information']/group[1]" position="after">
+					<group string="Family Details" name="family_details">
+						<field name="family_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="relationship" />
+								<field name="name" />
+								<field name="age" />
+								<field name="qualification" />
+								<field name="occupation" />
+								<field name="income" />
+								<field name="contact" />
+							</tree>
+						</field>
+					</group>
+				</xpath>
+				<xpath expr="//field[@name='address_home_id']" position="after">
+					<label for="street" string="Permanent Address" />
+					<div class="o_address_format">
+						<field name="street" placeholder="Street..."
+							class="o_address_street" />
+						<field name="street2" placeholder="Street 2..."
+							class="o_address_street" />
+						<field name="city" placeholder="City"
+							class="o_address_city" />
+						<field name="state_id" class="o_address_state"
+							placeholder="State" options='{"no_open": True}'
+							context="{'country_id': country_id, 'zip': zip}" />
+						<field name="zip" placeholder="ZIP" class="o_address_zip" />
+						<field name="country_id" placeholder="Country"
+							class="o_address_country"
+							options='{"no_open": True, "no_create": True}' />
+					</div>
+					<field name="residence_year" />
+					<field name="landline_no" />
+					<field name="present_address" />
+					<label for="street_1" string="Present Address" attrs="{'invisible':[('present_address','!=',False)]}"/>
+					<div class="o_address_format" attrs="{'invisible':[('present_address','!=',False)]}">
+						<field name="street_1" placeholder="Street..."
+							class="o_address_street" />
+						<field name="street2_1" placeholder="Street 2..."
+							class="o_address_street" />
+						<field name="city_1" placeholder="City"
+							class="o_address_city" />
+						<field name="state1_id" class="o_address_state"
+							placeholder="State" options='{"no_open": True}'
+							context="{'country1_id': country1_id, 'zip_1': zip_1}" />
+						<field name="zip_1" placeholder="ZIP" class="o_address_zip" />
+						<field name="country1_id" placeholder="Country"
+							class="o_address_country"
+							options='{"no_open": True, "no_create": True}' />
+					</div>
+					<field name="residence_year_1" attrs="{'invisible':[('present_address','!=',False)]}"/>
+					<field name="landline_no_1" attrs="{'invisible':[('present_address','!=',False)]}"/>
+					<field name="mobile_phone" string='Personal Mobile' />
+					<field name="email" string="Personal Email"/>
+				</xpath>
+				<xpath expr="//field[@name='address_home_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='mobile_phone']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//group[@name='active_group']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='bank_account_id']" position="replace">
+					<field name="bank_account_id" />
+				</xpath>
+				<xpath expr="//page[@name='public']/group[1]" position="after">
+					<group>
+						<group string="Status" name="active_group_duplicate">
+	                        <field name="hire_date" />
+							<field name="demographic" invisible="0" />
+							<field name="user_id" string="Related User"/>
+							<field name="address_home_id" string="Related Partner"/>
+                     	</group>
+						<group string="Tenure at PPTS" name="tenure_ppts">
+							<field name="doj" />
+							<field name="date_diff" />
+							<field name="probation_period" string = "Probation Start Date"/>
+							<field name="do_confirm" />
+							<!-- <field name="stamping" /> -->
+						</group>
+					</group>
+				</xpath>
+				<xpath expr="//notebook" position="inside">
+					<page string="Logs">
+						<group>
+							<group string="Designation Details" name="designation">
+								<field name="designation_ids" nolabel="1">
+									<tree editable="bottom">
+										<field name="designation" />
+										<field name="wef" />
+									</tree>
+								</field>
+							</group>
+							<group string="Salary Details" name="salary">
+								<field name="salary_ids" nolabel="1">
+									<tree editable="bottom">
+										<field name="amount" />
+										<field name="wef" />
+									</tree>
+								</field>
+							</group>
+						</group>
+					</page>
+				</xpath>
+				<xpath expr="//page[@name='hr_settings']/group[1]" position="after">
+					<group string="Original certificate produced" name="original_certificate">
+						<field name="original_certificate_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="certificate" />
+								<field name="reg_no" />
+								<field name="date_receipt" />
+							</tree>
+						</field>
+					</group>
+					<group string="Details of photocopies and Other certificates produced" name="other_certificate">
+						<field name="other_certificate_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="certificate" />
+								<field name="blood_group" />
+								<field name="medical_certificate" />
+								<field name="address_proof" />
+								<field name="id_proof" />
+								<field name="other_certificate" />
+							</tree>
+						</field>
+					</group>
+					<group string="Details of reference/Background verification" name="reference">
+						<field name="reference_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="ref_done_by" />
+								<field name="ref_name" />
+								<field name="relationship" />
+								<field name="contact" />
+								<field name="ref_date" />
+								<field name="ref_comment" />
+							</tree>
+						</field>
+					</group>
+					<group string="Medical History" name="medical_history">
+						<field name="medical_1" />
+						<field name="medical_2" />
+						<field name="medical_3" />
+						<field name="medical_4" />
+						<field name="medical_5" />
+						<field name="medical_6" />
+					</group>
+					<group>
+						<group>
+							<field name="hr_notes"/>
+						</group>
+						<group>
+							<field name="training"/>
+						</group>
+					</group>
+					<group string="Resignation Details" name="resignation">
+						<field name="resignation_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="do_resignation" />
+								<field name="last_day" />
+								<field name="do_releiving" />
+								<field name="certificate_issue" />
+								<field name="reason" />
+								<field name="exit_interview" />
+								<field name="comments" />
+							</tree>
+						</field>
+					</group>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>		

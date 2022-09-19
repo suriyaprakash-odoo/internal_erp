@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_account_config_settings_inherit" model="ir.ui.view">
+			<field name="name">res.config.settings.inherit</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="account.res_config_settings_view_form" />
+			<field name="arch" type="xml">
+                <xpath expr="//div[@id='recommended_apps']" position="after">
+                	<h2 groups="account.group_account_user">Tax Deducted at Source (TDS)</h2>
+                	<div class="row mt16 o_settings_container" id="tds" groups="account.group_account_user">
+	                    <div class="col-xs-12 col-md-6 o_setting_box" id="eu_service">
+	                        <div class="o_setting_right_pane">
+	                            <button name="%(action_tds)d" icon="fa-arrow-right" 
+									type="action" string="TDS Section(s)" class="btn-link"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<button name="%(action_deductee_type)d" icon="fa-arrow-right" 
+									type="action" string="TDS Deductee" class="btn-link"/>
+	                        </div>
+	                        <div class="o_setting_right_pane" style="padding-left:4%">
+		                        <label for="payment_journal_id" />
+                        		<field name="payment_journal_id" class="oe_inline"/>
+	                        </div>
+		                </div>
+		            </div>
+				</xpath>
+			</field>
+		</record>
+		
+	</data>
+</odoo>
+

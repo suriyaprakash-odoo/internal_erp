@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_firc_form" model="ir.ui.view">
+        <field name="name">account.account.firc.form</field>
+        <field name="model">account.firc</field>
+        <field name="arch" type="xml">
+            <form string="Account FIRC">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="payment_ref" readonly="1"/>
+                            <field name="move_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="paid_amount" readonly="1"/>
+                            <field name="paid_date" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="account_firc_tree" model="ir.ui.view">
+        <field name="name">account.firc.tree</field>
+        <field name="model">account.firc</field>
+        <field name="arch" type="xml">
+            <tree string="Account FIRC">
+                <field name="name"/>
+                <field name="payment_ref"/>
+                <field name="move_id"/>
+                <field name="paid_amount"/>
+                <field name="paid_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_firc_action" model="ir.actions.act_window">
+        <field name="name">FIRC Numbers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.firc</field>
+        <field name="view_id" ref="account_firc_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Details -->
+
+    <menuitem id="account_firc_payment_parent" name="FIRC" parent="account.menu_finance_entries" groups="account.group_account_manager"/>
+    <menuitem id="account_firc_payment_menu" name="FIRC Numbers" parent="account_firc_payment_parent" sequence="1"
+              action="account_firc_action"/>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_user_id,hr.onboarding.user,ppts_onboarding.model_hr_employee_onboarding,ppts_onboarding.group_onboarding_user,1,1,1,0
+access_manager_id,hr.onboarding.manager,ppts_onboarding.model_hr_employee_onboarding,ppts_onboarding.group_onboarding_manager,1,1,1,1
+access_hr_exp_academics_manager_id,hr.exp.academics.onboarding,ppts_onboarding.model_hr_experience_academics,ppts_onboarding.group_onboarding_user,1,1,1,0
+access_hr_exp_professional_manager_id,hr.exp.professional.onboarding,ppts_onboarding.model_hr_experience_professional,ppts_onboarding.group_onboarding_user,1,1,1,0
+access_hr_exp_certification_manager_id,hr.exp.certification.onboarding,ppts_onboarding.model_hr_experience_certification,ppts_onboarding.group_onboarding_user,1,1,1,0

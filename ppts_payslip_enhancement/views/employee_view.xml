@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- hr.employee.form.inherit -->
+
+		<record id="payslip_employee_form_view_inherit"
+			model="ir.ui.view">
+			<field name="name">hr.employee</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<!-- <field name="birthday" position="after">
+					<field name="employee_code" />
+					<field name="date_of_joining" />
+				</field> -->
+				<field name="bank_account_id" position="after">
+					<field name="aadhar_number" />
+					<field name="pan_number" />
+					<field name="epf_number" />
+					<field name="uan_number" />
+					<field name="esino" />
+				</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>

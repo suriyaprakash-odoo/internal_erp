@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="partner_ledger_form_view">
+			<field name="name">partner.ledger.report.form</field>
+			<field name="model">partner.ledger.report</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="all_partners"/>
+						<field name="partner_ids" widget="many2many_tags" attrs="{'invisible':[('all_partners','=',True)],'required':[('all_partners','!=',True)]}"/>
+					</group>
+					<footer>
+						<button type="object" name="report_partner_ledger" string="Partner Ledger" class="btn-primary"
+								context="{'partner_ids':context.get('partner_ids')}"/>
+						<button string="Cancel" class="btn-default" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="partner_ledger_wizard_action" model="ir.actions.act_window">
+			<field name="name">Partner Ledger</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">partner.ledger.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+		<menuitem id="account_reports.menu_action_account_report_partner_ledger" name="Partner Ledger" action="partner_ledger_wizard_action"
+				  parent="account_reports.account_reports_partners_reports_menu" groups="account.group_account_user"/>
+
+	</data>
+</odoo>

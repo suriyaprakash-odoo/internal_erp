@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="challan_number_form" model="ir.ui.view">
+			<field name="name">vendor.multi.payment.wizard.form</field>
+			<field name="model">vendor.multi.payment.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Challan number update">
+					<group>
+						<group>
+							<field name="challan_no" />
+						</group>
+					</group>
+					<footer>
+						<button string='Done' name="Done" type="object" class="btn-primary" />
+						<button string="Cancel" class="btn-default" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		
+		<record id="action_challan_number_update" model="ir.actions.act_window">
+			<field name="name">Challan number update</field>
+			<field name="res_model">vendor.multi.payment.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="challan_number_form" />
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

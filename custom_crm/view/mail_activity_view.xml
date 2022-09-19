@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Mail activity -->
+
+	<record id="mail_activity_view_form_popup_inheritance" model="ir.ui.view">
+		<field name="name">mail.activity.view.form.popup</field>
+		<field name="model">mail.activity</field>
+		<field name="inherit_id" ref="mail.mail_activity_view_form_popup" />
+		<field name="arch" type="xml">
+			<field name='activity_type_id' position="before">
+				<field name="res_name" invisible="1" />
+				<field name="crm_lead_id" />
+				<field name="last_action" invisible="True" />
+			</field>
+		</field>
+	</record>
+
+	<record id="mail_activity_view_tree_inheritance" model="ir.ui.view">
+		<field name="name">mail.activity.view.tree</field>
+		<field name="model">mail.activity</field>
+		<field name="inherit_id" ref="mail.mail_activity_view_tree" />
+		<field name="arch" type="xml">
+			<field name='activity_type_id' position="after">
+				<field name="user_id" />
+			</field>
+		</field>
+	</record>
+
+</odoo>   

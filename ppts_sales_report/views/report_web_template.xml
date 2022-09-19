@@ -1,0 +1,142 @@
+<odoo>
+    <data>
+        <template id="assets_frontend_result1" inherit_id="website.assets_frontend" name="Purchase Terms and Condition">
+            <xpath expr="." position="inside">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+				<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                <!--<link href="/ppts_sales_report/static/src/css/report_style.css" rel="stylesheet" type="text/css"></link>-->
+				<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+            </xpath>
+        </template>
+
+        <template id="ppts_sales_report_web_view" name="Sales Report">
+            <t t-call="website.layout">
+                <style>
+                    footer{display:none !important;}
+                </style>
+                <div id="wrap" class="oe_structure oe_empty" style="font-family:Century Gothic !important;">
+                    <section class="mt16 mb128">
+                        <div class="container" style="font-family:Century Gothic !important;">
+                            <div class="row">
+                                <div class="col-md-12 text-center mt16 mb32">
+                                    <h2>
+                                        <span style="color:#007ab5;">
+                                            <strong>SALES REPORT
+                                                (
+                                                <span t-esc="start_date"/>
+                                                -<span t-esc="end_date"/>)
+                                            </strong>
+                                        </span>
+                                    </h2>
+                                    <br/>
+                                    <div class="container"
+                                         style="background: #f9f9f9;font-size: 11px;box-shadow: 0px 0px 4px 3px #d9d9d9;">
+                                        <div class="table-responsive">
+                                            <table id="tbl" class="table table-striped table-hover table-bordered"
+                                                   style="table-layout: auto;background: #e3eae9;color:#310c29;overflow-x:auto;">
+                                                <tr style="background: #4a7673;color: #fafafa;">
+                                                    <th class="table_td" rowspan="2">Month</th>
+                                                    <th class="table_td" rowspan="2">Invoice Reference Number</th>
+                                                    <th class="table_td" style="white-space: nowrap;" rowspan="2">
+                                                        Invoice Date
+                                                    </th>
+                                                    <th class="table_td" rowspan="2">NSDL Reference No.</th>
+                                                    <th class="table_td" rowspan="2">Soft Tex Form No.</th>
+                                                    <th class="table_td" rowspan="2">Client Name</th>
+                                                    <th class="table_td" rowspan="2">Address</th>
+                                                    <th class="table_td" rowspan="2">Country</th>
+                                                    <th class="table_td" rowspan="2">Country Code</th>
+                                                    <th class="table-td" style="text-align:center" colspan="4">Invoice
+                                                        Values
+                                                    </th>
+                                                </tr>
+                                                <tr style="background: #4a7673;color: #fafafa;">
+                                                    <th class="table_td" style="text-align:center">Currency</th>
+                                                    <th class="table_td" style="text-align:center">Value</th>
+                                                    <th class="table_td" style="text-align:center">Ex.Rate</th>
+                                                    <th class="table_td" style="white-space: nowrap;text-align:center">
+                                                        Invoice Value INR
+                                                    </th>
+                                                </tr>
+                                                <tbody class="sale_tbody">
+                                                    <tr class="row2" t-foreach="invoices" t-as="invoice">
+                                                        <td style="white-space: nowrap;vertical-align: middle;background-color: #e6e6e6;border: 1px solid #cacaca;">
+                                                            <span t-esc="datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d').strftime('%b-%y')"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.number"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="datetime.datetime.strptime(invoice.date_invoice, '%Y-%m-%d').strftime('%d-%m-%Y')"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.nsdl_ref_no"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.softex_no"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.partner_id.name"/>
+                                                        </td>
+                                                        <td style="text-align:left;">
+                                                            <span t-esc="invoice.partner_id.street"/>
+                                                            <span t-esc="invoice.partner_id.city"/>
+                                                            <span t-esc="invoice.partner_id.state_id.name"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.partner_id.country_id.name"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.partner_id.country_id.code"/>
+                                                        </td>
+                                                        <td style="text-align:left;white-space: nowrap;">
+                                                            <span t-esc="invoice.currency_id.name"/>
+                                                        </td>
+                                                        <td style="text-align:right;white-space: nowrap;">
+                                                            <span t-esc="invoice.currency_id.symbol"/>
+                                                            <span t-esc="invoice.amount_total"/>
+                                                        </td>
+                                                        <td style="text-align:right;white-space: nowrap;">
+                                                            <t t-if="invoice.currency_rate"> <t t-esc="'%.2f'%(invoice.currency_rate)"/></t>
+                                                            <t t-else=""> <t t-esc="'%.2f'%(1/invoice.currency_id.rate)"/></t>
+                                                        </td>
+                                                        <td style="text-align:right;white-space: nowrap;">
+                                                            <span>₹</span>
+                                                            <span t-esc="'%.2f'%(invoice.move_id.amount)"/>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <script>
+                        $(document).ready(function(){
+                           var span = 1;
+                               var prevTD = "";
+                               var prevTDVal = "";
+                               $("#tbl tr td:first-child").each(function() { //for each first td in every tr
+                                  var $this = $(this);
+                                  if ($this.text() == prevTDVal) { // check value of previous td text
+                                     span++;
+                                     if (prevTD != "") {
+                                        prevTD.attr("rowspan", span); // add attribute to previous td
+                                        $this.remove(); // remove current td
+                                     }
+                                  } else {
+                                     prevTD     = $this; // store current td
+                                     prevTDVal  = $this.text();
+                                     span       = 1;
+                                  }
+                               });
+                            });
+                    </script>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

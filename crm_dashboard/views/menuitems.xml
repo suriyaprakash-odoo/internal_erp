@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo> 
+    
+     <menuitem id="crm.crm_menu_root" name="CRM" action="crm_dashboard"/>
+     <menuitem id="menu_crm_dashboard" name="Dashboard" parent="crm.crm_menu_root" sequence="0" action="crm_dashboard"/>
+</odoo>

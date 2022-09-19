@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_add_reconcile_view" model="ir.ui.view">
+		<field name="name">Add TDS</field>
+		<field name="model">tds.add.reconcile</field>
+		<field name="arch" type="xml">
+			<form string="Add Reconcile">
+				<group>
+					<field name="tds_reconcile_method" class="oe_inline"
+						widget="radio" />
+					<field name="tds_line_id" invisible="1" />
+					<field name="partial_amount"
+						attrs="{'invisible': [('tds_reconcile_method', '=', 'full')], 'required': [('tds_reconcile_method', '!=', 'full')]}"
+						class="oe_inline" />
+				</group>
+				<footer>
+					<button name="add_reconcilations" string="Add TDS" type="object" class="btn-primary" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_view_add_reconcile"
+		model="ir.actions.act_window">
+		<field name="name">Add TDS</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">tds.add.reconcile</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+</odoo>

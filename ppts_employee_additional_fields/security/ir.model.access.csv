@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_designation_user,designation.held,model_designation_held,hr.group_hr_user,1,1,1,0
+access_salary_user,salary.details,model_salary_details,hr.group_hr_user,1,1,1,0
+access_accomodation_user,accomodation.details,model_accomodation_details,hr.group_hr_user,1,1,1,0
+access_guardian_user,guardian.details,model_guardian_details,hr.group_hr_user,1,1,1,0
+access_family_user,family.details,model_family_details,hr.group_hr_user,1,1,1,0
+access_language_user,language.known,model_language_known,hr.group_hr_user,1,1,1,0
+access_original_user,original.certificate,model_original_certificate,hr.group_hr_user,1,1,1,0
+access_other_user,other.certificate,model_other_certificate,hr.group_hr_user,1,1,1,0
+access_reference_user,reference.details,model_reference_details,hr.group_hr_user,1,1,1,0
+access_resignation_user,resignation.details,model_resignation_details,hr.group_hr_user,1,1,1,0

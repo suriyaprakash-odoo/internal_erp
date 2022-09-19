@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_payment_from_invoices_new" model="ir.ui.view">
+        <field name="name">account.payments.inherit</field>
+        <field name="type">form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='communication']" position="after">
+                <field name="firc_no"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_payment_from_invoices_inherit_new" model="ir.ui.view">
+        <field name="name">account.register.payments.wizard.inherit</field>
+        <field name="type">form</field>
+        <field name="model">account.register.payments</field>
+        <field name="inherit_id" ref="account.view_account_payment_from_invoices"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount']" position="after">
+                <field name="firc_no"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

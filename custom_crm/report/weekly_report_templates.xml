@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_dwrcrm_week">
+		<t t-call="web.html_container">
+			<t t-call="custom_crm.external_layout_standard">
+				<div class="page">
+					<div class="oe_structure" />
+					<div>
+						<table class="table table-bordered">
+							<tr>
+								<th style="font-size: 16px;background-color:#9AFF9A;text-align:center">
+									<span t-esc="doc['date_min']" /> - <span t-esc="doc['date_max']"/> BUSINESS DEVELOPMENT TEAM
+								</th>
+							</tr>
+							<tr>
+								<th style="text-align:center;background-color:yellow;font-size: 16px">THE ONE KEY SUCCESS OF LAST 24 HOURS OF YOUR TEAM
+								</th>
+							</tr>
+							<tr>
+								<td style="text-align:center">
+									<span t-esc="doc['dwr_success']" />
+								</td>
+							</tr>
+							<tr>
+								<th style="text-align:center;background-color:orange;font-size: 16px">THE ONE KEY SET BACK OF LAST 24 HOURS</th>
+							</tr>
+							<tr>
+								<td style="text-align:center">
+									<t t-foreach="doc['dwr_setback']" t-as="o">
+										<span t-esc="o" />
+										.
+										<br />
+									</t>
+								</td>
+							</tr>
+							<tr>
+								<th style="text-align:center;background-color:#AEEEEE;font-size: 16px">LIST OF PRODUCTION NUMBERS</th>
+							</tr>
+						</table>
+					</div>
+					<p
+						style="background-color:#EEA9B8;position: relative;top:-19px;left:0px;padding-left:8px;height:30px;padding-top:6px;font-size: 16px">
+						<strong>LEADS RECEIVED FROM</strong>
+					</p>
+					<div style="position: relative;top:-28px;left:0px;">
+						<table class="table table-bordered">
+
+							<tr>
+								<th>Odoo</th>
+								<th>Telesales</th>
+								<th>Presales</th>
+								<th>Any Other Sources</th>
+								<th>Website</th>
+							</tr>
+							<tr>
+								<td>
+									<span t-esc="doc['odoo_lead']" />
+								</td>
+								<td>
+									<span t-esc="doc['telesales_lead']" />
+								</td>
+								<td>
+									<span t-esc="doc['presales_lead']" />
+								</td>
+								<td>
+									<span t-esc="doc['any_other_sources_lead']" />
+								</td>
+								<td>
+									<span t-esc="doc['website_lead']" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div>
+						<p
+							style="background-color:#EEA9B8;position: relative;top:-47px;left:0px;padding-left:8px;height:30px;padding-top:6px;font-size: 16px">
+							<strong>DEMOS GIVEN</strong>
+						</p>
+						<table class="table table-bordered" style="position: relative;top:-57px;left:0px;">
+							<thead>
+								<tr>
+									<th>Odoo</th>
+									<th>Telesales</th>
+									<th>Presales</th>
+									<th>Any Other Sources</th>
+									<th>No Show</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<span t-esc="doc['odoo_demo']" />
+									</td>
+									<td>
+										<span t-esc="doc['telesales_demo']" />
+									</td>
+									<td>
+										<span t-esc="doc['presales_demo']" />
+									</td>
+									<td>
+										<span t-esc="doc['any_other_sources_demo']" />
+									</td>
+									<td>
+										<span t-esc="doc['no_show_demo']" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div>
+						<p
+							style="background-color:#EEA9B8;position: relative;top:-75px;left:0px;padding-left:8px;height:30px;padding-top:6px;font-size: 16px">
+							<strong>NEGOTIATION STAGES</strong>
+						</p>
+						<table class="table table-bordered" style="position: relative;top:-85px;left:0px;">
+							<thead>
+								<tr>
+									<th>Client Name</th>
+									<th>Area</th>
+									<th>Value</th>
+									<th>Details</th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-foreach="doc['client_state_ids']" t-as="o">
+									<tr>
+										<td>
+											<span t-esc="o['client_name_id']" />
+										</td>
+										<td>
+											<span t-esc="o['area']" />
+										</td>
+										<td>
+											<span t-esc="o['value']" />
+										</td>
+										<td>
+											<span t-esc="o['details']" />
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</table>
+					</div>
+					<table class="table table-bordered" style="position: relative;top:-103px;left:0px;">
+						<tr>
+							<th style="background-color:yellow;font-size: 16px">TRAINING ACTIVITY TOPIC AND TIME SPENT WITH WHICH
+								TEAM
+								AND TRAINER NAME
+							</th>
+						</tr>
+						<tr>
+							<td>
+								<t t-foreach="doc['training_activity']" t-as="o">
+									<span t-esc="o" />
+									.
+									<br />
+								</t>
+							</td>
+						</tr>
+						<tr>
+							<th style="background-color:yellow;font-size: 16px">REVIEW ACTIVITY DETAILS AND TIME SPENT WITH WHICH
+								TEAM
+								AND TRAINER NAME
+							</th>
+						</tr>
+						<tr>
+							<td>
+								<t t-foreach="doc['review_activity']" t-as="o">
+									<span t-esc="o" />
+									.
+									<br />
+								</t>
+							</td>
+						</tr>
+						<tr>
+							<th style="background-color:yellow;font-size: 16px">KEY OBSERVATIONS FROM LEAD GENERATION AUDIT</th>
+						</tr>
+						<tr>
+							<td>
+								<t t-foreach="doc['key_observation']" t-as="o">
+									<span t-esc="o" />
+									.
+									<br />
+								</t>
+							</td>
+						</tr>
+						<tr>
+							<th style="background-color:yellow;font-size: 16px">ANY OTHER SIGNIFICANT DETAILS TO SHARE</th>
+						</tr>
+						<tr>
+							<td>
+								<t t-foreach="doc['other_details']" t-as="o">
+									<span t-esc="o" />
+									.
+									<br />
+								</t>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</t>
+		</t>
+	</template>
+
+</odoo>

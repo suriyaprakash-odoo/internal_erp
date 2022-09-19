@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- // Email template -->
+
+		<record id="hr_employees_email" model="mail.template">
+			<field name="name">Demographic Details</field>
+			<field name="email_from">hr@pptservices.com</field>
+			<field name="subject">Demographic Details</field>
+			<field name="lang">${object.lang}</field>
+			<field name="email_to">management@pptservices.com,admin.support@pptservices.com,finance.support@pptservices.com,itsupport@pptservices.com,swapna.yasmin@pptservices.com,dinesh@pptservices.com,vicknesh.s@pptservices.com,abilash.ganesh@pptservices.com,tamilarasan.m@pptservices.com,jafarsathik.ajmalkhan@pptservices.com,hrd@pptservices.com,arun.velusamy@pptservices.com</field>
+			<field name="model_id"
+				ref="ppts_employee_additional_fields.model_hr_employee" />
+			<field name="auto_delete" eval="True" />
+			<field name="body_html">
+           <![CDATA[
+           
+<p>Dear All,</p>
+
+<p>We would like to introduce the below mentioned employee who has Joined us.</p>
+<p>The demographic details are provided below for your kind reference.</p>
+
+% for values in ctx['emp_list']
+	<img src="/web/image/hr.employee/${values['image']}/image" height="100px" width="100px" alt="Employee image"></img>
+	<table width="771" cellspacing="1" cellpadding="4" border="1" height="73">
+	    <tbody>
+	        <tr style="font-weight:bold;">
+	    		<th style="width:50%;font-weight:bold;background-color: #0faad9;">Name:</th>
+	            <td style="width:50%;" valign="middle" align="center">${values['name']}</td>
+	        </tr>
+	        
+	       <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Age & D.O.B</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['birthday']}<br></td>
+	        </tr>
+	        
+	        
+      	    <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Qualification & Institution</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['qualification']}<br></td>
+	        </tr>
+	        
+      	    <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Permanent Address</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['address']}<br></td>
+	        </tr>
+	        
+	        
+      	    <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Experience</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['experience']}<br></td>
+	        </tr>
+	        
+	        
+	        <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Previous Company</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['previous_company']}<br></td>
+	        </tr>
+	        
+	        <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Source</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['source']}<br></td>
+	        </tr>
+	        
+	       <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Date of Joining</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['date_of_joining']}<br></td>
+	        </tr>
+	        
+	        <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Department</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['department']}<br></td>
+	        </tr>
+	        
+	        <tr style="font-weight:bold;">
+	            <th style="width:50%;font-weight:bold;background-color: #0faad9;">Designation</th>
+	             <td style="width:50%;" valign="middle" align="center">${values['designation']}<br></td>
+	        </tr>
+	        
+	        
+	        
+	    </tbody>
+	</table>
+	<br>
+	<br>
+	<br>
+% endfor
+<br><br><br>
+      ]]>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>

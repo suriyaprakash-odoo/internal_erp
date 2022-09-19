@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<!--website main menu-->
+        <record id="menu_crm_nurture" model="website.menu">
+            <field name="name">Leads</field>
+            <field name="url">/lead_form</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">15</field>
+        </record>
+
+		<record id="menu_crm_nurture_sub_1" model="website.menu">
+            <field name="name">Leads form</field>
+            <field name="url">/lead_form</field>
+            <field name="parent_id" ref="menu_crm_nurture"/>
+        </record>
+
+
+        <record id="action_open_website_crm" model="ir.actions.act_url">
+            <field name="name">Lead Form</field>
+            <field name="target">self</field>
+            <field name="url">/lead_form</field>
+        </record>
+
+
+        <record id="base.open_menu" model="ir.actions.todo">
+            <field name="action_id" ref="action_open_website_crm"/>
+            <field name="state">open</field>
+        </record>
+
+       <!--______________________________-->
+
+        <record id="menu_crm_nurture_sub_2" model="website.menu">
+            <field name="name">Leads form 2</field>
+            <field name="url">/lead_form_2</field>
+            <field name="parent_id" ref="menu_crm_nurture"/>
+        </record>
+
+
+        <record id="action_open_website_crm_2" model="ir.actions.act_url">
+            <field name="name">Lead Form 2</field>
+            <field name="target">self</field>
+            <field name="url">/lead_form_2</field>
+        </record>
+
+
+        <record id="base.open_menu" model="ir.actions.todo">
+            <field name="action_id" ref="action_open_website_crm_2"/>
+            <field name="state">open</field>
+        </record>
+
+    </data>
+</odoo>

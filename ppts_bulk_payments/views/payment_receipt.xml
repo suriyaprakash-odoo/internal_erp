@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_payment_view_report">
+            <div class="header">
+                <style>
+	                     body{
+	                    letter-spacing: 0.5px;
+	                    }
+	                    .table {
+	                    border: 1px solid #000000;
+	                    }
+	                    .table-bordered > thead > tr > th,
+	                    .table-bordered > tbody > tr > th,
+	                    .table-bordered > tfoot > tr > th,
+	                    .table-bordered > thead > tr > td,
+	                    .table-bordered > tbody > tr > td,
+	                    .table-bordered > tfoot > tr > td {
+	                    border: 1px solid #000000;
+	                    }
+	                </style>
+	                <!-- <div class="row">
+	                    <div class="col-xs-6">
+	                        <img t-att-src="'/ppts_imporvements/static/src/img/logo.png'"/>
+	                    </div>
+	                </div> -->
+	           </div>
+	            
+                   <div class="page">
+	                <style>
+	                    body{
+	                    letter-spacing: 0.5px;
+	                    }
+	                    .table {
+	                    border: 1px solid #000000;
+	                    }
+	                    .table-bordered > thead > tr > th,
+	                    .table-bordered > tbody > tr > th,
+	                    .table-bordered > tfoot > tr > th,
+	                    .table-bordered > thead > tr > td,
+	                    .table-bordered > tbody > tr > td,
+	                    .table-bordered > tfoot > tr > td {
+	                    border: 1px solid #000000;
+	                    }
+	                </style>	               
+                       <div class="oe_structure"/>
+	                	<t t-set="rec_count" t-value="0"/>
+		 	                <t t-foreach="docs" t-as="doc">
+		 	                	<t t-foreach="doc" t-as="c_doc">
+		 	                	<t t-if="rec_count == 0">
+				                    <div class="row">
+				                    <div class="col-xs-6">
+				                    </div>
+					                    <div class="col-xs-6">
+					                        <table class="table table-bordered pull-left">
+					                            <tr>
+					                                <th style="background-color:#000000;color:#ffffff;">Payment Receipt</th>
+					                            </tr>
+					                            <tr style="min-height:130px;height:130px;">
+					                                <td>
+							                            <h4>
+					                                        <span t-field="c_doc.partner_id.name"/>
+					                                    </h4>
+					                                    <p style="margin-bottom:0px;padding-bottom:0px;padding-left:10px;">
+					                                        <span t-field="c_doc.partner_id.street"/>
+					                                    </p>
+					                                    <p style="margin-bottom:0px;padding-bottom:0px;padding-left:10px;">
+					                                        <span t-field="c_doc.partner_id.street2"/>
+					                                    </p>
+					                                    <p style="margin-bottom:0px;padding-bottom:0px;padding-left:10px;">
+					                                        <span t-field="c_doc.partner_id.city"/>, <span t-field="c_doc.partner_id.state_id.name"/>
+					                                    </p>
+					                                    <p style="margin-bottom:0px;padding-bottom:0px;padding-left:10px;">
+					                                        <span t-field="c_doc.partner_id.zip"/>
+					                                    </p>
+					                                </td>
+					                            </tr>
+					                        </table>
+					                    </div>
+					                    <div class="col-xs-4">
+		   		                            <p style="padding-left:10px;"><strong>Payment Date: </strong><span t-esc="docs.payment_date"/></p>
+		                        		</div>
+		                        		<!-- <div class="col-xs-4">
+		   		                            <p style="padding-left:10px;"><strong>Payment Reference: </strong><span t-esc="docs.communication"/></p>
+		                        		</div> -->
+				                	</div>
+			                	</t>
+			                	<t t-set="rec_count" t-value="rec_count + 1"/>
+			                	</t>
+			                </t>
+			                
+			                <div class="row">
+	                    <div class="col-xs-12">
+	                    	<t t-set="t_amount" t-value="0"/>
+	                        <table class="table table-bordered" >
+	                            <tr style="border:1px #000000;">
+	                                <th style="background-color:#000000;color:#ffffff;" width="30%">Invoice Date</th>
+  	                                <th style="background-color:#000000;color:#ffffff;" width="25%">Invoice</th>
+	                                <!-- <th style="background-color:#000000;color:#ffffff;" width="20%">Reference</th> -->
+	                                <th style="background-color:#000000;color:#ffffff;" width="25%">Amount Paid</th>
+	                            </tr>
+                            	<tr t-foreach="docs.account_payment_line" t-as="line" style="border:1px #000000;">
+	                               <td >
+										<span t-esc="line.date"/>
+	                               </td>
+	                                <td >
+					<span t-esc="line.at_reference"/>
+	                                    <span t-esc="line.description"/>
+	                               </td>
+	                                <td >
+	                                   <span t-esc="'{0:,.2f}'.format(float(line.original_amt))" class="pull-right" t-esc-options="{&quot;widget&quot;: &quot;False&quot;}"/>
+	                                   <span t-field="o.currency_id.symbol" class="pull-right"/>
+	                               </td>
+	                            	<t t-set="t_amount" t-value="t_amount + line.original_amt"/>
+	                            </tr>
+	                            <tr style="border:none;">
+  	                                <td colspan="2" style="border:none;" align="right"></td>
+	                                <td class="pull-right" style="border:none;">
+	                                	<span t-esc="'{0:,.2f}'.format(float(t_amount))" class="pull-right" t-esc-options="{&quot;widget&quot;: &quot;False&quot;}"/>
+	                                	<span t-field="o.currency_id.symbol" class="pull-right"/>
+	                                	<span class="pull-right"><b>Total:</b> &#160;&#160;</span>
+	                                </td>
+		                       </tr>
+	                        </table>
+	                    </div>
+	                </div>
+	             </div>
+        </template>
+        <template id="report_payemt_view">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="ppts_imporvements.report_payment_view_report" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

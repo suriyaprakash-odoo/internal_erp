@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+	<!-- Form -->
+	<record id="tds_payment_form" model="ir.ui.view">
+		<field name="name">tds.payment.form</field>
+		<field name="model">tds.payment</field>
+		<field name="arch" type="xml">
+			<form string="TDS Payment">
+				<header>
+					<button name="action_create_payment" string="Validate" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+					<button name="generate_payments" string="Generate Payments" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+					<button name="cancel_payment" string="Cancel" attrs="{'invisible':[('state','=','cancel')]}" type="object"/>
+					<button name="reset_to_draft" string="Reset to Draft" attrs="{'invisible':[('state','!=','cancel')]}" type="object"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button name="action_challan_number_update" icon="fa-bars" class="oe_stat_button" type="object" string="Update Challan No." />
+						<button name="action_view_journal_entries" type="object"
+							class="oe_stat_button" icon="fa-money" states="posted">
+							<field name="journal_entries_counts" widget="statinfo" />
+						</button>
+					</div>
+					<h1 class="mt0">
+						<field name="name" class="oe_inline" readonly="1"/>
+					</h1>
+					<group>
+						<group>
+							<field name="is_payment_line" invisible="1"/>	
+							<field name="company_id" />
+							<field name="partner_id" attrs="{'readonly':['|',('state','!=','draft'),('is_payment_line','!=',True)],'required':[('is_payment_line','=',True)]}"/>
+							<field name="amount" attrs="{'readonly':['|',('state','!=','draft'),('is_payment_line','!=',True)],'required':[('is_payment_line','=','True')]}" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+							<field name="hide_payment_method" invisible="1"/>
+							<field name="journal_id" />
+							<field name="payment_method_id" attrs="{'invisible': [('hide_payment_method', '=', True)],'readonly': ['|',('state', '!=', 'draft'),('is_payment_line','!=',True)]}"/>
+						</group>
+						<group>
+							<field name="payment_date" attrs="{'readonly':['|',('state','!=','draft'),('is_payment_line','!=',True)],'required':[('is_payment_line','=',True)]}"/>
+							<field name="communication" attrs="{'readonly':['|',('state','!=','draft'),('is_payment_line','!=',True)]}"/>
+							<field name="currency_id" required="1" attrs="{'readonly':['|',('state','!=','draft'),('is_payment_line','!=',True)]}"/>
+							<field name="account_move_id" readonly="1" attrs="{'invisible':[('account_move_id','=',False)]}"/>
+							<field name="challan_no" />
+							<field name="check_number_hide" invisible="1" />							
+							<field name="check_number" attrs="{'invisible':[('check_number_hide','=',True)],'readonly':['|',('state','!=','draft'),('is_payment_line','!=',True)]}"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Payment Information">
+							<label string="Debit"/>
+							<field name="payment_line_ids" widget="one2many" attrs="{'readonly':[('state','!=','draft')]}">
+								<tree editable="bottom" string="Invoices" sum="amount_reconcile" create="false">
+									<field name="is_check"/>
+									<field name="name" readonly="1"/>
+									<field name="partner_id" readonly="1"/>
+									<field name="account_id" readonly="1"/>
+									<field name="payment_date" readonly="1"/>
+									<field name="amount" readonly="1"/>
+									<field name="amount_unreconcile" readonly="1"/>
+									<field name="amount_reconcile" />
+								</tree>
+							</field>
+							<group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total"/>
+                            </group>
+							<field name="note" placeholder="Add an Internal note.." nolabel="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+						</page>
+					</notebook>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"
+						groups="base.group_user" />
+					<field name="message_ids" widget="mail_thread" />
+				</div>
+			</form>
+		</field>
+	</record>
+	
+	<!-- Tree -->
+	<record id="tds_payment_tree" model="ir.ui.view">
+		<field name="name">tds.payment.tree</field>
+		<field name="model">tds.payment</field>
+		<field name="arch" type="xml">
+			<tree string="Account Multi Payment" default_order="name desc">
+				<field name="account_move_id"/>
+				<field name="name"/>
+				<field name="journal_id"/>
+				<field name="payment_date"/>
+				<field name="partner_id"/>
+				<field name="amount_total"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<!-- Search -->
+	<record id="view_tds_payment_search" model="ir.ui.view">
+		<field name="name">tds.payment.search</field>
+		<field name="model">tds.payment</field>
+		<field name="arch" type="xml">
+			<search string="Payments">
+				<field name="name" filter_domain="[('name','ilike',self)]" string="Name"/>
+				<separator/>
+				<field name="partner_id"/>
+				<field name="journal_id"/>
+				<field name="account_move_id"/>
+				<separator/>
+				<filter string="Draft" domain="[('state','=','draft')]" name='state_draft'/>
+				<filter string="Posted" domain="[('state','=','posted')]" name='state_posted'/>
+				<filter string="Cancelled" domain="[('state','=','cancel')]" name='state_cancel'/>
+				<separator/>
+				<filter string="Partner" domain="[]" context="{'group_by': 'partner_id'}"/>
+				<filter string="Journal" domain="[]" context="{'group_by': 'journal_id'}"/>
+				<filter string="State" domain="[]" context="{'group_by': 'state'}"/>
+				<filter string="Currency" domain="[]" context="{'group_by': 'currency_id'}" groups="base.group_multi_currency"/>
+			</search>
+		</field>
+	</record>
+
+	<!-- Action View -->
+	<record id="tds_payment_action" model="ir.actions.act_window">
+		<field name="name">TDS Payment</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">tds.payment</field>
+		<field name="view_id" ref="tds_payment_tree"/>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="view_tds_payment_search"/>
+	</record>
+
+	<!-- Menu Details -->
+	<menuitem id="tds_payment_menu" name="TDS Payments" parent="account.menu_finance_payables_documents" 
+		sequence="99" action="tds_payment_action" groups="account.group_account_manager"/>
+
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="portal_my_home_mprf_request" name="Portal My Home : MPRF Request entries" inherit_id="portal.portal_my_home" priority="25">
+		<xpath expr="//ul[hasclass('o_portal_docs')]" position="inside">
+            <li class="list-group-item" >
+                <a href="/mprfrequest">MPRF Request</a>
+            </li>
+        </xpath>
+	</template>
+
+</odoo>

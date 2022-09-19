@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="firc_account_invoice_form_inherited" model="ir.ui.view">
+        <field name="name">account.invoice.form.view</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="ppts_account_invoice.ppts_account_invoice_form_inherited"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='firc_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='firc_no']" position="after">
+                <field name="firc_ids" invisible="1"/>
+                <div>
+                    <label string="FIRC Number"/>
+                    <button type="object" class="btn-link" name="open_related_firc">
+                        <field string="FIRC Number(s)" name="firc_count" widget="statinfo"/>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

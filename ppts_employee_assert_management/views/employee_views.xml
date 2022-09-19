@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record id="view_employee_form_inherited_asserts" model="ir.ui.view">
+		<field name="name">hr.employee.form</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Assets management">
+					<field name="employee_assert_ids">
+						<tree editable="bottom">
+							<field name="name" />
+							<field name="unique_no" attrs="{'required':[('name','!=',False)]}"/>
+							<field name="issued_by" attrs="{'required':[('name','!=',False)]}"/>
+							<field name="issued_at" attrs="{'required':[('name','!=',False)]}"/>
+							<field name="handover_to" />
+							<field name="handover_at" attrs="{'required':[('handover_to','!=',False)]}"/>
+							<field name="comments" attrs="{'required':[('handover_to','!=',False)]}"/>
+							<field name="issued" />
+							<field name="handover" />
+							<!-- <field name="received_date" />
+							<field name="returned_date" />
+							<field name="remarks" attrs="{'required':[('returned_date','!=',False)]}"/> -->
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+	<record id="action_company_asserts_form_view" model="ir.ui.view">
+		<field name="name">Company Asserts form</field>
+		<field name="model">company.asserts</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+				<group>
+					<group>
+						<field name="name" />					
+					</group>
+					<group>
+						<field name="code" />
+					</group>
+				</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	
+	<record id="action_company_asserts_tree_view" model="ir.ui.view">
+		<field name="name">Company Asserts tree</field>
+		<field name="model">company.asserts</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="code" />
+			</tree>
+		</field>
+	</record>
+	
+	<record id="action_company_asserts_view" model="ir.actions.act_window">
+		<field name="name">Company Assets</field>
+		<field name="res_model">company.asserts</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	
+	<menuitem name="Company Assets" id="menu_company_asserts_sub"
+		parent="hr.menu_human_resources_configuration" action="action_company_asserts_view" sequence="4" />
+</odoo>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+		<!-- <record model="ir.module.category"
+			id="module_ppts_recruitment_enhancement">
+			<field name="name">HR Applicant Access Rights</field>
+			<field name="description">HR Approval</field>
+			<field name="sequence">7</field>
+		</record> -->
+
+		<record id="group_hr_recruitment_user_hr" model="res.groups">
+			<field name="name">Recruiter</field>
+			<field name="category_id"
+				ref="base.module_category_hr_recruitment" />
+			<field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]" />
+		</record>
+
+		<record id="hr_recruitment.group_hr_recruitment_user"
+			model="res.groups">
+			<field name="implied_ids"
+				eval="[(4, ref('group_hr_recruitment_user_hr'))]" />
+		</record>
+
+		<!-- <record id="group_hr_recruitor_user" model="res.groups"> <field name="name">Recruiter</field> 
+			<field name="category_id" ref="module_ppts_recruitment_enhancement" /> </record> -->
+
+	<!-- 	<record id="group_l1_round_approval" model="res.groups">
+			<field name="name">L1 Round</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+		</record>
+
+		<record id="group_l2_round_approval" model="res.groups">
+			<field name="name">L2 Round</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_l1_round_approval'))]" />
+		</record>
+
+		<record id="group_manager_access_approval" model="res.groups">
+			<field name="name">Manager Round</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_l2_round_approval'))]" />
+		</record>
+
+		<record id="group_l1_approval" model="res.groups">
+			<field name="name">L1 Approval</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_manager_access_approval'))]" />
+		</record>
+
+		<record id="group_l2_approval" model="res.groups">
+			<field name="name">L2 Approval</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_l1_approval'))]" />
+		</record>
+
+		<record id="group_final_approval" model="res.groups">
+			<field name="name">Manager Approval</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_l2_approval'))]" />
+		</record>
+		<record id="group_final_discussion" model="res.groups">
+			<field name="name">Final Discussion</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_final_approval'))]" />
+		</record>
+		<record id="group_offer_letter" model="res.groups">
+			<field name="name">Offer Letter</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_final_discussion'))]" />
+		</record>
+		<record id="group_onboarding" model="res.groups">
+			<field name="name">On Boarding</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_offer_letter'))]" />
+		</record> -->
+
+		<record model="ir.module.category"
+			id="module_ppts_recruitment_enhancement_approval">
+			<field name="name">HR Job Position Access Rights</field>
+			<field name="description">HR Approval</field>
+			<field name="sequence">7</field>
+		</record>
+
+		<record id="group_send_to_approval" model="res.groups">
+			<field name="name">Send To Approval</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement_approval" />
+		</record>
+		
+		<record id="group_first_approval" model="res.groups">
+			<field name="name">First Approval</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement_approval" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_send_to_approval'))]" />
+		</record>
+		<record id="group_second_approval" model="res.groups">
+			<field name="name">Second Approval</field>
+			<field name="category_id"
+				ref="module_ppts_recruitment_enhancement_approval" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_first_approval'))]" />
+		</record>
+
+
+	</data>
+
+</odoo>

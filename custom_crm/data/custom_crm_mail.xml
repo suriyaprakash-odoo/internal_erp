@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+		<!--Email template -->
+		<record id="crm_activity_mail_template" model="mail.template">
+			<field name="name">Next Activities - Send by Email</field>
+			<field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
+				(object.user_id.name, object.user_id.email) or '')|safe}
+			</field>
+			<field name="subject">Client Engagement Delay</field>
+			<field name="partner_to">${object.email_list}</field>
+			<field name="model_id" ref="custom_crm.model_crm_lead" />
+			<field name="auto_delete" eval="False" />
+			<field name="lang">${object.partner_id.lang}</field>
+			<field name="body_html" type="xml">
+				<p>Hello Team,</p>
+				<p>${object.name} opportunity was not been updated since last
+					${object.date_diff} days. Please make sure both Salesperson and
+					Followers to make it move forward.
+				</p>
+				<p>Regards,</p>
+				<p>PPTS - ODOO</p>
+			</field>
+		</record>
+
+		<record id="crm_dwr_mail_template" model="mail.template">
+			<field name="name">Daily Report - Send by Email</field>
+			<field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' %
+				(object.user_id.name, object.user_id.email) or '')|safe}
+			</field>
+			<field name="subject">Daily Report - ${object.name}</field>
+			<field name="partner_to"></field>
+			<field name="model_id" ref="custom_crm.model_crm_dwr" />
+			<field name="report_template" ref="report_dwr_crm" />
+			<field name="auto_delete" eval="False" />
+			<field name="body_html" type="xml">
+				<p>Hello Team,</p>
+				<br />
+				<br />
+				<p>Regards,</p>
+				<p>PPTS - ODOO</p>
+			</field>
+		</record>
+
+	</data>
+</odoo>

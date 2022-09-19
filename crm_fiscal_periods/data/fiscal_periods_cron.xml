@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+
+      	<record id="fiscal_periods_cron" model="ir.cron">
+            <field name="name">Fiscal Periods</field>
+            <field name="model_id" ref="crm_fiscal_periods.model_fiscal_periods"/>
+            <field name="state">code</field>
+            <field name="code">model.fiscal_periods_send_cron()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+        </record>
+    </data>
+</odoo>

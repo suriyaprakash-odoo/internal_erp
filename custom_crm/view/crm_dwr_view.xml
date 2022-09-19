@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+
+		<record id="dwr_crm_form_view" model="ir.ui.view">
+			<field name="name">crm.dwr.form</field>
+			<field name="model">crm.dwr</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<div class="row">
+							<div class="col-sm-3"></div>
+							<div class="col-sm-6">
+								<center>
+									<h3>
+										<b>Business Development Team</b>
+									</h3>
+								</center>
+							</div>
+							<div class="col-sm-3"></div>
+						</div>
+						<div>
+							<field name="name" />
+							<field name="user_id" invisible="1"/>
+						</div>
+						<label name="dwr_success"
+							string="The One Key Success Of Last 24 Hours Of Your Team" />
+						<div>
+							<field name="dwr_success" />
+						</div>
+						<label name="dwr_setback" string="The One Key Set Back Of Last 24 Hours" />
+						<div>
+							<field name="dwr_setback" />
+						</div>
+						<label name="training_activity"
+							string="Training Activity Topic And Time Spent With Which Team And Trainer Name" />
+						<div>
+							<field name="training_activity" />
+						</div>
+						<label name="review_activity"
+							string="Review Activity Details And Time Spent With Which Team And Trainer Name" />
+						<div>
+							<field name="review_activity" />
+						</div>
+						<label name="key_observation" string="Key Observations From Lead Generation Audit" />
+						<div>
+							<field name="key_observation" />
+						</div>
+						<label name="other_details" string="Any Other Significant Details To Share" />
+						<div>
+							<field name="other_details" />
+						</div>
+						<h4>LIST OF PRODUCTION NUMBERS</h4>
+						<notebook>
+							<page string="Leads Received From">
+								<group>
+									<group>
+										<field name="odoo_lead" />
+										<field name="telesales_lead" />
+										<field name="presales_lead" />
+										<field name="any_other_sources_lead" />
+										<field name="website_lead" />
+									</group>
+								</group>
+							</page>
+							<page string="Demos Given">
+								<group>
+									<group>
+										<field name="odoo_demo" />
+										<field name="telesales_demo" />
+										<field name="presales_demo" />
+										<field name="any_other_sources_demo" />
+										<field name="no_show_demo" />
+									</group>
+								</group>
+							</page>
+							<page string="Negotiation stages">
+								<field name="client_state_ids">
+									<tree editable="bottom">
+										<field name="client_name_id" />
+										<field name="area" />
+										<field name="value" />
+										<field name="details" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="dwr_crm_tree_view" model="ir.ui.view">
+			<field name="name">crm.dwr.tree</field>
+			<field name="model">crm.dwr</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" string="Date" />
+					<button name="report_mail" string="Send by Mail" type="object"
+						class="oe_highlight" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_crm_dwr_filter" model="ir.ui.view">
+			<field name="name">crm.dwr.search</field>
+			<field name="model">crm.dwr</field>
+			<field name="arch" type="xml">
+				<search string="DWR">
+					<filter string="Today"
+						domain="[('name', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('name', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]" />
+					<group expand="0" string="Group By">
+						<filter string="Date" context="{'group_by':'name'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_dwr_crm_view" model="ir.actions.act_window">
+			<field name="name">Daily Work Report</field>
+			<field name="res_model">crm.dwr</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Click to create a new activity.</p>
+			</field>
+		</record>
+
+		<menuitem name="DWR" id="menu_dwr_crm_sub" parent="crm.crm_menu_report"
+			action="action_dwr_crm_view" sequence="2" />
+
+	</data>
+</odoo>
+

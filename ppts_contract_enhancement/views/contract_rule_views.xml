@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+	
+		<record id="hr_contract_rule_view_form" model="ir.ui.view">
+	        <field name="name">hr.contract.rule.form</field>
+	        <field name="model">hr.contract.rule</field>
+	        <field name="priority">1</field>
+	        <field name="arch" type="xml">
+	        	<form string="Contract Rule">
+	        		<sheet string="Contract Rule">
+	        			<div>
+	        				<h1 class="mt0">	
+	        					<field name="name" class="oe_inline"  />
+	        				</h1>
+	        			</div>
+	        			
+	        			<div>
+	        				<label for="from_amount" string='Gross Between'/>
+	        				<field name="from_amount" class="oe_inline" /> To
+	        				<field name="to_amount" nolabel="1" class="oe_inline" />
+	        			</div>
+	        			
+	        			<group string="Rule">
+	        			
+	        				<group>
+	       						<label for="basic" />
+                                <div>
+                                    <field name="basic" class="oe_inline"/>
+                                    <label string="%" class="oe_inline" attrs="{'invisible':[('basic_method','=','fixed')]}"/>
+                                </div>
+                                
+                                <label for="hra" />
+                                <div>
+                                    <field name="hra" class="oe_inline"/>
+                                    <label string="%" class="oe_inline" attrs="{'invisible':[('hra_method','=','fixed')]}"/>
+                                </div>
+                                
+                                <label for="transport" />
+                                <div>
+                                    <field name="transport" class="oe_inline"/>
+                                    <label string="%" class="oe_inline" attrs="{'invisible':[('transport_method','=','fixed')]}"/>
+                                </div>
+                                
+                                <label for="medical" />
+                                <div>
+                                    <field name="medical" class="oe_inline"/>
+                                    <label string="%" class="oe_inline" attrs="{'invisible':[('medical_method','=','fixed')]}"/>
+                                </div>
+                                
+                                <label for="project" />
+                                <div>
+                                    <field name="project" class="oe_inline"/>
+                                    <label string="%" class="oe_inline" attrs="{'invisible':[('project_method','=','fixed')]}"/>
+                                </div>
+                                
+                                <label for="exgratia" />
+                                <div>
+                                    <field name="exgratia" class="oe_inline"/>
+                                    <label string="%" class="oe_inline" attrs="{'invisible':[('exgratia_method','=','fixed')]}"/>
+                                </div>
+                                
+	        				</group>
+	        				
+	        				<group>
+	        					<field name="basic_method" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+	        					<br/>
+	        					<field name="hra_method" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+	        					<br/>
+	        					<field name="transport_method" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+	        					<br/>
+	        					<field name="medical_method" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+	        					<br/>
+	        					<field name="project_method" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+	        					<br/>
+	        					<field name="exgratia_method" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+	        				</group>
+	        				
+	        			</group>
+	        			
+	        		</sheet>
+	        	</form>
+	        </field>
+	    </record>
+	    
+	    <record id="hr_contract_rule_view_tree" model="ir.ui.view">
+	    	<field name="name">hr.contract.rule.tree</field>
+	    	<field name="model">hr.contract.rule</field>
+	    	<field name="arch" type="xml">
+	    		<tree string="Contract Rule">
+	    			<field name="name"/>
+	    		</tree>
+	    	</field>
+	    </record>
+	    
+	    <record id="action_hr_contract_rule" model="ir.actions.act_window">
+            <field name="name">Contract Salary Rules</field>
+            <field name="res_model">hr.contract.rule</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem
+            id="hr_menu_contract_rule"
+            action="action_hr_contract_rule"
+            parent="hr.menu_human_resources_configuration"
+            sequence="4"
+            groups="base.group_no_one"/>
+	     
+	</data>
+</odoo>		

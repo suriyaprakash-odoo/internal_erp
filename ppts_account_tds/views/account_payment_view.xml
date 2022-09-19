@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="view_account_payment_tds_inherit" model="ir.ui.view">
+			<field name="name">account.payment.form.tds</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='payment_transaction_id']" position="after">
+					<field name="is_apply" attrs="{'invisible':[('payment_type','!=','outbound')]}"/>
+					<field name="is_gen" invisible="1"/>
+					<field name="without_pan" attrs="{'invisible':[('payment_type','!=','outbound')]}"/>
+				</xpath>
+                <xpath expr="//form/sheet/group" position="after">
+                	<notebook colspan="4" attrs="{'invisible':[('is_apply','=',False)]}">
+                        <page string="TDS">
+                        	<group>
+	                        	<group>
+	                        		<field name="domain_section_id" invisible="1"/>
+									<field name="tds_section_id" options="{'no_create':1,'no_create_edit':1}" 
+									attrs="{'invisible':[('is_apply','=',False)],'required':[('is_apply','=',True)]}" 
+									domain="[('id', '=', domain_section_id)]"/>
+								</group>
+								<group>
+									<button name="gen_tds" icon="fa-cog" type="object" 
+										string="Gen TDS" class="btn-primary pull-right" attrs="{'invisible':[('state','=','posted')]}"/>
+								</group>
+							</group>
+                            <field name="tds_payment_ids" nolabel="1" widget="one2many_list">
+                            	<form string="TDS Payment" create="false" edit="false" delete="false">
+                            		<group>
+	                        			<group>
+	                        				<field name="date" readonly="1" />
+	                        				<field name="tds_section_id" readonly="1" />
+	                        				<field name="amount" readonly="1" />
+                                			<field name="tds_payable" readonly="1" />
+                                			<field name="partner_id" readonly="1" />
+                                			<field name="tds_payment_line_ids" create="false" edit="false" delete="false">
+                                				<form string="TDS Payment Line" create="false" edit="false" delete="false">
+                                					<group>
+                                						<group>
+                                							<field name="tax_type" readonly="1" />
+                                							<field name="debit" readonly="1" />
+                                							<field name="rate" readonly="1" />
+                                						</group>
+                                						<group>
+                                							<field name="rate" readonly="1" />
+		                                					<field name="credit" readonly="1" />
+                                						</group>
+                                					</group>
+                                				</form>
+                                				<tree string="TDS Payment Line" create="false" edit="false" delete="false">
+                                					<field name="tax_type" readonly="1"/>
+			                        				<field name="rate" readonly="1"/>
+			                        				<field name="debit" readonly="1"/>
+		                                			<field name="credit" readonly="1"/>
+		                                			<field name="base" readonly="1"/>
+                                				</tree>
+                                			</field>
+	                        			</group>
+	                        			<group>
+	                        				<field name="name" readonly="1" />
+	                        				<field name="account_id" readonly="1" />
+	                        				<field name="tds_amount" readonly="1" />
+                                			<field name="tds_deduct" readonly="1" />
+	                        			</group>	
+	                        		</group>
+                            	</form>
+                                <tree string="TDS Payment" create="false" edit="false" delete="false">
+                                	<field name="name" />
+                                	<field name="partner_id" />
+                                	<field name="tds_section_id" />
+                                	<field name="account_id" />
+                                	<field name="amount" />
+                                	<field name="bal_amount" invisible="1"/>
+                                	<field name="tds_amount" />
+                                	<field name="tds_payable" />
+                                	<field name="state" />
+                                </tree>
+                             </field>
+                             <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_payment"/>
+                                <field name="amount_tds"/>
+                                <field name="amount_total" string="Total" readonly="1" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                    </notebook>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>
+

@@ -1,0 +1,39 @@
+.oe_snippet_body .form-control {
+    display: inline-block;
+    width: 66%;
+    height: 34px;
+    float: right;
+    padding: 2px 10px;
+}
+.form_bg{
+    background: #fbf9f6;
+    margin-top:30px;
+    margin-bottom:30px;
+    border-radius:25px;
+    width: 70%;
+    box-shadow: 5px 3px 15px -2px #95778d;
+}
+.form_size {
+    padding-right:30px;
+    padding-left:30px;
+}
+.oe_snippet_body .form-group label {
+	width:30%;
+	display: inline-block;
+}
+
+.btn-lg {
+	padding: 10px;
+	margin: 20px;
+	width: 125px;
+}
+
+.butn {
+	text-align:center;
+}
+
+.oe_website_appointment {color: None;}
+
+textarea{ 
+	  min-height:127px;  
+	}

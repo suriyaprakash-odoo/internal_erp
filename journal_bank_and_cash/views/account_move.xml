@@ -1,0 +1,150 @@
+<odoo>
+	<data>
+		<record id="view_move_form_inherit" model="ir.ui.view">
+			<field name="name">account.move.form</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="arch" type="xml">
+				<field name="date" position="after">
+					<field name="inv_type" string="Type" invisible="1" />
+				</field>
+			</field>
+		</record>
+
+		<record id="view_account_move_filter_inherit" model="ir.ui.view">
+			<field name="name">account.move.filter</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_account_move_filter" />
+			<field name="arch" type="xml">
+				<filter name="misc_filter" position="replace">
+					
+				</filter>
+				<xpath expr="//search/group/filter[2]" position='replace'>
+					<filter name="group_journal_id" string="Journal" icon="terp-partner" context="{'group_by':'journal_id'}"/>
+				</xpath>
+
+			</field>
+		</record>
+		
+		<!-- <record id="view_account_move_filter_inherit" model="ir.ui.view">
+			<field name="name">account.move.select</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_account_move_filter" />
+			<field name="arch" type="xml">
+			<filter name="misc_filter" position="after">
+			 <filter string="Bank" domain="[('journal_id.type','=','bank')]" name="bank_filter" context="{'default_type': 'bank'}"/>
+			  <filter string="Cash" domain="[('journal_id.type','=','cash')]" name="cash_filter" context="{'default_type': 'cash'}"/>
+			</filter>
+			</field>
+		</record> -->
+
+		 <record id="account.action_move_journal_line" model="ir.actions.act_window">
+            <field name="name">Journal Entries</field>
+            <field name="res_model">account.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="account.view_move_tree"/>
+            <field name="search_view_id" ref="account.view_account_move_filter"/>
+            <field name="context">{'search_default_group_journal_id':1,'view_no_maturity': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a journal entry.
+              </p><p>
+                A journal entry consists of several journal items, each of
+                which is either a debit or a credit transaction.
+              </p><p>
+                Odoo automatically creates one journal entry per accounting
+                document: invoice, refund, vendor payment, bank statements,
+                etc. So, you should record journal entries manually only/mainly
+                for miscellaneous operations.
+              </p>
+            </field>
+        </record>
+        
+		<record id="action_move_journal_line_cash"
+			model="ir.actions.act_window">
+			<field name="name">Cash Entries</field>
+			<field name="res_model">account.move</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,kanban,form</field>
+			<field name="view_id" ref="account.view_move_tree" />
+			<field name="search_view_id"
+				ref="account.view_account_move_filter" />
+			 <field name="domain">[('journal_id.type', '=', 'cash')]</field>	
+			<field name="context">{
+				'view_no_maturity': True,'default_inv_type':'cash'}
+			</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create a journal entry.
+				</p>
+				<p>
+					A journal entry consists of several journal items, each of
+					which
+					is either a debit or a credit transaction.
+				</p>
+				<p>
+					Odoo automatically creates one journal entry per accounting
+					document: invoice, refund, vendor payment, bank statements,
+					etc. So,
+					you should record journal entries manually only/mainly
+					for
+					miscellaneous operations.
+				</p>
+			</field>
+		</record>
+
+		<record id="action_move_journal_line_bank"
+			model="ir.actions.act_window">
+			<field name="name">Bank Entries</field>
+			<field name="res_model">account.move</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,kanban,form</field>
+			<field name="view_id" ref="account.view_move_tree" />
+			<field name="search_view_id"
+				ref="account.view_account_move_filter" />
+			 <field name="domain">[('journal_id.type', '=', 'bank')]</field>	
+			<field name="context">{
+				'view_no_maturity': True,'default_inv_type':'bank'}
+			</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create a journal entry.
+				</p>
+				<p>
+					A journal entry consists of several journal items, each of
+					which
+					is either a debit or a credit transaction.
+				</p>
+				<p>
+					Odoo automatically creates one journal entry per accounting
+					document: invoice, refund, vendor payment, bank statements,
+					etc. So,
+					you should record journal entries manually only/mainly
+					for
+					miscellaneous operations.
+				</p>
+			</field>
+		</record>
+
+		<menuitem action="account.action_move_journal_line"
+			id="account.menu_action_move_journal_line_form"
+			parent="account.menu_finance_entries_accounting_entries"
+			groups="account.group_account_user" sequence="2"
+			name="Journal Entries" />
+
+		<menuitem action="action_move_journal_line_cash"
+			id="menu_action_move_journal_line_cash_form"
+			parent="account.menu_finance_entries_accounting_entries"
+			groups="account.group_account_user" sequence="4"
+			name="Cash Entries" />
+
+		<menuitem action="action_move_journal_line_bank"
+			id="menu_action_move_journal_line_bank_form"
+			parent="account.menu_finance_entries_accounting_entries"
+			groups="account.group_account_user" sequence="3"
+			name="Bank Entries" />
+
+
+	</data>
+</odoo>

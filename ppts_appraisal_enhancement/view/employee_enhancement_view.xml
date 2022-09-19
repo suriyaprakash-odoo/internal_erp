@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	     <!-- hr.employee.form.inherit -->
+	
+		<record id="employee_form_view_inherit_appraisal_enhancement"
+			model="ir.ui.view">
+			<field name="name">hr.employee</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">					
+			<xpath expr="/form/*" position="before">
+				<header>
+	       			<button string="SEND APPRAISAL" class="btn-primary" name="action_confirm_appraisal" type="object" />          
+	       		</header>
+       		</xpath>                   
+			
+				<xpath expr="//field[@name='coach_id']" position="replace">
+					<field name="coach_id" string="TL" />
+				</xpath>
+				<xpath expr="//field[@name='coach_id']" position="after">
+					<field name="appraisal_by_ro" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_employee_view_form_inherit_appraisal" model="ir.ui.view">
+			<field name="name">hr.employee.view.form.inherit.appraisal</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_appraisal.hr_employee_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//page[2]" position="replace">
+					<page string="Appraisal">
+						<group string="Send Appraisal Form To" col="4">
+							<!-- Employee -->
+							<field name="appraisal_self" />
+							<field name="appraisal_employee" nolabel="1"
+								attrs="{'invisible':[('appraisal_self','=',False)]}" />
+							<field name="appraisal_self_survey_id" nolabel="1"
+								placeholder="Appraisal Form..." attrs="{'invisible':[('appraisal_self','=',False)]}" />
+
+							<field name="appraisal_by_tl" />
+							<field name="appraisal_tl_ids" nolabel="1"
+								placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+								options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_tl','=',False)]}"
+								readonly="0" />
+							<field name="appraisal_tl_id" nolabel="1" placeholder="Appraisal Form..."
+								attrs="{'invisible':[('appraisal_by_tl','=',False)]}" />
+
+							<field name="appraisals_by_ro" />
+							<field name="appraisal_ro_ids" nolabel="1"
+								placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+								options="{'color_field': 'color'}" attrs="{'invisible':[('appraisals_by_ro','=',False)]}"
+								readonly="0" />
+							<field name="appraisal_ro_id" nolabel="1" placeholder="Appraisal Form..."
+								attrs="{'invisible':[('appraisals_by_ro','=',False)]}" />
+
+							<!-- Manager -->
+							<field name="appraisal_by_manager" />
+							<field name="appraisal_manager_ids" nolabel="1"
+								placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+								options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_manager','=',False)]}"
+								readonly="0" />
+							<field name="appraisal_manager_survey_id" nolabel="1"
+								placeholder="Appraisal Form..." attrs="{'invisible':[('appraisal_by_manager','=',False)]}" />
+
+							<field name="appraisals_by_hr" />
+							<field name="appraisal_hr_ids" nolabel="1"
+								placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+								options="{'color_field': 'color'}" attrs="{'invisible':[('appraisals_by_hr','=',False)]}"
+								readonly="0" />
+							<field name="appraisal_hr_id" nolabel="1" placeholder="Appraisal Form..."
+								attrs="{'invisible':[('appraisals_by_hr','=',False)]}" />
+
+							<field name="appraisal_by_collaborators" invisible="1" />
+							<field name="appraisal_collaborators_ids" nolabel="1"
+								placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+								options="{'color_field': 'color'}"
+								attrs="{'invisible':[('appraisal_by_collaborators','=',False)]}"
+								invisible="1" />
+							<field name="appraisal_collaborators_survey_id" nolabel="1"
+								placeholder="Appraisal Form..."
+								attrs="{'invisible':[('appraisal_by_collaborators','=',False)]}"
+								invisible="1" />
+							<field name="appraisal_by_colleagues" invisible="1" />
+							<field name="appraisal_colleagues_ids" nolabel="1"
+								placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+								options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}"
+								readonly="0" invisible="1" />
+							<field name="appraisal_colleagues_survey_id" placeholder="Appraisal Form..."
+								nolabel="1" attrs="{'invisible':[('appraisal_by_colleagues','=',False)]}"
+								invisible="1" />
+							<field name="child_ids" invisible="1" />
+						</group>
+						<group string="Periodicity" col="2">
+							<group>
+								<field name="periodic_appraisal" />
+							</group>
+							<group attrs="{'invisible':[('periodic_appraisal','=',False)]}">
+								<field name="appraisal_date"
+									attrs="{'required':[('periodic_appraisal','=',True)]}" />
+								<label for="appraisal_frequency" string="Repeat Every" />
+								<div class="o_row">
+									<field name="appraisal_frequency"
+										attrs="{'required':[('periodic_appraisal','=',True)]}" class="oe_inline" />
+									<field name="appraisal_frequency_unit"
+										attrs="{'required':[('periodic_appraisal','=',True)]}" class="oe_inline" />
+								</div>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+
+             <!-- hr.appraisal.form.inherit -->
+
+		<record id="hr_employee_view_form_inherit_appraisals" model="ir.ui.view">
+			<field name="name">hr.appraisal.form</field>
+			<field name="model">hr.appraisal</field>
+			<field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="replace">
+					<notebook>
+						<page string="Final Evaluation" attrs="{'invisible':[('state','=','new')]}">
+							<field name="action_plan" />
+						</page>
+						<page string="Plan">
+							<group col="4">
+
+								<field name="employee_appraisal" string="Employee"
+									attrs="{'readonly':[('state', '!=', 'new')]}" />
+								<separator />
+								<field name="employee_survey_id" nolabel="1"
+									placeholder="Appraisal Form..."
+									attrs="{'invisible':[('employee_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}" />
+
+								<field name="appraisal_by_tl" />
+								<field name="appraisal_tl_ids" nolabel="1"
+									placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+									options="{'color_field': 'color'}" attrs="{'invisible':[('appraisal_by_tl','=',False)]}"
+									readonly="0" />
+								<field name="appraisal_tl_id" nolabel="1" placeholder="Appraisal Form..."
+									attrs="{'invisible':[('appraisal_by_tl','=',False)]}" />
+
+								<field name="appraisals_by_ro" />
+								<field name="appraisal_ro_ids" nolabel="1"
+									placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+									options="{'color_field': 'color'}" attrs="{'invisible':[('appraisals_by_ro','=',False)]}"
+									readonly="0" />
+								<field name="appraisal_ro_id" nolabel="1" placeholder="Appraisal Form..."
+									attrs="{'invisible':[('appraisals_by_ro','=',False)]}" />
+
+								<field name="manager_appraisal" attrs="{'readonly':[('state', '!=', 'new')]}" />
+								<field name="manager_ids" nolabel="1"
+									placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+									options="{'color_field': 'color'}"
+									attrs="{'invisible':[('manager_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"
+									readonly="0" />
+								<field name="manager_survey_id" nolabel="1"
+									placeholder="Appraisal Form..."
+									attrs="{'invisible':[('manager_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}" />
+
+								<field name="appraisals_by_hr" />
+								<field name="appraisal_hr_ids" nolabel="1"
+									placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+									options="{'color_field': 'color'}" attrs="{'invisible':[('appraisals_by_hr','=',False)]}"
+									readonly="0" />
+								<field name="appraisal_hr_id" nolabel="1" placeholder="Appraisal Form..."
+									attrs="{'invisible':[('appraisals_by_hr','=',False)]}" />
+
+								<field name="collaborators_appraisal" attrs="{'readonly':[('state', '!=', 'new')]}"
+									invisible="1" />
+								<field name="collaborators_ids" nolabel="1"
+									placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+									options="{'color_field': 'color'}"
+									attrs="{'invisible':[('collaborators_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"
+									invisible="1" />
+								<field name="collaborators_survey_id" nolabel="1"
+									placeholder="Appraisal Form..."
+									attrs="{'invisible':[('collaborators_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"
+									invisible="1" />
+
+								<field name="colleagues_appraisal" attrs="{'readonly':[('state', '!=', 'new')]}"
+									invisible="1" />
+								<field name="colleagues_ids" nolabel="1"
+									placeholder="Select Appraisal Reviewer..." widget="many2many_tags"
+									options="{'color_field': 'color'}"
+									attrs="{'invisible':[('colleagues_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"
+									readonly="0" invisible="1" />
+								<field name="colleagues_survey_id" placeholder="Appraisal Form..."
+									nolabel="1"
+									attrs="{'invisible':[('colleagues_appraisal','=',False)], 'readonly':[('state', '!=', 'new')]}"
+									invisible="1" />
+							</group>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

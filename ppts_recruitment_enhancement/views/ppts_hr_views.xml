@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="edit_custom_hr_inherit" model="ir.ui.view">
+			<field name="name">calendar.event.custom.inherit</field>
+			<field name="model">calendar.event</field>
+			<field name="inherit_id"
+				ref="calendar.view_calendar_event_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button name="send_offer_letter" string="Send Call Letter"
+							type="object" class="btn-primary" />
+					</header>
+				</xpath>
+				<xpath expr="//field[@name='start_datetime']" position="after">
+					<field name="email_from" invisible="1" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="edit_hr_applicant_inherit" model="ir.ui.view">
+			<field name="name">hr.applicant.inherit.form</field>
+			<field name="model">hr.applicant</field>
+			<field name="inherit_id"
+				ref="hr_recruitment.crm_case_form_view_job" />
+			<field name="arch" type="xml">
+
+				<xpath expr="//button[@name='reset_applicant']" position="after">
+	                <button name="action_offer_send" string="Send Offer Letter"
+	                    type="object" states="" class="btn-primary" attrs = "{'invisible': [('stage_change_flag', '!=', 'offer')]}"/>
+                    <button name="action_tech_discussion_send" string="Send Technical Discussion Letter"
+                    	type="object" states="" class="btn-primary" attrs = "{'invisible': [('stage_change_flag', '!=', 'tech')]}"/>
+                	<!-- <button name="action_applicant_schedule_send" string="Send Schedule" type="object" states="" class="btn-primary"/> -->
+	                <button name="action_manager_discussion_send" string="Send Manager Discussion Letter"
+	                    type="object" states="" class="btn-primary" attrs = "{'invisible': [('stage_change_flag', '!=', 'man')]}"/>
+	                <button name="action_final_discussion_send" string="Send Final Discussion Letter"
+	                    type="object" states="" class="btn-primary" attrs = "{'invisible': [('stage_change_flag', '!=', 'final')]}"/>
+	            </xpath>
+
+				<xpath expr="//field[@name='email_from']" position="after">
+					<field name="tot_exp" />
+					<field name="relevant_exp" />
+					<!-- <field name="notice_period"/> -->
+					<label for="notice_period"/>
+						<div>
+							<field name="notice_period" class="oe_inline"/>
+							<span>
+								Days
+							</span>
+						</div>
+					<field name="stage_change_flag" invisible='1'/>
+				</xpath>
+
+				<xpath expr="//field[@name='description']" position="after">					
+					<separator string="Feedback - New Applicant" attrs = "{'invisible': [('stage_change_flag', '!=', 'new')]}"/>					
+					<field name="new_stage_feebdack" attrs = "{'invisible': [('stage_change_flag', '!=', 'new')]}"/>
+					<separator string="Feedback - Technical Round" attrs = "{'invisible': [('stage_change_flag', '!=', 'tech')]}"/>
+					<field name="technical_stage_feebdack" attrs = "{'invisible': [('stage_change_flag', '!=', 'tech')]}"/>
+					<separator string="Feedback - Manager Round" attrs = "{'invisible': [('stage_change_flag', '!=', 'man')]}"/>
+					<field name="manager_stage_feebdack" attrs = "{'invisible': [('stage_change_flag', '!=', 'man')]}"/>
+					<separator string="Feedback - Final Discussion" attrs = "{'invisible': [('stage_change_flag', '!=', 'final')]}"/>
+					<field name="final_stage_feebdack" attrs = "{'invisible': [('stage_change_flag', '!=', 'final')]}"/>
+				</xpath>
+
+				<xpath expr="//field[@name='type_id']" position="after">
+					<field name="actual_qualification_ids" widget="many2many_tags" />
+					<field name="applicant_qualification" />
+					<field name="actual_keyskill_ids" widget="many2many_tags" />
+					<field name="current_company" />
+					<field name="current_location" />
+				</xpath>
+				<xpath expr="//field[@name='reference']" position="after">
+					<label for="exp_in_yr" string="Experience in Year" />
+					<div>
+						<field name="exp_in_yr" style="width: 47.5%" />
+						To
+						<field name="exp_in_month" style="width: 47.5%" />
+					</div>
+					<field name="age_preference" />
+					<field name="gender" />
+					<field name="reason_for_manpower" />
+					<field name="type" />
+					<!-- <field name="contract_month" /> -->
+					<label for="budget_from" string="Budget" />
+					<div>
+						<field name="budget_from" style="width: 42.5%" />
+						To
+						<field name="budget_to" style="width: 41.5%" />
+						<span>Years</span>
+					</div>
+				</xpath>
+				<xpath expr="/form/sheet/group" position="after">
+					<!-- <group>
+						<group>
+							<notebook>
+								<page string="Expected Qualification">
+									<field name="applicant_qualification_ids"
+										widget="one2many">
+										<tree editable="bottom" create="false" edit="false"
+											string="Expected Qualification">
+											<field name="name" />
+											<field name="code" />
+										</tree>
+									</field>
+								</page>
+							</notebook>
+						</group>
+						<group>
+							<notebook>
+								<page string="Expected Key Skills / Abilities">
+									<field name="applicant_keyskills_ids" widget="one2many">
+										<tree editable="bottom" create="false" edit="false"
+											string="Expected Key Skills &amp;Abilities">
+											<field name="name" />
+											<field name="code" />
+										</tree>
+									</field>
+								</page>
+							</notebook>
+						</group>
+					</group> -->
+					<separator string="Job Description" />
+					<field name="job_description" />
+				</xpath>
+
+				<xpath expr="//group/group[4]/label[1]" position="attributes">
+		            <attribute name="string">Current Salary</attribute>
+		        </xpath>
+
+				<xpath expr="//group/group[4]/label[2]" position="attributes">
+		            <attribute name="string">Expected Salary</attribute>
+		        </xpath>
+	            <!-- <xpath expr="//field[@name='salary_expected']" position="attributes">
+		            <attribute name="lable">Current Salary</attribute>
+		        </xpath>
+	            <xpath expr="//field[@name='salary_proposed']" position="attributes">
+		            <attribute name="lable">Expected Salary</attribute>
+		        </xpath> -->
+				<!-- <xpath expr="//field[@name='salary_proposed_extra']"
+					position="after">
+					<span>Months</span>
+				</xpath> -->
+				<xpath expr="//field[@name='salary_expected_extra']"
+					position="after">
+					<span>Months</span>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_kanban_view_applicant_inherit" model="ir.ui.view">
+			<field name="name">hr.applicant.kanban</field>
+			<field name="model">hr.applicant</field>
+			<field name="inherit_id"
+				ref="hr_recruitment.hr_kanban_view_applicant" />
+			<field name="arch" type="xml">
+				<xpath expr="//kanban" position="attributes">
+					<attribute name="quick_create">false</attribute>
+					<attribute name="edit">false</attribute>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

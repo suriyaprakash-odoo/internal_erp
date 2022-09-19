@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="onboarding_settings_from" model="ir.ui.view">
+		<field name="name">onboarding.config.settings.form</field>
+		<field name="model">onboarding.config.settings</field>
+		<field name="arch" type="xml">
+			<form class="oe_form_configuration">
+				<header>
+					<button string="Apply" type="object" name="execute" class="oe_highlight" />
+					<button string="Cancel" type="object" name="cancel" class="oe_link" />
+				</header>
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Settings</h1>
+					</div>
+				</div>
+				<group>
+					<field name="welcome_template_id" style="width:650px" />
+					<field name="pi_document_id" style="width:650px" />
+					<field name="bgv_survey_id" style="width:650px" />
+				</group>				
+			</form>
+		</field>
+	</record>
+	
+	<record id="action_onboarding_settings" model="ir.actions.act_window">
+		<field name="name">Configure Onboarding</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">onboarding.config.settings</field>
+		<field name="view_mode">form</field>
+		<field name="target">inline</field>
+	</record>
+	<menuitem name="Settings" id="menu_settings"
+			parent="ppts_onboarding.menu_onboarding"  sequence="10" />
+	<menuitem name="Company Settings" id="menu_settings_sub"
+			parent="ppts_onboarding.menu_settings" action="action_onboarding_settings"
+			sequence="10" />
+</odoo>

@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<!--
+		   'Set Campaign' in action dropdown
+	   -->
+		<record id="action_set_campaign" model="ir.actions.server">
+			<field name="name">Set Campaign</field>
+			<field name="model_id" ref="model_crm_lead"/>
+			<field name="state">code</field>
+			<field name="code">
+	            action = model.call_wizard_lead()
+			</field>
+		</record>
+
+		<!--Act window for the buttons to view the particular records-->
+		<record id="action_view_mail_tracking_email_cl_0" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('lead_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_cl_1" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','sent'),('lead_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_cl_2" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','opened'),('lead_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_cl_3" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','error'),('lead_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_cl_4" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','bounced'),('lead_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+
+		<!--Inheriting Lead form for adding the email followup status-->
+		<record id="crm_case_form_view_leads_inherited" model="ir.ui.view">
+			<field name="name">crm.lead.form.lead</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='email_from']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='partner_name']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//notebook[last()]" position="inside">
+					<!--New page for Email Followup-->
+					<page string="Campaigns">
+						<div class="button_box row" style="border-bottom: 1px solid grey;margin:0;margin: 0px 0px 20px 0px;">
+							<div style="float:right;">
+								<button name="%(action_view_mail_tracking_email_cl_0)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#6900ff66;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="total_mails"/>
+											</div>
+										</div>
+										<span>Total Mails</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_1)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#0096e8;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="sent_ratio"/>
+											</div>
+										</div>
+										<span>Sent</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_2)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#00b259;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="opened_ratio"/>
+											</div>
+										</div>
+										<span>Opened</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_3)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#f70000;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="error_ratio"/>
+											</div>
+										</div>
+										<span>Error</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_4)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#ffaebf;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="bounced_ratio"/>
+											</div>
+										</div>
+										<span>Bounced</span>
+									</div>
+								</button>
+							</div>
+						</div>
+						<!--Adding the email tags-->
+						<field name="lead_followup_line_ids" context="{'followup_line_ids':lead_followup_line_ids}">
+							<tree string="Email Followup Line" editable="bottom">
+								<field name="crm_campaign_id" domain="[('model','=','crm.lead')]" options="{'no_create' : True,'no_edit' : True}" required="1"/>
+								<field name="next_template_id" readonly="1"/>
+								<field name="next_mail_date" readonly="1"/>
+								<field name="added_date" readonly="1"/>
+								<field name="mail_seq" invisible="1"/>
+							</tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+		<!--Inheriting opportunity form for adding the email followup status-->
+		<record id="crm_case_form_view_oppor_inherited" model="ir.ui.view">
+			<field name="name">crm.opportunity.form.inherited</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='email_from']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//notebook[last()]" position="inside">
+					<!--New page for Email Followup-->
+					<page string="Campaigns">
+						<div class="button_box row" style="border-bottom: 1px solid grey;margin:0;margin: 0px 0px 20px 0px;">
+							<div style="float:right;">
+								<button name="%(action_view_mail_tracking_email_cl_0)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#6900ff66;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="total_mails"/>
+											</div>
+										</div>
+										<span>Total Mails</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_1)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#0096e8;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="sent_ratio"/>
+											</div>
+										</div>
+										<span>Sent</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_2)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#00b259;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="opened_ratio"/>
+											</div>
+										</div>
+										<span>Opened</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_3)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#f70000;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="error_ratio"/>
+											</div>
+										</div>
+										<span>Error</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_cl_4)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#ffaebf;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="bounced_ratio"/>
+											</div>
+										</div>
+										<span>Bounced</span>
+									</div>
+								</button>
+							</div>
+						</div>
+						<!--Adding the email tags-->
+						<field name="lead_followup_line_ids" context="{'followup_line_ids':lead_followup_line_ids}">
+							<tree string="Email Followup Line" editable="bottom">
+								<field name="crm_campaign_id" options="{'no_create' : True,'no_edit' : True}" required="1"/>
+								<field name="next_template_id" readonly="1"/>
+								<field name="next_mail_date" readonly="1"/>
+								<field name="added_date" readonly="1"/>
+							</tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<!--Inheriting Kanban view for adding the mailing details in kanban view-->
+		<record id="crm_case_kanban_view_leads_inherited" model="ir.ui.view">
+			<field name="name">crm.lead.kanban.lead</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+			<field name="arch" type="xml">
+				<xpath expr="//kanban" position="inside">
+					<field name="sent_ratio"/>
+					<field name="opened_ratio"/>
+					<field name="error_ratio"/>
+					<field name="bounced_ratio"/>
+				</xpath>
+				<xpath expr="//div[@class='o_kanban_record_bottom']" position="before">
+					<ul>
+						<li t-if="record.total_mails.raw_value" style="border-top: 1px solid #e3e3e3;">
+							<b>
+								<span class="fa fa-envelope-o"/>
+								Mails:
+								<field name="total_mails"/>
+							</b>
+						</li>
+						<li t-if="record.total_mails.raw_value" class="o_text_overflow" style="border-bottom: 1px solid #e3e3e3;display: block;">
+							<span style="color:#0623f9">Sent:
+								<field name="sent_ratio"/>
+							</span>
+							<span style="color:#2b8c00">| Opened:
+								<field name="opened_ratio"/>
+							</span>
+							<br/>
+							<span style="color:#e10e0e">Error:
+								<field name="error_ratio"/>
+							</span>
+							<span style="color:#ffaebf">| Bounced:
+								<field name="bounced_ratio"/>
+							</span>
+						</li>
+					</ul>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_crm_lead2opportunity_partner_inherit" model="ir.ui.view">
+			<field name="name">crm.lead2opportunity.partner.form</field>
+			<field name="model">crm.lead2opportunity.partner</field>
+			<field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form" position="inside">
+					<group string="Campaign Actions">
+						<field name="campaign_action" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_crm_lead2opportunity_partner_mass_inherit" model="ir.ui.view">
+			<field name="name">crm.lead2opportunity.partner.mass.form</field>
+			<field name="model">crm.lead2opportunity.partner.mass</field>
+			<field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner_mass"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form" position="inside">
+					<group string="Campaign Actions">
+						<field name="campaign_action" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

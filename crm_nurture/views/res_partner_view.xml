@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="action_set_campaign_partner" model="ir.actions.server">
+            <field name="name">Set Campaign</field>
+           <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">
+            action = model.call_wizard_customer()
+            </field>
+        </record>
+
+		<record id="action_view_mail_tracking_email_0" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('partner_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_1" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','sent'),('partner_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_2" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','opened'),('partner_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_3" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','error'),('partner_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="action_view_mail_tracking_email_4" model="ir.actions.act_window">
+			<field name="name">MailTracking emails</field>
+			<field name="res_model">mail.tracking.email</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="mail_tracking.view_mail_tracking_email_tree"/>
+			<field name="domain">[('state','=','bounced'),('partner_id','=',active_id)]</field>
+			<field name="search_view_id" ref="mail_tracking.view_mail_tracking_email_search"/>
+		</record>
+		<record id="view_partner_form_inherit" model="ir.ui.view">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='lang']" position="after">
+					<field name="tz" required="0"/>
+				</xpath>
+				<xpath expr="//field[@name='email']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//notebook[last()]" position="inside">
+					<page string="Campaigns">
+						<div class="button_box row" style="border-bottom: 1px solid grey;margin:0;margin: 0px 0px 20px 0px;">
+							<div style="float:right;">
+
+								<button name="%(action_view_mail_tracking_email_0)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#6900ff66;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="total_mails"/>
+											</div>
+										</div>
+										<span>Total Mails</span>
+									</div>
+								</button>
+
+								<button name="%(action_view_mail_tracking_email_1)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#0096e8;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="sent_ratio"/>
+											</div>
+										</div>
+										<span>Sent</span>
+									</div>
+								</button>
+								<button name="%(action_view_mail_tracking_email_2)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#00b259;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="opened_ratio"/>
+											</div>
+										</div>
+										<span>Opened</span>
+									</div>
+								</button>
+								<button name="%(action_view_mail_tracking_email_3)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;border-right: 1px solid darkgrey;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#f70000;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="error_ratio"/>
+											</div>
+										</div>
+										<span>Error</span>
+									</div>
+								</button>
+								<button name="%(action_view_mail_tracking_email_4)d" type="action" class="btn btn-sm oe_stat_button" data-original-title="" title="" style="width: 150px;">
+									<div class="o_form_field_percent_pie o_form_field" data-original-title="" title="">
+										<div class="o_pie" style="background:#ffaebf;">
+											<div class="o_mask" style="transform: rotate(360deg);"></div>
+											<div class="o_mask o_full" style="transform: rotate(0deg);"></div>
+											<div class="o_pie_value">
+												<field name="bounced_ratio"/>
+											</div>
+										</div>
+										<span>Bounced</span>
+									</div>
+								</button>
+							</div>
+						</div>
+						<field name="followup_line_ids" context="{'followup_line_ids':followup_line_ids}">
+							<tree string="Email Followup Line" editable="bottom">
+								<field name="crm_campaign_id" domain="[('model','=','res.partner')]" options="{'no_create' : True,'no_edit' : True}" required="1"/>
+								<field name="next_template_id" readonly="1"/>
+								<field name="next_mail_date" readonly="1"/>
+								<field name="added_date" readonly="1"/>
+								<field name="mail_seq" invisible="1"/>
+							</tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="res_partner_kanban_view_inherited">
+			<field name="name">res.partner.kanban</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.res_partner_kanban_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//kanban[@class='o_res_partner_kanban']" position="inside">
+					<field name="sent_ratio"/>
+					<field name="opened_ratio"/>
+					<field name="error_ratio"/>
+					<field name="bounced_ratio"/>
+				</xpath>
+				<xpath expr="//div[@class='oe_kanban_details']//ul" position="inside">
+					<li t-if="record.total_mails.raw_value" style="border-top: 1px solid #e3e3e3;">
+						<b>
+							<span class="fa fa-envelope-o"/>
+							Mails:
+							<field name="total_mails"/>
+						</b>
+					</li>
+					<li t-if="record.total_mails.raw_value" style="border-bottom: 1px solid #e3e3e3;display: block;" class="o_text_overflow">
+						<span style="color:#0623f9">Sent:
+							<field name="sent_ratio"/>
+						</span>
+						<span style="color:#2b8c00">| Opened:
+							<field name="opened_ratio"/>
+						</span>
+						<br/>
+						<span style="color:#e10e0e">Error:
+							<field name="error_ratio"/>
+						</span>
+						<span style="color:#ffaebf">| Bounced:
+							<field name="bounced_ratio"/>
+						</span>
+					</li>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

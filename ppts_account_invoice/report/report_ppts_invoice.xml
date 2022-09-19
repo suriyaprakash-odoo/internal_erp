@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="report_invoice_document_ppts">
+			<t t-call="ppts_account_invoice.custom_invoice_external_layout">
+				<!-- <div class="article"> -->
+				<style>
+					.table1{
+					border: 1px solid black;
+					}
+					td {
+					padding-left: 4px;
+					}
+
+					.table2{
+					border-top: 1px solid black;
+					border-left: 1px solid black;
+					border-right: 1px solid black;
+					}
+
+					.table3{
+					border-bottom: 1px solid
+					black;
+					border-left: 1px solid black;
+					border-right: 1px solid black;
+					}
+					.table4{
+					border-bottom: 1px solid black;
+					}
+					.table5{
+					border-top: 1px
+					solid black;
+					}
+					.pagebreak { page-break-before: always; } /*
+					page-break-after works, as well */
+
+
+				</style>
+				<t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+				<div class="page">
+					<table
+						style="width: 100%;height:120px;background-color: white;">
+						<tbody>
+							<tr>
+								<td style="width:55%;background-color: white;">
+									<strong>
+										<span style="color:#875A7B">Buyer</span>
+									</strong>
+									<br />
+									<strong>
+										<span t-field="o.partner_id.name" />
+									</strong>
+									<br />
+									<span t-field="o.partner_id.street" />
+									<br/>
+									<span t-field="o.partner_id.street2" />
+									<br />
+									<span t-field="o.partner_id.city" />
+									<span t-field="o.partner_id.state_id" />
+									<br />
+									<span t-field="o.partner_id.country_id" />
+									<span t-field="o.partner_id.zip" />
+								</td>
+								<td style="width:45%;background-color: white;">
+									<table style="width:100%;background-color: white;">
+										<tbody>
+											<!-- <tr> <td style="width:50%;">Invoice Date</td> <td style="width:50%;"> 
+												<span t-field="o.date_invoice" /> </td> </tr> -->
+											<tr>
+												<td style="width:40%;">Country code</td>
+												<td style="width:60%;">
+													<span t-field="o.partner_id.country_id.code" />
+												</td>
+											</tr>
+											<tr>
+												<td>Payment Terms</td>
+												<td>
+													<span t-field="o.payment_term_id.name" />
+												</td>
+											</tr>
+											<tr>
+												<td>Buyer Order Reference</td>
+												<td>
+													<span t-field="o.buyer_ref" />
+												</td>
+											</tr>
+											<tr>
+												<td>Reference Dated</td>
+												<td>
+													<span t-field="o.buyer_po_date" />
+												</td>
+											</tr>
+										</tbody>
+
+									</table>
+									<hr>
+										<table style="width:100%;">
+											<tbody>
+												<tr>
+													<td style="width:40%;">FIRC No</td>
+													<td style="width:60%;">
+														<span t-field="o.firc_no" />
+													</td>
+												</tr>
+												<tr>
+													<td>SOFTEX No</td>
+													<td>
+														<span t-field="o.softex_no" />
+													</td>
+												</tr>
+												<!-- <tr> <td>SOFTEX Dated</td> <td> <span t-field="o.softex_ref_date" 
+													/> </td> </tr> -->
+												<tr>
+													<td>NSDL No</td>
+													<td>
+														<span t-field="o.nsdl_ref_no" />
+													</td>
+												</tr>
+												<tr>
+													<td>e.BRC No</td>
+													<td>
+														<span t-field="o.e_brc_no" />
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</hr>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<br />
+					<table class="table table-condensed"
+						name="invoice_line_table">
+						<thead>
+							<tr>
+								<th class="text-left" style="width:13%">GST Code</th>
+								<th class="text-left" style="width:47%">Description</th>
+								<th class="text-center" style="width:10">Project Code</th>
+								<th class="text-center" style="width:5%">Qty</th>
+								<th class="text-center" style="width:5%">UOM</th>
+								<th class="text-right" style="width:10%">Rate</th>
+								<th class="text-right" style="width:10%">
+									Amount
+									<br />
+									(
+									<span t-field="o.currency_id.name" />
+									)
+								</th>
+							</tr>
+						</thead>
+						<tbody class="invoice_tbody">
+							<t t-set="i" t-value="1" />
+							<tr t-foreach="o.invoice_line_ids" t-as="l">
+								<t>
+									<td style=" text-align: left;">
+										<span t-field="l.gst_code_id.name" />
+									</td>
+									<td style=" text-align: left;">
+										<span t-field="l.name" />
+									</td>
+									<td style=" text-align: center;">
+										<span t-field="l.project_code" />
+									</td>
+									<td style=" text-align: center;">
+										<span t-field="l.quantity" />
+									</td>
+									<td style=" text-align: center;">
+										<span t-field="l.uom_id.name" />
+									</td>
+									<td style=" text-align: right;">
+										<span t-field="l.price_unit" />
+									</td>
+									<td style=" text-align: right;">
+										<span t-field="l.price_subtotal" />
+									</td>
+
+								</t>
+							</tr>
+						</tbody>
+					</table>
+					<div class="clearfix"
+						style="page-break-inside: avoid;padding-right:15px;">
+						<div id="total" class="row pull-right">
+							<div>
+								<table class="table-condensed"
+									style="min-width: 250px;max-width: 400px;text-align:right;">
+									<tr class="border-black"
+										style="border-bottom:1px solid #dddddd;">
+										<td>
+											<strong>Subtotal</strong>
+										</td>
+										<td class="text-right">
+											<span t-field="o.amount_untaxed"
+												t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+										</td>
+									</tr>
+									<t t-set="tax_groups_length"
+										t-value="len(o._get_tax_amount_by_group())" />
+									<t t-foreach="o._get_tax_amount_by_group()"
+										t-as="amount_by_group">
+										<tr style="border-bottom:1px solid #dddddd;">
+											<t
+												t-if="len(o.tax_line_ids) == 1 and o.amount_untaxed == amount_by_group[2]">
+												<td>
+													<span t-esc="amount_by_group[0]" />
+												</td>
+												<td class="text-right">
+													<span t-esc="amount_by_group[1]"
+														t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+												</td>
+											</t>
+											<t t-else="">
+												<td>
+													<span t-esc="amount_by_group[0]" />
+													<span>
+														&amp;nbsp;
+														<span>on</span>
+														<t t-esc="amount_by_group[2]"
+															t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+													</span>
+												</td>
+												<td class="text-right">
+													<span t-esc="amount_by_group[1]"
+														t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+												</td>
+											</t>
+										</tr>
+									</t>
+									<tr class="border-black">
+										<td>
+											<strong>Total</strong>
+										</td>
+										<td class="text-right">
+											<span t-field="o.amount_total"
+												t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<hr>
+						<div style="width: 100%;height:40px;padding-top:10px">
+							<strong>Amount (in words) :</strong>
+							<span t-field="o.amount_in_word" />
+						</div>
+					</hr>
+					<br />
+					<!-- <table>
+						<tr
+							style="width:100%;background-color: white;background:transparent;">
+							<td>
+								<strong>Bank Details for Payment:</strong>
+								<br /> -->
+								<table style='width:100%;background:transparent;'>
+									<tr style='background-color: white;background:transparent !important;'>
+										<td>
+								<span t-field="o.bank_details" />
+							</td>
+						</tr>
+					</table>
+							<!-- </td>
+						</tr>
+					</table> -->
+
+					<!-- <div class="footer"> <table class="footer" style="width: 100%;height:140px;"> 
+						<td> <table class="table1" style="width:100%;border-top: 1px solid black;border-left: 
+						1px solid black;border-right: 1px solid black;"> <tr> <td style=" width:50%;"></td> 
+						<td style=" width:50%; text-align: right"> <span>For Point Perfect Transcription 
+						Services India Pvt Ltd </span> </td> </tr> <tr> <td style=" width:50%;"></td> 
+						<td style=" width:50%; padding-top:60px;text-align: right"> <span>Authorised 
+						Signatory</span> </td> </tr> </table> <table style="width:100%;border-top: 
+						1px solid black;"> <tbody> <tr> <td> <center> <span>This is a Computer Generated 
+						Invoice</span> </center> </td> </tr> </tbody> </table> </td> </table> </div> -->
+				</div>
+				<!-- </div> -->
+			</t>
+		</template>
+
+		<template id="report_ppts_invoice_custom">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="ppts_account_invoice.report_invoice_document_ppts"
+						t-lang="o.partner_id.lang" />
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

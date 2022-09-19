@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fiscl_periods,fiscal.periods,model_fiscal_periods,base.group_user,1,1,1,1
+access_fiscl_periods_month,periods.generate,model_periods_generate,base.group_user,1,1,1,1
+acess_fiscal_periods_week,periods.week,model_periods_week,base.group_user,1,1,1,1

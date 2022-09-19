@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="tds_sql_report_tree" model="ir.ui.view">
+	    <field name="name">TDS Report Tree</field>
+	    <field name="model">tds.sql.report</field>
+	    <field name="type">tree</field>
+	    <field name="arch" type="xml">
+	      <tree string="TDS Payment Report">
+		      <field name="entry_date"/>
+		      <field name="company_id"/>
+		      <field name="payment_id"/>
+		      <field name="invoice_id"/>
+		      <field name="partner_id"/>
+		      <field name="internal_ref"/>
+		      <field name="supplier_ref_date"/>
+		      <field name="tds_section_id"/>
+		      <field name="account_id"/>
+		      <field name="access_amount"/>
+		      <field name="tds_total"/>
+		      <field name="tds_bal"/>
+		      <field name="net_payable"/>
+		      <field name="invoice_state"/>
+		      <field name="paid_state"/>			            
+	        </tree>
+	    </field>         
+	</record>
+	
+	<record id="tds_report_search" model="ir.ui.view">
+	    <field name="name">TDS Report Search</field>
+	    <field name="model">tds.sql.report</field>
+	    <field name="type">search</field>
+	    <field name="arch" type="xml">
+	    <search>
+			<field name="entry_date" select="1"/>
+			<field name="company_id" select="1"/>
+			<field name="invoice_id" select="1"/>
+			<field name="payment_id" select="1"/>
+			<field name="partner_id" select="1"/>
+			<field name="internal_ref" select="1"/>
+			<field name="supplier_ref_date" select="1"/>
+			<field name="tds_section_id" select="1"/>
+			<field name="account_id" select="1"/>
+			<field name="tds_total" select="1"/>
+			<field name="access_amount" select="1"/>
+			<field name="net_payable" select="1"/>
+			<field name="invoice_state" select="1"/>
+			<field name="paid_state" select="1"/>
+			<group expand="0" string="Group By...">
+				<filter string="Company" icon="terp-folder-orange" domain="[]" context="{'group_by':'company_id'}"/>
+				<filter string="Invoice State" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'invoice_state'}"/>
+				<filter string="Account" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'account_id'}"/>
+				<filter string="TDS Section" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'tds_section_id'}"/>
+				<filter string="Partner" icon="terp-folder-orange" domain="[]" context="{'group_by':'partner_id'}"/>
+				<filter string="Payment State" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'paid_state'}"/>
+			 </group>
+			 </search>
+	    </field>
+	</record>
+	              
+	<record id="tds_supplier_payment_report" model="ir.actions.act_window">
+		<field name="name">TDS Status</field>
+		<field name="res_model">tds.sql.report</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="search_view_id" ref="tds_report_search" />
+		<field name="view_id" ref="tds_sql_report_tree" />
+	</record>
+	      
+	<menuitem id="menu_tds_report" name="TDS Report" parent="account.menu_finance_reports"/>
+	<menuitem action="tds_supplier_payment_report" id="menu_tds_report_tree" parent="ppts_account_tds.menu_tds_report"/>
+
+</odoo>

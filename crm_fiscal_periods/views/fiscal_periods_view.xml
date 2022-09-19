@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+
+		<!-- Main Menu -->
+		<menuitem name="Fiscal Periods"
+			id="menu_fiscal_periods"
+			web_icon="crm_fiscal_periods,static/description/icon.png"
+			sequence="3" />
+
+		<record id="fiscal_periods_form_view" model="ir.ui.view">
+			<field name="name">fiscal.periods.form</field>
+			<field name="model">fiscal.periods</field>
+			<field name="arch" type="xml">
+				<form string="Fiscal Periods">
+					<sheet>
+							<group>
+								<field name="name" />
+								<field name="start_date_periods"/>
+								<field name="end_date_periods"/>
+							</group>
+						<button name="generate_dates" class="oe_highlight"
+						string="Generate" type="object" />
+						<button name="generate_weeks" class="oe_highlight"
+						string="Generate Weeks" type="object" invisible="1"/>
+						<notebook>
+						<page string="Month">
+							<group>
+								<field name="documents_ids" string="">
+										<tree editable="bottom">
+											<field name="month" />
+											<field name="quarter" />
+											<field name="year"/>
+											<field name="start_date" />
+											<field name="end_date" />
+										</tree>
+								</field>
+							</group>
+						</page>
+						<!-- <page string="Week">
+							<group>
+								<field name="documents_week_ids" string="">
+										<tree editable="bottom">
+											<field name="year" />
+											<field name="month" />
+											<field name="month_name" />
+											<field name="week" invisible="1"/>
+											<field name="week_name" />
+											<field name="start_date" />
+											<field name="end_date" />
+										</tree>
+								</field>
+							</group>
+						</page> -->
+					</notebook>						
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="fiscal_periods_tree_view" model="ir.ui.view">
+			<field name="name">fiscal.periods.tree</field>
+			<field name="model">fiscal.periods</field>
+			<field name="arch" type="xml">
+				<tree string="Fiscal Periods">
+				    <field name="name"/>
+					<field name="start_date_periods"/>
+				    <field name="end_date_periods"/>
+				</tree>
+			</field>
+		</record>
+          
+        <record id="action_fiscal_periods_view"
+			model="ir.actions.act_window">
+			<field name="name">Fiscal Periods</field>
+			<field name="res_model">fiscal.periods</field>
+			<field name="view_mode">tree,form</field>
+		</record>  
+
+		<menuitem name="Periods" id="menu_exp_sub_periods"
+			parent="menu_fiscal_periods" action="action_fiscal_periods_view"
+			 sequence="2" />
+	</data>
+</odoo>

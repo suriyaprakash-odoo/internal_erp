@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="view_custom_sale_periods_inherited" model="ir.ui.view">
+		<field name="name">sale.order</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='fiscal_position_id']" position="after">
+               <field name="year" readonly="1"/>
+               <field name="quarter" readonly="1"/>
+               <field name="month" readonly="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 
+	</field>
+	</record>
+	
+	<record id="view_custom_sale_periods_inherited_tree" model="ir.ui.view">
+		<field name="name">sale.order</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_quotation_tree" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='user_id']" position="after">
+               <field name="year" invisible="1"/>
+               <field name="quarter" invisible="1"/>
+               <field name="month" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 
+	</field>
+	</record>
+	
+	<record id="view_custom_crm_periods_inherited" model="ir.ui.view">
+		<field name="name">crm.lead</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='referred']" position="after">
+               <field name="year" readonly="1"/>
+               <field name="quarter" readonly="1"/>
+               <field name="month" readonly="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 
+	</field>
+	</record>
+	
+	<record id="view_custom_crm_periods_inherited_tree" model="ir.ui.view">
+		<field name="name">crm.lead</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_tree_view_oppor" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='user_id']" position="after">
+               <field name="year" invisible="1"/>
+               <field name="quarter" invisible="1"/>
+               <field name="month" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 
+	</field>
+	</record>
+	
+	<record id="view_custom_invoice_periods_inherited1" model="ir.ui.view">
+		<field name="name">account.invoice</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='fiscal_position_id']" position="after">
+               <field name="year" readonly="1" invisible="1"/>
+               <field name="quarter" readonly="1" invisible="1"/>
+               <field name="month" readonly="1" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 
+	</field>
+	</record>
+		
+	<record id="view_custom_invoice_periods_inherited1_tree" model="ir.ui.view">
+		<field name="name">account.invoice</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_tree" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='date_due']" position="after">
+               <field name="year" invisible="1"/>
+               <field name="quarter" invisible="1"/>
+               <field name="month" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 
+	</field>
+	</record>
+	
+	<record id="view_custom_invoice_periods_inherited" model="ir.ui.view">
+		<field name="name">account.invoice</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='date']" position="after">
+               <field name="year" readonly="1" invisible="1"/>
+               <field name="quarter" readonly="1" invisible="1"/>
+               <field name="month" readonly="1" invisible="1"/>
+               <field name="week" invisible="1" />
+        </xpath> 	
+	</field>
+	</record>
+	
+	<record id="view_custom_invoice_payments_periods_inherited" model="ir.ui.view">
+		<field name="name">account.payment</field>
+		<field name="model">account.payment</field>
+		<field name="inherit_id" ref="account.view_account_payment_form" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='payment_transaction_id']" position="after">
+               <field name="year" readonly="1" invisible="1"/>
+               <field name="quarter" readonly="1" invisible="1"/>
+               <field name="month" readonly="1" invisible="1"/>
+               <field name="week" invisible="1" />
+        </xpath> 	
+	</field>
+	</record>
+	
+	<record id="view_custom_invoice_payments_tree_periods_inherited" model="ir.ui.view">
+		<field name="name">account.payment</field>
+		<field name="model">account.payment</field>
+		<field name="inherit_id" ref="account.view_account_payment_tree" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='amount']" position="after">
+               <field name="year" invisible="1"/>
+               <field name="quarter" invisible="1"/>
+               <field name="month" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 	
+	</field>
+	</record>
+	
+	<record id="view_custom_move_payments_form_periods_inherited" model="ir.ui.view">
+		<field name="name">account.move</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='date']" position="after">
+               <field name="year" readonly="1" invisible="1"/>
+               <field name="quarter" readonly="1" invisible="1"/>
+               <field name="month" readonly="1" invisible="1"/>
+               <field name="week" invisible="1" />
+        </xpath> 	
+	</field>
+	</record>
+	
+	<record id="view_custom_move_payments_tree_periods_inherited" model="ir.ui.view">
+		<field name="name">account.move</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_tree" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='amount']" position="after">
+               <field name="year" invisible="1"/>
+               <field name="quarter" invisible="1"/>
+               <field name="month" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 	
+	</field>
+	</record>
+	<record id="view_custom_move_line_payments_form_periods_inherited" model="ir.ui.view">
+		<field name="name">account.move.line</field>
+		<field name="model">account.move.line</field>
+		<field name="inherit_id" ref="account.view_move_line_form" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='date_maturity']" position="after">
+               <field name="year" readonly="1" invisible="1"/>
+               <field name="quarter" readonly="1" invisible="1"/>
+               <field name="month" readonly="1" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 	 
+	</field>
+	</record>
+	
+	<record id="view_custom_move_line_payments_tree_periods_inherited" model="ir.ui.view">
+		<field name="name">account.move.line</field>
+		<field name="model">account.move.line</field>
+		<field name="inherit_id" ref="account.view_move_line_tree" />
+		<field name="arch" type="xml"> 
+        <xpath expr="//field[@name='date_maturity']" position="after">
+               <field name="year" invisible="1"/>
+               <field name="quarter" invisible="1"/>
+               <field name="month" invisible="1"/>
+               <field name="week" invisible="1"/>
+        </xpath> 	
+	</field>
+	</record>
+	
+	 <record id="sale_fiscal_periods_view_groupby_inherit2" model="ir.ui.view">
+			<field name="name">sale.order</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
+			<field name="arch" type="xml">
+				<xpath expr="//search//group" position="inside">
+					<filter string="Fiscal Year" context="{'group_by':'year'}" />
+					<filter string="Fiscal Quarter" context="{'group_by':'quarter'}" />
+					<filter string="Fiscal Month" context="{'group_by':'month'}" />
+<!-- 					<filter string="Fiscal Week" context="{'group_by':'week'}" />
+ -->				</xpath>
+			</field>
+	</record>
+	
+	 <record id="crm_fiscal_periods_view_inherit1" model="ir.ui.view">
+			<field name="name">crm.lead</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search//group" position="inside">
+					<filter string="Fiscal Year" context="{'group_by':'year'}" />
+					<filter string="Fiscal Quarter" context="{'group_by':'quarter'}" />
+					<filter string="Fiscal Month" context="{'group_by':'month'}" />
+<!-- 					<filter string="Fiscal Week" context="{'group_by':'week'}" />
+ -->				</xpath>
+			</field>
+	</record>
+	
+	<record id="invoice_fiscal_periods_view_inherit4" model="ir.ui.view">
+			<field name="name">account.invoice</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.view_account_invoice_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search//group" position="inside">
+					<filter string="Fiscal Year" context="{'group_by':'year'}" />
+					<filter string="Fiscal Quarter" context="{'group_by':'quarter'}" />
+					<filter string="Fiscal Month" context="{'group_by':'month'}" />
+<!-- 					<filter string="Fiscal Week" context="{'group_by':'week'}" />
+ -->				</xpath>
+			</field>
+	</record> 
+	
+	 <record id="payments_fiscal_periods_view_inherit5" model="ir.ui.view">
+			<field name="name">account.payment</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_search" />
+			<field name="arch" type="xml">
+				<xpath expr="//search" position="inside">
+					<filter string="Fiscal Year" context="{'group_by':'year'}" />
+					<filter string="Fiscal Quarter" context="{'group_by':'quarter'}" />
+					<filter string="Fiscal Month" context="{'group_by':'month'}" />
+<!-- 					<filter string="Fiscal Week" context="{'group_by':'week'}" />
+ -->				</xpath>
+			</field>
+	</record>  
+	
+	<record id="move_fiscal_periods_view_inherit5" model="ir.ui.view">
+			<field name="name">account.move</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_account_move_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search//group" position="inside">
+					<filter string="Fiscal Year" context="{'group_by':'year'}" />
+					<filter string="Fiscal Quarter" context="{'group_by':'quarter'}" />
+					<filter string="Fiscal Month" context="{'group_by':'month'}" />
+<!-- 					<filter string="Fiscal Week" context="{'group_by':'week'}" />
+ -->				</xpath>
+			</field>
+	</record>  
+	
+	<record id="move_line_fiscal_periods_view_inherit5" model="ir.ui.view">
+			<field name="name">account.move.line</field>
+			<field name="model">account.move.line</field>
+			<field name="inherit_id" ref="account.view_account_move_line_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search//group" position="inside">
+					<filter string="Fiscal Year" context="{'group_by':'year'}" />
+					<filter string="Fiscal Quarter" context="{'group_by':'quarter'}" />
+					<filter string="Fiscal Month" context="{'group_by':'month'}" />
+<!-- 					<filter string="Fiscal Week" context="{'group_by':'week'}" />
+ -->				</xpath>
+			</field>
+	</record>  
+</odoo>

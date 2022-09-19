@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Sales Team -->
+
+	<record id="crm_team_view_form_inherit" model="ir.ui.view">
+		<field name="name">crm.team.form</field>
+		<field name="model">crm.team</field>
+		<field name="inherit_id" ref="sales_team.crm_team_view_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/div/div" position="before">
+				<group>
+					<field name="crm_team_id" />
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="crm_team_view_tree_inherit" model="ir.ui.view">
+		<field name="name">crm.team.tree</field>
+		<field name="model">crm.team</field>
+		<field name="inherit_id" ref="sales_team.crm_team_view_tree" />
+		<field name="arch" type="xml">
+			<field name="name" position="before">
+				<field name="crm_team_id" invisible="1"/>
+				<field name="display_name" />
+			</field>
+		</field>
+	</record>
+
+</odoo>   

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record model="ir.sequence" id="seq_pay">
+		<field name="name">customer.partial.payment</field>
+		<field name="code">customer.partial.payment</field>
+		<field name="prefix">Rec/</field>
+		<field name="padding">3</field>
+	</record>
+
+	<record id="partial_receipt_form" model="ir.ui.view">
+		<field name="name">customer.partial.payment.form</field>
+		<field name="model">customer.partial.payment</field>
+		<field name="arch" type="xml">
+			<form string="Partial Receipts">.
+				<header>
+					<button name="create_payments" string="Validate" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+					<button name="cancel_payment" string="Cancel" attrs="{'invisible':[('state','=','cancel')]}" type="object"/>
+					<button name="reset_to_draft" string="Reset to Draft" attrs="{'invisible':[('state','!=','cancel')]}" type="object"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" name="open_journal_entries" string="Journal Items" type="object" icon="fa-bars" attrs="{'invisible':[('state','!=','posted')]}"/>
+					</div>
+					<h1 class="mt0">
+						<field name="name" class="oe_inline" readonly="1"/>
+					</h1>
+					<group>
+						<group>
+							<field name="partner_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="paid_amount" required="1" attrs="{'readonly':[('state','!=','draft')]}" invisible="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+							<field name="journal_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="payment_mode_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+						</group>
+						<group>
+							<field name="payment_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="communication" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="currency_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="payment_method_id" invisible="1"/>
+							<field name="payment_type" invisible="1"/>
+							<field name="partner_type" invisible="1"/>
+							<field name="account_move_id" readonly="1" attrs="{'invisible':[('account_move_id','=',False)]}"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Payment Information">
+							<label string="Credit"/>
+							<field name="credit_line_ids" widget="one2many" attrs="{'readonly':[('state','!=','draft')]}">
+								<tree editable="bottom" string="Invoices" sum="amount_to_pay">
+									<field name="description"/>
+									<field name="invoice_id"/>
+									<field name="payment_id"/>
+									<field name="invoice_date"/>
+									<field name="amount_invoice" invisible="1"/>
+									<field name="amount_residual" invisible="1"/>
+									<field name="amount_invoice_dup" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+									<field name="amount_residual_dup" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+									<field name="currency_id"/>
+									<field name="currency_rate"/>
+									<field name="inverse_val" invisible="1"/>
+									<field name="full_reconcile"/>
+									<field name="amount_to_pay" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+								</tree>
+							</field>
+							<group></group>
+							<label string="Debit"/>
+							<field name="debit_line_ids" widget="one2many" attrs="{'readonly':[('state','!=','draft')]}">
+								<tree editable="bottom" string="Invoices" sum="amount_to_pay">
+									<field name="description"/>
+									<field name="invoice_id"/>
+									<field name="payment_id"/>
+									<field name="invoice_date"/>
+									<field name="amount_invoice" invisible="1"/>
+									<field name="amount_residual" invisible="1"/>
+									<field name="amount_invoice_dup" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+									<field name="amount_residual_dup" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+									<field name="currency_id"/>
+									<field name="currency_rate"/>
+									<field name="full_reconcile"/>
+									<field name="inverse_val" invisible="1"/>
+									<field name="amount_to_pay" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+								</tree>
+							</field>
+							<field name="note" placeholder="Add an Internal note.." nolabel="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="partial_receipt_tree" model="ir.ui.view">
+		<field name="name">customer.partial.payment.tree</field>
+		<field name="model">customer.partial.payment</field>
+		<field name="arch" type="xml">
+			<tree string="Partial Receipts">
+				<field name="account_move_id"/>
+				<field name="name"/>
+				<field name="journal_id"/>
+				<field name="payment_date"/>
+				<field name="partner_id"/>
+				<field name="paid_amount"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="partial_receipt_search" model="ir.ui.view">
+		<field name="name">customer.partial.payment.search</field>
+		<field name="model">customer.partial.payment</field>
+		<field name="arch" type="xml">
+			<search string="Partial Receipts">
+				<field name="name" filter_domain="[('name','ilike',self)]" string="Description"/>
+				<separator/>
+				<field name="partner_id"/>
+				<field name="journal_id"/>
+				<field name="account_move_id"/>
+				<separator/>
+				<filter string="Draft" domain="[('state','=','draft')]" name='state_draft'/>
+				<filter string="Posted" domain="[('state','=','posted')]" name='state_posted'/>
+				<filter string="Cancelled" domain="[('state','=','cancel')]" name='state_cancel'/>
+				<separator/>
+				<filter string="Partner" domain="[]" context="{'group_by': 'partner_id'}"/>
+				<filter string="Journal" domain="[]" context="{'group_by': 'journal_id'}"/>
+				<filter string="State" domain="[]" context="{'group_by': 'state'}"/>
+				<filter string="Currency" domain="[]" context="{'group_by': 'currency_id'}" groups="base.group_multi_currency"/>
+			</search>
+		</field>
+	</record>
+
+	<!-- Action View -->
+	<record id="partial_receipt_action" model="ir.actions.act_window">
+		<field name="name">Advance Receipt Adjustment</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">customer.partial.payment</field>
+		<field name="view_id" ref="partial_receipt_tree"/>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'default_payment_type':'inbound','default_partner_type':'customer'}</field>
+		<field name="search_view_id" ref="partial_receipt_search"/>
+	</record>
+
+	<!-- Menu Details -->
+	<menuitem id="partial_receipt_menu" name="Advance Receipt Adjustment" parent="account.menu_finance_receivables_documents" sequence="1" action="partial_receipt_action" groups="account.group_account_manager"/>
+
+	
+</odoo>

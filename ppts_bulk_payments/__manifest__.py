@@ -1,0 +1,20 @@
+{
+    'name': 'Bulk Payments',
+    'version': '11.0.1.0.0',
+    'description': 'Bulk payments for invoice',
+    'summary': 'Bulk payments for invoice',
+    'category': 'Account Invoice',
+    'author': 'PPTS [India] Pvt.Ltd.',
+    'website': "http://www.pptssolutions.com",
+    'sequence': 67,
+    'depends': ['base','account','ppts_payment_mode_master'],
+    'data': [
+        'views/account_payment_view.xml',
+        'views/account_view.xml',
+        # 'views/payment_receipt.xml',
+    ],
+    'license': 'LGPL-3',
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

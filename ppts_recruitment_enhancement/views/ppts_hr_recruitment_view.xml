@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="edit_custom_hr_job_inherit" model="ir.ui.view">
+			<field name="name">hr.job.inherit</field>
+			<field name="model">hr.job</field>
+			<field name="inherit_id" ref="hr.view_hr_job_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//label[@for='name']" position="before">
+					<div class="row">
+						<div class="col-sm-6">
+							<label for="job_seniority_id" class="oe_edit_only" />
+							<h1>
+								<field name="job_seniority_id" required="1" />
+							</h1>
+						</div>
+						<div class="col-sm-6">
+							<label for="job_type" class="oe_edit_only" />
+							<h1>
+								<field name="job_type" style="font-size: 14px;"
+									required="1" />
+							</h1>
+						</div>
+					</div>
+				</xpath>
+				<xpath expr="//field[@name='address_id']" position="before">
+					<label for="application_survey_id" groups="base.group_user" />
+					<div groups="base.group_user" class="o_row">
+						<field name="application_survey_id" />
+						<button string="Display Applicant Form"
+							name="action_print_applicant_survey" type="object"
+							attrs="{'invisible':[('survey_id','=',False)]}" class="oe_link" />
+					</div>
+				</xpath>
+				<xpath expr="//field[@name='department_id']" position="before">
+					<field name="job_template" required="1" />
+				</xpath>
+				<xpath expr="//field[@name='state']" position="replace">
+					<field name="state" widget="statusbar"
+						statusbar_visible="draft,approval,recruit,open,refuse" />
+				</xpath>
+				<xpath expr="//button[@name='set_open']" position="after">
+					<!-- <button name="first_approval" string="Send To Approval" type="object" 
+						attrs="{'invisible':[('hide_first_approval','=',True)]}" groups="ppts_recruitment_enhancement.group_send_to_approval"/> -->
+					<button name="approval" string="Send For Approve"
+						attrs="{'invisible':[('state','in',('recruit','open','approval','refuse'))]}"
+						type="object"
+						groups="ppts_recruitment_enhancement.group_send_to_approval" />
+					<button name="recruitment_progress" string="Approve"
+						attrs="{'invisible':[('state','in',('draft','recruit','open','refuse'))]}"
+						type="object"
+						groups="ppts_recruitment_enhancement.group_second_approval" />
+					<button name="%(action_view_refuse_wizard)d" string="Refuse"
+						attrs="{'invisible':[('state','=','refuse')]}" type="action" />
+				</xpath>
+				<xpath expr="//field[@name='no_of_recruitment']"
+					position="after">
+					<field name="reason_for_cancel" />
+				</xpath>
+				<xpath expr="//form/sheet/div[3]" position="attributes">
+					<attribute name="attrs">{}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='department_id']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='survey_id']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='application_survey_id']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='address_id']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='user_id']" position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='no_of_recruitment']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='hr_responsible_id']"
+					position="attributes">
+					<attribute name="required">1</attribute>
+				</xpath>
+				<xpath expr="//div[@class='oe_button_box']" position="after">
+					<div class="oe_title">
+						<h1>
+							<field name="sequence_id" />
+						</h1>
+					</div>
+				</xpath>
+				<xpath expr="//field[@name='hr_responsible_id']"
+					position="after">
+					<label for="exp_in_yr" string="Experience in Year" />
+					<div>
+						<field name="exp_in_yr" style="width: 46.5%" required="1" />
+						To
+						<field name="exp_in_month" style="width: 47.5%" required="1" />
+					</div>
+					<field name="age_preference" required="1" />
+					<field name="gender" required="1" />
+					<field name="reason_for_manpower" required="1"
+						options='{"no_open": True, "no_create": True}' />
+					<!-- <field name="type"/> -->
+					<!-- <field name="contract_month" attrs="{'invisible': [('type','=', 
+						'permanent')]}"/> -->
+					<field name="hide_first_approval" invisible='1' />
+					<field name="hide_second_approval" invisible='1' />
+					<field name="hide_approved" invisible='1' />
+					<field name="hide_third_approval" invisible='1' />
+					<label for="budget_from" string="Budget" />
+					<div>
+						<field name="budget_from" style="width: 41.5%" required="1" />
+						To
+						<field name="budget_to" style="width: 41.5%" required="1" />
+						<span>/Years</span>
+					</div>
+					<field name="expected_date" required="1" />
+					<field name="recruitment_date" readonly="1" />
+					<field name="closed_date" readonly="1" />
+				</xpath>
+				<xpath expr="/form/sheet/group" position="after">
+					<!-- <group>
+						<group>
+							<notebook>
+								<page string="Qualification">
+									<field name="hr_qualification_ids" widget="one2many">
+										<tree editable="bottom" string="Qualification">
+											<field name="name" />
+											<field name="code" />
+										</tree>
+									</field>
+								</page>
+							</notebook>
+						</group>
+						<group>
+							<notebook>
+								<page string="Key Skills &amp;Abilities">
+									<field name="hr_keyskills_ids" widget="one2many">
+										<tree editable="bottom" string="Qualification">
+											<field name="name" />
+											<field name="code" />
+										</tree>
+									</field>
+								</page>
+							</notebook>
+						</group>
+					</group> -->
+					<group string="Log"
+						groups="hr_recruitment.group_hr_recruitment_manager">
+						<div>
+							<field name="hr_position_log_ids" widget="one2many">
+								<form>
+									<h1>
+										<field name="sequence_id" />
+									</h1>
+									<group>
+										<group>
+											<field name="job_seniority_id" />
+											<field name="job_type" />
+											<field name="name" />
+										</group>
+									</group>
+									<group>
+										<group>
+											<field name="job_template" />
+											<field name="department_id" />
+											<field name="survey_id" />
+											<field name="application_survey_id" />
+											<field name="address_id" />
+											<!-- <field name="alias_email" /> -->
+											<field name="user_id" />
+											<field name="no_of_recruitment" />
+										</group>
+										<group>
+											<field name="hr_responsible_id" />
+											<field name="exp_in_yr" />
+											<field name="exp_in_month" />
+											<field name="age_preference" />
+											<field name="gender" />
+											<field name="reason_for_manpower"
+												options='{"no_open": True, "no_create": True}' />
+											<field name="budget_from" />
+											<field name="budget_to" />
+											<field name="expected_date" />
+											<field name="recruitment_date" />
+											<field name="closed_date" />
+											<field name="duration_days" />
+										</group>
+									</group>
+									<group>
+										<div>
+											<field name="hr_qualification_ids" widget="one2many">
+												<tree editable="bottom" string="Qualification">
+													<field name="name" />
+													<field name="code" />
+												</tree>
+											</field>
+										</div>
+										<div>
+											<field name="hr_keyskills_ids" widget="one2many">
+												<tree editable="bottom" string="Qualification">
+													<field name="name" />
+													<field name="code" />
+												</tree>
+											</field>
+										</div>
+									</group>
+									<div>
+										<field name="intro_box" />
+										<label for="intro" style="padding-right: 20px;" />
+										<br />
+										<field name="intro"
+											attrs="{'invisible': [('intro_box', '=', False)]}" />
+									</div>
+									<div>
+
+										<field name="descript_box" />
+										<label for="descript" style="padding-right: 20px;" />
+										<br />
+										<field name="descript"
+											attrs="{'invisible': [('descript_box', '=', False)]}" />
+									</div>
+								</form>
+								<tree create="false" delete="false">
+									<field name="sequence_id" />
+									<field name="recruitment_date" />
+									<field name="closed_date" />
+									<field name="duration_days" />
+								</tree>
+							</field>
+						</div>
+					</group>
+				</xpath>
+				<xpath expr="/form/sheet/group[2]" position="after">
+					<group string="MPRF History">
+						<div>
+							<field name="mprf_job_position_ids" widget="one2many">
+								<form>
+									<group>
+										<group>
+											<field name="department_id" required="1" />
+											<field name="num_of_positions" required="1" />
+											<label for="from_exp" string="Experience(in years)" />
+											<div>
+												<field name="from_exp" style="width: 30%" required="1" />
+												To
+												<field name="to_exp" style="width: 30%" required="1" />
+											</div>
+											<field name="manpower_reason" />
+											<field name="qualification_required" widget='many2many_tags' required="1" />
+											<field name="reporting_to" />
+										</group>
+										<group>
+											<field name="job_position_id" required="1" />
+											<field name="tentative_doj" />
+											<field name="gender" required="1" />
+											<field name="skills_required" widget='many2many_tags' required="1" />
+											<field name="other_skills" />
+										</group>
+										<group>
+											<label for="budget_from" string="Budget(in CTC/years)" />
+											<div>
+												<field name="budget_from" style="width: 30%" required="1" />
+												To
+												<field name="budget_to" style="width: 30%" required="1" />
+											</div>
+											<field name="employement_type" />
+											<label for="period_count" string="T/P/C Period" />
+											<div>
+												<field name="period_count" style="width: 30%" required="1" />
+												/
+												<field name="period_type" style="width: 30%" required="1" />
+											</div>
+										</group>
+										<group>
+											<field name="requested_by" required="1" />
+											<field name="designation" required="1" />
+											<field name="requested_date" required="1" />
+										</group>
+										<group>
+											<field name="job_description" required="1" />
+										</group>
+									</group>
+								</form>
+								<tree create="false" delete="false">
+									<field name="department_id" />
+									<field name="job_position_id" />
+									<field name="num_of_positions" />
+									<field name="manpower_reason" />
+									<field name="requested_by" />
+									<field name="requested_date" />
+									<field name="status" />
+									<field name="duration_days" />
+								</tree>
+							</field>
+						</div>
+					</group>
+				</xpath>
+				<xpath expr="//label[@for='description']" position="before">
+					<field name="description_box" />
+				</xpath>
+				<xpath expr="//field[@name='description']"
+					position="attributes">
+					<attribute name="attrs">{'invisible':
+						[('description_box','=',False)]}
+					</attribute>
+				</xpath>
+				<xpath expr="//field[@name='description_box']"
+					position="before">
+					<field name="introduction_box" />
+					<label for="introduction" style="padding-right: 20px;" />
+					<br />
+					<field name="introduction"
+						attrs="{'invisible': [('introduction_box', '=', False)]}" />
+				</xpath>
+				<xpath expr="//div[@class='oe_chatter']" position="inside">
+					<field name="message_ids" widget="mail_thread" />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_recruitment.action_hr_job" model="ir.actions.act_window">
+
+			<field name="name">Job Positions</field>
+	        <field name="res_model">hr.job</field>
+	        <field name="context">{"search_default_in_recruitment":1}</field>
+	        <field name="help" type="html">
+	          <p class="oe_view_nocontent_create">
+	              Click here to create a new job position.
+	          </p><p>
+	              Once a job position is created, you can track related applications
+	              and manage the recruitment process.
+	          </p>
+        	</field>
+    	</record>
+
+		<record id="view_hr_job_kanban_inherit" model="ir.ui.view">
+			<field name="name">hr.job.kanban</field>
+			<field name="model">hr.job</field>
+			<field name="inherit_id"
+				ref="hr_recruitment.view_hr_job_kanban" />
+			<field name="arch" type="xml">
+				<xpath expr="//templates/t/div/div[2]/t/div/div[2]/a" position="before">
+					<a name="action_get_mprf_request_view" type="object">
+						MPRF Request
+					</a>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="hr_reason_manpower" model="ir.ui.view">
+			<field name="name">reason.manpower.form</field>
+			<field name="model">reason.manpower</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="code" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_reason_manpower_tree" model="ir.ui.view">
+			<field name="name">reason.manpower.tree</field>
+			<field name="model">reason.manpower</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window"
+			id="action_view_reason_for_manpower">
+			<field name="name">Reason For Manpower</field>
+			<field name="res_model">reason.manpower</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_hr_reason_for_manpower_menu"
+			name="Reason For Manpower"
+			parent="hr_recruitment.menu_hr_recruitment_configuration"
+			action="action_view_reason_for_manpower" sequence="9" />
+		<!-- <record id="hr_position_log" model="ir.ui.view"> <field name="name">hr.job.inherit</field> 
+			<field name="model">hr.job</field> <field name="inherit_id" ref="hr.view_hr_job_form" 
+			/> <field name="arch" type="xml"> </field> </record> -->
+
+	</data>
+</odoo>

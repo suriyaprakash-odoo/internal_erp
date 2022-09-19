@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<!-- <template id="apply_inherit" inherit_id='website_hr_recruitment.apply'> 
+		<xpath expr='//h2' position='replace'> <h2 t-if="job.sudo().job_seniority_id" 
+		class="text-center text-muted"> <span t-field="job.sudo().job_seniority_id.name" 
+		/> </h2> </xpath> <xpath expr='//form' position='replace'> <form action="/website_form/" 
+		method="post" class="s_website_form form-horizontal container-fluid mt32" 
+		enctype="multipart/form-data" data-model_name="hr.applicant" data-success_page="/applicant/welcome_page/" 
+		t-att-data-form_field_department_id="job and job.department_id.id or False" 
+		t-att-data-form_field_job_id="job and job.id or False"> <div class="form-group 
+		form-field o_website_form_required_custom"> <div class="col-md-3 col-sm-3 
+		text-right"> <label class="control-label" for="partner_name">Name</label> 
+		</div> <div class="col-md-2 col-sm-2"> <input type="text" class="form-control 
+		o_website_form_input" name="partner_name" required="" placeholder="First 
+		Name" /> </div> <div class="col-md-2 col-sm-2"> <input type="text" class="form-control 
+		o_website_form_input" name="middle_name" placeholder="Middle Name" /> </div> 
+		<div class="col-md-2 col-sm-2"> <input type="text" class="form-control o_website_form_input" 
+		name="last_name" required="" placeholder="Last Name" /> </div> </div> <div 
+		class="form-group form-field o_website_form_required_custom"> <div class="col-md-3 
+		col-sm-3 text-right"> <label class="control-label" for="email_from">Your 
+		Email</label> </div> <div class="col-md-6 col-sm-6"> <input type="email" 
+		class="form-control o_website_form_input" name="email_from" required="" /> 
+		<input type="hidden" class="form-control o_website_form_input" name="company_id" 
+		t-attf-value="{{job.id}}" /> </div> </div> <div class="form-group form-field 
+		o_website_form_required_custom"> <div class="col-md-3 col-sm-3 text-right"> 
+		<label class="control-label" for="partner_phone">Your Phone Number</label> 
+		</div> <div class="col-md-6 col-sm-6"> <input type="number" id="phone" class="form-control 
+		o_website_form_input" name="partner_phone" required="" /> </div> </div> <div 
+		class="form-group form-field"> <div class="col-md-3 col-sm-3 text-right"> 
+		<label class="control-label" for="description">Short Introduction</label> 
+		</div> <div class="col-md-6 col-sm-6"> <textarea class="form-control o_website_form_input" 
+		name="description"></textarea> </div> </div> <div class="form-group form-field 
+		o_website_form_custom" data_exp="exp"> <div class="col-md-3 col-sm-3 text-right"> 
+		<label class="control-label" for="Resume">Resume</label> </div> <div class="col-md-6 
+		col-sm-6"> <input type="file" class="form-control o_website_form_input" name="Resume" 
+		/> </div> </div> <div class="form-group form-field o_website_form_custom"> 
+		<div class="col-md-3 col-sm-3 text-right"></div> <div t-if="site_key"> <span 
+		t-field="job.site_key" class="site_key" style="display:none;"/> </div> <div 
+		class="col-md-6 col-sm-6"> <script src="https://www.google.com/recaptcha/api.js"></script> 
+		<div class="g-recaptcha" data-sitekey="6LfegG8UAAAAAG8oaE5lKA5gzI_zY36zaRImvaBt" 
+		data-callback="YourOnSubmitFn"></div> </div> <script> $(document).ready(function(){ 
+		$("body").on('click', ".o_website_form_send", function() { if($("name")) 
+		setTimeout(function(){ if($("#o_website_form_result").text().indexOf("An 
+		error has occured, the form has not been sent.") >= 0){ $("#o_website_form_result").text("Please 
+		enter valid captcha") } }, 100); }); }); </script> </div> <div class="form-group"> 
+		<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7" id="submit_form"> 
+		<span class="btn btn-primary btn-lg o_website_form_send">Submit</span> <span 
+		id="o_website_form_result"></span> </div> </div> </form> </xpath> </template> -->
+
+	<template id="detail" name="Job Detail" inherit_id="website_hr_recruitment.detail">
+		<xpath expr='//div/section' position='replace'>
+			<style>
+				.jobs-container{
+				padding:20px;
+				}
+				.apply-container{
+				width:90%;
+				background-color: #c9d3f7;
+				}
+				.block {
+				background-color: #f8f8f8;
+				width:
+				100%;
+				position: relative;
+				padding: 15px;
+				border: 1px solid #c9d3f7;
+				}
+
+				.block-inner {
+				background-color: #ffffff;
+				width: 100%;
+				padding: 20px;
+				}
+				.block-inner:after {
+				display: block;
+				content: "";
+				clear: both;
+				}
+
+				.block:hover {
+				box-shadow: 0 0 7px 0 rgba(0,0,0,.36);
+				}
+
+				.job_apply:hover {
+				background-image: linear-gradient(to right,
+				#e54f25 0%, #e57925 100%) !important;
+				}
+				.block-info {
+				margin-top: 15px;
+				display:block !important;
+				border-top: 1px solid #c9d3f7;
+				border-bottom: 1px solid #c9d3f7;
+				padding: 0;
+				}
+				.block-info div {
+				border-right: 1px solid #c9d3f7;
+				padding: 10px;
+				}
+				.block-info
+				div:last-child {
+				border-right: 0;
+				}
+
+				.block-job-details{
+				margin-top:
+				15px;
+				position:relative;
+				padding: 0;
+				}
+				.block-job-description-lable{
+				position:relative;
+				margin-top: 15px;
+				}
+				.block-job-details-value{
+				overflow-x: auto;
+				max-height: 300px;
+				margin-top: 15px;
+				}
+				.apply_now_form {
+				background-color: #4c4c4c1c;
+				}
+				.apply_now_form:hover
+				{
+				box-shadow: 0 0 7px 0 rgba(0,0,0,.36);
+				}
+				.job_apply_submit{
+				background-color: #df6512;
+			    border-color: #df6512;
+			    border-radius: 23px;
+			    color: white;
+			    width: 150px;
+			    box-shadow: 1px 2px 3px 2px rgb(202 202 202);
+			    background-image: linear-gradient(to right, #e57925 0%, #e54f25 100%);
+				}
+				.job_apply_submit:hover {
+				background-image: linear-gradient(to right, #e54f25 0%, #e57925
+				100%) !important;
+				}
+				.apply_form_hide{
+				display:none !important;
+				}
+
+				.div-submit-btn { float: right;}
+				.fl-right {float: right; }.fl-left
+				{float: left;}
+
+
+				.apply_close{position:absolute;right:10px;top:0;cursor:pointer}
+				.btn-default{background-color:#df6512;border-color:#df6512;border-radius:23px;color:#fff;width:150px;box-shadow:1px
+				2px 3px 2px #cacaca;background-image:linear-gradient(to
+				right,#e57925 0,#e54f25 100%);margin-bottom:1em;}
+
+
+
+				@media only screen
+				and (max-width: 600px) and (min-width: 300px) {
+				.fl-right{ float:none
+				!important; }
+
+				.div-submit-btn {
+				float: none !important;
+				text-align:
+				center;
+				}
+				.block-info div {
+				border-right: 1px solid #c9d3f7 !important;
+				border-left: 1px solid #c9d3f7 !important;
+				}
+				.block-title {
+				font-size:
+				20px !important;
+				text-align: center;
+				}
+				.g-recaptcha { transform:
+				scale(0.75);}
+
+				}
+
+
+			</style>
+			<script>
+				$(document).ready(function(){
+				$(".job_apply").click(function(){
+				$(".apply_now_form").removeClass("apply_form_hide");
+				window.location.hash = '#form_apply_now';
+				});
+				$(".apply_close").click(function(){
+				$(".apply_now_form").addClass("apply_form_hide");
+				window.location.hash = '#apply_now_description';
+				});
+				});
+			</script>
+			<section class="mb16 bg-white">
+				<div class="jobs-container col-xs-12" id="apply_now_description">
+					<div class="block">
+						<div class="block-inner">
+							<div class="block-title" style="font-size: 25px;">
+								<label style="color:#e67926;">
+									<a href="/jobs" style="color:#e67926;">Jobs</a>
+									/
+								</label>
+								<label style="color:#e67926;">
+									<span t-field="job.name" style="color:#e67926;" />
+								</label>
+								<div class="fl-right">
+									<button type="submit" class="btn btn-default job_apply">Apply Now</button>
+								</div>
+							</div>
+							<div class="col-xs-12 block-info">
+								<div class="col-sm-4 block-info-dept">
+									<p>
+										<b>Department</b>
+									</p>
+									<span t-field="job.department_id.name" />
+								</div>
+								<div class="col-sm-4 block-info-opening">
+									<p>
+										<b>Number of Openings</b>
+									</p>
+									<span t-field="job.no_of_recruitment" />
+								</div>
+								<div class="col-sm-4 block-info-date">
+									<p>
+										<b>Joining Period</b>
+									</p>
+									<span t-field="job.expected_date" />
+								</div>
+							</div>
+
+							<div class="row block-job-details">
+								<div class="col-sm-2 col-md-2 block-job-description-lable">
+									<p>
+										<b>Description</b>
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-10 block-job-details-value">
+									<div t-field="job.description" />
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<form action="/job-apply" method="post"
+					class="s_website_form form-horizontal container-fluid mt32"
+					data-model_name="hr.applicant" data-success_page="/apply-job-thank-you"
+					enctype="multipart/form-data">
+					<div class="col-xs-12 apply_now_form apply_form_hide" id="form_apply_now">
+						<div class="pull-right apply_close" style="background-color: #4c4c4c1c;margin-top:15px;">
+							<button type="close" class="btn btn-close" style="background-color: #ebebeb;">
+								<span class="fa fa-times" style="background-color: #4c4c4c1c;" />
+							</button>
+						</div>
+						<h2 class="text-center">Apply Now</h2>
+
+
+
+						<div class="row">
+							<div class="col-sm-12 col-md-6" style="margin-top:15px;">
+								<input type="hidden" class="resume_value" />
+								<div class="col-sm-12">
+									<h3 style="color:#df6512;">Personal Information</h3>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<select name="job_position_id" id="jobs" required="True"
+											class="form-control" style="border:1px solid #df6512;"
+											t-att-value="job.name">
+											<option value="" selected="selected">Select Job*</option>
+											<t t-foreach="jobs" t-as="open_job">
+												<option t-att-value="open_job.id"
+													t-att-selected="open_job.id == (job.id and job.id or -1)"
+													t-if="job">
+													<t t-esc="open_job.name" />
+												</option>
+											</t>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="firstname" placeholder="First Name*" pattern="[A-Za-z]{1,15}"
+											title="Name should only contain alphabets. e.g. John or john"
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="middlename" placeholder="Middle Name" pattern="[A-Za-z]{1,15}"
+											title="Name should only contain alphabets. e.g. John or john"
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="lastname" placeholder="Last Name*" pattern="[A-Za-z]{1,15}"
+											title="Name should only contain alphabets. e.g. John or john"
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<input type="email" class="form-control o_website_form_input"
+											name="email_from" placeholder="Email*" required=""
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="partner_phone" placeholder="Phone Number*" pattern="[0-9]{1,10}"
+											title="Phone should only contain only numbers max 10 characters."
+											required="" style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<select name="qualification" id="qualification"
+											required="True" class="form-control" style="border:1px solid #df6512;">
+											<option value="" selected="selected">Qualification*</option>
+											<t t-foreach="qualification" t-as="qualifications">
+												<option t-att-value="qualifications.id">
+													<t t-esc="qualifications.name" />
+												</option>
+											</t>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<input type="file" id="inputFileToLoad"
+											class="form-control o_website_form_input" name="Resume"
+											placeholder="Resume" style="border:1px solid #df6512;"
+											accept=".pdf,.doc,.docx" />
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-6" style="margin-top:15px;">
+								<div class="col-sm-12">
+									<h3 style="color:#df6512;">Work Experience</h3>
+								</div>
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<select name="work_exp"
+											style="width:100%;height:30px;background:white;border-radius:3px;border:1px solid #df6512;">
+											<option value="">Select Experience*</option>
+											<option value="fresher">Fresher</option>
+											<option value="below1">Below 1 Year</option>
+											<option value="1to2">1-2 Years</option>
+											<option value="2to4">2-4 Years</option>
+											<option value="4to6">4-6 Years</option>
+											<option value="6above">Above 6 Years</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group form-field">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="present_employer" placeholder="Present Employer"
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="present_location" placeholder="Present Location"
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="present_salary" placeholder="Present Salary(CTC/months in numbers)"
+											style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="expected_salary" placeholder="Expected Salary(CTC/months in numbers)*"
+											required="" style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field">
+									<div class="col-sm-12">
+										<input type="text" class="form-control o_website_form_input"
+											name="reference" placeholder="Reference,if any" style="border:1px solid #df6512;" />
+									</div>
+								</div>
+
+								<div class="form-group form-field o_website_form_required_custom">
+									<label class="col-md-3 col-sm-4" for="g-recaptcha-response" />
+									<div class="col-md-7 col-sm-8">
+										<span class="o_website_form_recaptcha" />
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-12 text-center">
+								<button type="submit" class="btn btn-default job_apply_submit">Submit</button>
+								<span id="o_website_form_result" />
+							</div>
+						</div>
+					</div>
+				</form>
+			</section>
+		</xpath>
+		<xpath expr='//div[@id="wrap"]/div[2]' position='attributes'>
+			<attribute name="style">display:none</attribute>
+		</xpath>
+		<!-- <xpath expr='//div[@id="wrap"]/div[3]' position='attributes'>
+			<attribute name="style">display:none</attribute>
+		</xpath> -->		
+		<xpath expr='//div[@id="wrap"]/div[3]/section/div/a' position='replace'>
+			<span></span>
+		</xpath>
+		<!-- <xpath expr='//t/div/div[2]' position='replace'> <div style="margin-left:15%" 
+			class="col-md-10"> <div t-field="job.description" /> </div> </xpath> -->
+	</template>
+
+
+	<template id="thankyou_job_applied" name="Job Applied">
+		<t t-call="website.layout">
+			<div id="wrap" class="oe_structure oe_empty">
+				<section class="mt16 mb128">
+					<div class="container" style="text-align:center">
+						<div class="row">
+							<div class="col-md-12 mt16 mb32">
+								<h1 class="text-center">Thank You!</h1>
+								<h3>Your Application has been submitted.</h3>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</t>
+	</template>
+
+	<!-- A survey -->
+	<template id="back_inherit" inherit_id="survey.back" name="Survey assets">
+		<xpath expr="//div[1]" position="before">
+			<div groups="website.group_website_publisher" t-ignore="true"
+				class="pull-right">
+				<a
+					t-attf-href="/web?debug=#id=#{applicant_id}&amp;view_type=form&amp;model=hr.applicant&amp;action=#{action_id}&amp;menu_id=#{menu_id}"
+					class="btn btn-default">
+					Back to Application
+				</a>
+			</div>
+		</xpath>
+	</template>
+
+</odoo>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem name="Invoicing"
+			  id="account.menu_finance"
+			  groups="account.group_account_user,account.group_account_manager,account.group_account_invoice,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable"
+			  web_icon="account_invoicing,static/description/icon.png"
+			  sequence="40"/>
+
+	<!--Access for Bills Receivables -->
+	<menuitem id="account.menu_finance_receivables" name="Sales" parent="account.menu_finance" sequence="2" groups="account.group_account_user,account_access.group_account_invoice_bills_receivable"/>
+	<menuitem id="account.menu_finance_receivables_documents" name="Documents" parent="account.menu_finance_receivables" sequence="1" groups="account.group_account_user,account_access.group_account_invoice_bills_receivable"/>
+	<menuitem id="account.menu_finance_receivables_follow_up" name="Follow-up" parent="account.menu_finance_receivables" sequence="2" groups="account.group_account_user,account_access.group_account_invoice_bills_receivable"/>
+	<!-- <menuitem id="account_multi_payment.account_multi_payment_menu" name="Receipts" parent="account.menu_finance_receivables_documents" sequence="1" action="account_multi_payment.account_multi_payment_action"
+			  groups="account.group_account_manager,account_access.group_account_invoice_bills_receivable"/> -->
+	<menuitem id="account_reports.menu_action_followups" name="Customer Statements" action="account_reports.action_account_followup_all" parent="account.menu_finance_receivables_follow_up" sequence="1"
+			  groups="account.group_account_invoice,account_access.group_account_invoice_bills_receivable"/>
+
+	<record id="account_access_invoice_form_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.form</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_invoice_open']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+			<xpath expr="//button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+			<xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+			<xpath expr="//field[@name='journal_id']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+			<xpath expr="//page[@name='other_info']//field[@name='account_id']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+			<xpath expr="///field[@name='move_id']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="invoice_form_cancel_inherit_inv_access" model="ir.ui.view">
+		<field name="name">invoice.form.cancel.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_receivable</attribute>
+			</xpath>
+		</field>
+	</record>
+
+	<!--Access for Adviser -->
+	<menuitem id="account.menu_finance_entries" name="Adviser" parent="account.menu_finance" sequence="4"
+			  groups="account.group_account_user,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable"/>
+	<menuitem id="account.menu_finance_entries_accounting_entries" name="Accounting Entries" parent="account.menu_finance_entries"
+			  groups="account.group_account_user,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable"/>
+	<menuitem
+			action="account.action_move_journal_line"
+			id="account.menu_action_move_journal_line_form"
+			parent="account.menu_finance_entries_accounting_entries"
+			groups="account.group_account_user,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable"
+			sequence="2"/>
+	<menuitem action="account.action_account_moves_all_a"
+			  id="account.menu_action_account_moves_all"
+			  parent="account.menu_finance_entries_accounting_entries"
+			  sequence="1"
+			  groups="account.group_account_manager,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable"/>
+
+	<!--Access for Bills Payable -->
+	<menuitem id="account.menu_finance_payables" name="Purchases" parent="account.menu_finance" sequence="3" groups="account.group_account_user,account_access.group_account_invoice_bills_payable"/>
+	<menuitem id="account.menu_finance_payables_documents" name="Documents" parent="account.menu_finance_payables" sequence="1" groups="account.group_account_user,account_access.group_account_invoice_bills_payable"/>
+	<menuitem action="account.action_invoice_tree2" id="account.menu_action_invoice_tree2" parent="account.menu_finance_payables_documents" sequence="1" groups="account.group_account_user,account_access.group_account_invoice_bills_payable"/>
+
+
+	<record id="access_invoice_supplier_form_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.supplier.form</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_invoice_open']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+			<xpath expr="//button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+			<xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+			<xpath expr="//field[@name='journal_id']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+			<xpath expr="//field[@name='account_id']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+			<xpath expr="//field[@name='move_id']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+
+		</field>
+	</record>
+
+	<record id="invoice_form_cancel_inherit_access" model="ir.ui.view">
+		<field name="name">invoice.form.cancel.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account_cancel.invoice_supplier_cancel_form_inherit"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+				<attribute name="groups">account.group_account_user,account_access.group_account_invoice_bills_payable</attribute>
+			</xpath>
+		</field>
+	</record>
+
+
+	<menuitem id="account_firc.account_firc_payment_parent" name="FIRC" parent="account.menu_finance_entries"
+			  groups="account.group_account_user,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable"/>
+	<menuitem id="account_firc.account_firc_payment_menu" name="FIRC Numbers" parent="account_firc.account_firc_payment_parent" sequence="1"
+			  action="account_firc.account_firc_action"/>
+
+
+
+		<menuitem action="journal_bank_and_cash.action_move_journal_line_cash"
+			id="journal_bank_and_cash.menu_action_move_journal_line_cash_form"
+			parent="account.menu_finance_entries_accounting_entries"
+			 groups="account.group_account_user,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable" sequence="4"
+			name="Cash Entries" />
+
+		<menuitem action="journal_bank_and_cash.action_move_journal_line_bank"
+			id="journal_bank_and_cash.menu_action_move_journal_line_bank_form"
+			parent="account.menu_finance_entries_accounting_entries"
+			 groups="account.group_account_user,account_access.group_account_invoice_bills_payable,account_access.group_account_invoice_bills_receivable" sequence="3"
+			name="Bank Entries" />
+</odoo>

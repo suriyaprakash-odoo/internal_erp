@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="cron_tenure_notification_mail" model="ir.cron">
+			<field name="name">Tenure Notification</field>
+			<field name="model_id" ref="model_hr_employee" />
+			<field name="state">code</field>
+			<field name="code">model.tenure_notification_cron()</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False" />
+		</record>
+
+		<record id="cron_birthday_notification_mail" model="ir.cron">
+			<field name="name">Birthday Notification</field>
+			<field name="model_id" ref="model_hr_employee" />
+			<field name="state">code</field>
+			<field name="code">model.birthday_notification_cron()</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False" />
+		</record>
+
+		<record id="cron_anniversary_notification_mail" model="ir.cron">
+			<field name="name">Anniversary Notification</field>
+			<field name="model_id" ref="model_hr_employee" />
+			<field name="state">code</field>
+			<field name="code">model.anniversary_notification_cron()</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False" />
+		</record>
+	
+	</data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	     <!-- hr.holidays.public.inherit form -->
+	
+	<record id="holidays_form_view_inherit_leave_enhancement" model="ir.ui.view">
+	<field name="name">hr.holidays.public.form</field>
+	<field name="model">hr.holidays.public</field>
+	<field name="inherit_id" ref="hr_holidays_public.view_holidays_public_form" />
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='name']" position="after">
+			<field name="holiday_type" />
+		</xpath>
+	</field>
+</record>
+
+</data>
+</odoo>	

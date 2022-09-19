@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Inherited Account account -->
+	<record id="ppts_cash_control_form" model="ir.ui.view">
+		<field name="name">account.account.form.inherit</field>
+		<field name="model">account.account</field>
+		<field name="inherit_id" ref="account.view_account_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='deprecated']" position="after">
+				<field name="debit_amount" />
+				<field name="credit_amount" />
+				<field name="balance_amount" />
+				<field name="currency_balance_amount" />
+			</xpath>
+		</field>
+	</record>
+	
+	<!-- Inherited Vendor multi payment -->
+	<record id="multi_payment_form_inherit" model="ir.ui.view">
+		<field name="name">vendor.multi.payment.form.inherit</field>
+		<field name="model">vendor.multi.payment</field>
+		<field name="inherit_id" ref="ppts_multi_payment.vendor_multi_payment_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='payment_date']" position="before">
+				<field name="is_company_currency" invisible="1"/>
+				<field name="balance_amount" />
+				<field name="currency_balance_amount" attrs="{'invisible': [('is_company_currency', '=', False)]}" />
+			</xpath>
+		</field>
+	</record>
+	
+	<!-- Inherited Account payment -->
+	<record id="account_payment_form_inherit" model="ir.ui.view">
+		<field name="name">account.payment.form.inherit</field>
+		<field name="model">account.payment</field>
+		<field name="inherit_id" ref="account.view_account_payment_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='payment_date']" position="before">
+				<field name="is_company_currency" invisible="1"/>
+				<field name="balance_amount" />
+				<field name="currency_balance_amount" attrs="{'invisible': [('is_company_currency', '=', False)]}" />
+			</xpath>
+		</field>
+	</record>
+	
+	<!-- Inherited Account journal -->
+	<record id="account_journal_form_inherit" model="ir.ui.view">
+		<field name="name">account.journal.form.inherit</field>
+		<field name="model">account.journal</field>
+		<field name="inherit_id" ref="account.view_account_journal_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='outbound_payment_method_ids']" position="after">
+				<field name="cash_control" attrs="{'invisible': [('type', 'not in', ('cash','bank'))]}"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

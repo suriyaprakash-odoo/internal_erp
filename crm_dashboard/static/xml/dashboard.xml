@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="crm_dashboard.HomePage">
+    	<div class="o_dashboards">
+            <div class="container-fluid o_website_dashboard">
+            </div>
+        </div>
+    </t>
+    
+    <t t-name="crm_dashboard.dashboard">
+    <div class="row" style="background-color: #f1f1f1;text-align: center;padding: 2px 0 13px 0;">
+		    <h1>Expected Revenue List</h1>
+	</div>
+		    
+	    <div class="row" style="background-color:#fff;">
+		    <div class="col-xs-6 o_sales_team_filter" style="margin-top:30px;">
+		    	<div class="form-group">
+				  <label for="sel1">Sales Team:</label>
+				  <select class="form-control" id="team">
+				  	<option>--Select Sales Team--</option>
+				  	<t t-foreach="values['sale_team']" t-as="vals">
+					    <option t-att-value="vals['id']"><t t-esc="vals['name']" /></option>
+					</t>
+				  </select>
+				</div>
+		    </div>
+		    <div class="col-xs-6" style="margin-top:30px;">
+		    	<div class="form-group o_sales_person_filter">
+				  <label for="sel1">Sales Person:</label>
+				  <select class="form-control" id="person">
+				  	<option>--Select Sales Person--</option>
+				  	<t t-foreach="values['sales_member']" t-as="vals">
+					    <option t-att-value="vals['id']"><t t-esc="vals['name']" /></option>
+					</t>
+				  </select>
+				</div>
+		    </div>
+	    </div>
+    	<div class="row all_dashboard" style="margin-top:10px;">
+    		<div class="col-sm-1">
+    			<div class="col-sm-12">
+    				<h2 style="margin-top: 7px;">Dashboard</h2>
+    			</div>
+    		</div>
+    	 	<div class="col-sm-11">
+            <t t-set="i" t-value="0" />
+            <t t-foreach="values['state']" t-as="vals">
+                <t t-if="vals != 'Employee'">
+                    <t t-set="i" t-value="i+1" />
+                    <div class="col-sm-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <t t-if="vals == 'No Show / To Reschedule'">
+                                    <div style="background-color:#b71c1c;height: 90px;">
+                                        <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:none;"
+	                                          t-att-name="vals">
+                                        <div style="color:#fff; text-align:right; padding-right:5px; font-size:24px;">
+                                           <t t-esc="values['lead_states_rec'][i]" />
+                                           </div>
+                                           <div style="color:#fff; text-align:right; padding-right:5px; font-size:16px; ">
+                                            <t t-esc="vals" />
+                                         </div>
+                                         </a>
+                                    </div>
+                                   
+                                </t>
+                                <t t-if="vals != 'No Show / To Reschedule'">
+                                    <div style="background-color:#333300;height: 40px;">
+                                       <!--  <div style="color:#fff; text-align:right; padding-right:5px; font-size:24px;">
+                                           <t t-esc="values['lead_states_rec'][i]" />
+                                           </div> -->
+                                           <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:none"
+	                                                 t-att-name="vals">
+                                           <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px; ">
+                                            <t t-esc="vals" />
+                                         </div>
+                                         </a>
+                                    </div>
+                                   
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p></p>
+                        </div>
+                    </div>
+                </t> 
+            </t>
+        
+        	</div>
+        </div>
+        
+        <div class="row" style="margin-top:10px;">
+        
+        
+    		<div class="col-sm-1">
+    			<div class="col-sm-12">
+    				<h2 style="margin-top: 7px;">Count</h2>
+    			</div>
+    		</div>
+    	 	<div class="col-sm-11">
+    	 	
+            <t t-set="i" t-value="0" />
+            <t t-foreach="values['state']" t-as="vals_2">
+                <t t-if="vals_2 != 'Employee'">
+                    <t t-set="i" t-value="i+1" />
+                    <div class="col-sm-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <t t-if="vals_2 == 'No Show / To Reschedule'">
+                                    <div style="background-color:#b71c1c;height: 90px;">
+                                        <div style="color:#fff; text-align:right; padding-right:5px; font-size:24px;">
+                                           <t t-esc="values['lead_states_rec'][i]" />
+                                           </div>
+                                           <div style="color:#fff; text-align:right; padding-right:5px; font-size:16px; ">
+                                            <t t-esc="vals_2" />
+                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div style="background-color:#cfd3d0;"> 
+                                                    <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:underline;"
+	                                           t-att-name="vals_2">View details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="vals_2 != 'No Show / To Reschedule'">
+                                    <div style="background-color:#154360;height: 40px;">
+                                     <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:none"
+	                                                 t-att-name="vals_2">
+                                         <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px;">
+                                           <t t-esc="values['lead_states_rec'][i]" />
+                                           </div>
+                                           </a>
+                                           <!-- <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px; ">
+                                            <t t-esc="vals_2" />
+                                         </div> -->
+                                    </div>
+                                    
+                                </t>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <p></p>
+                        </div>
+                    </div>
+                </t> 
+            </t>
+        
+        	</div>
+        </div>
+        
+        <div class="row" style="margin-top:10px;">
+        
+    		<div class="col-sm-1">
+    			<div class="col-sm-12">
+    				<h2 style="margin-top: 7px;">Value</h2>
+    			</div>
+    		</div>
+    	 	<div class="col-sm-11">
+    	 	
+            <t t-set="i" t-value="0" />
+            <t t-foreach="values['state']" t-as="vals_3">
+                <t t-if="vals_3 != 'Employee'">
+                    <div class="col-sm-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <t t-if="vals_3 == 'No Show / To Reschedule'">
+                                    <div style="background-color:#b71c1c;height: 90px;">
+                                        <div style="color:#fff; text-align:right; padding-right:5px; font-size:24px;">
+                                           <t t-esc="values['lead_states_rec'][i]" />
+                                           </div>
+                                           <div style="color:#fff; text-align:right; padding-right:5px; font-size:16px; ">
+                                            <t t-esc="vals_3" />
+                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div style="background-color:#cfd3d0;"> 
+                                                    <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:underline; cursor:pointer;"
+	                                            t-att-name="vals_3">View details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="vals_3 != 'No Show / To Reschedule'">
+                                    <div style="background-color:#D35400;height: 40px;">
+                                     <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:none;"
+	                                                 t-att-name="vals_3">
+                                         <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px;">
+                                           <t t-esc="values['state_revenue'][i]" />
+                                           </div>
+                                           </a>
+                                           <!-- <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px; ">
+                                            <t t-esc="vals_3" />
+                                         </div> -->
+                                    </div>
+                                   
+                                </t>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <p></p>
+                        </div>
+                    </div>
+                    <t t-set="i" t-value="i+1" />
+                </t> 
+            </t>
+        
+        	</div>
+        </div>
+        
+        <div class="row" style="margin-top:10px;">
+    		<div class="col-sm-1">
+    			<div class="col-sm-12">
+    				<h2 style="margin-top: 7px;">Average</h2>
+    			</div>
+    		</div>
+    	 	<div class="col-sm-11">
+            <t t-set="i" t-value="0" />
+            <t t-foreach="values['state']" t-as="vals_4">
+                <t t-if="vals_4 != 'Employee'">
+                    <div class="col-sm-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <t t-if="vals_4 == 'No Show / To Reschedule'">
+                                    <div style="background-color:#b71c1c;height: 40px;">
+                                        <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:none;"
+	                                           t-att-name="vals_4">
+                                        <div style="color:#fff; text-align:right; padding-right:5px; font-size:24px;">
+                                           <t t-esc="values['lead_states_rec'][i]" />
+                                           </div>
+                                           <div style="color:#fff; text-align:right; padding-right:5px; font-size:16px; ">
+                                            <t t-esc="vals_4" />
+                                         </div>
+                                         </a>
+                                    </div>
+                                    
+                                </t>
+                                <t t-if="vals_4 != 'No Show / To Reschedule'">
+                                    <div style="background-color:#663399;height: 40px;">
+                                    <a style="text-align: left; height: 25px; padding-top:3px; text-decoration:none;"
+	                                                 t-att-name="vals_4">
+                                         <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px;">
+                                           <t t-esc="values['state_revenue_sum'][i]" />
+                                           </div>
+                                           </a>
+                                           <!-- <div style="color:#fff;text-align:center;padding-right:12px;font-size:16px;padding-top: 8px; ">
+                                            <t t-esc="vals_3" />
+                                         </div> -->
+                                    </div>
+                                   
+                                </t>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <p></p>
+                        </div>
+                    </div>
+                    <t t-set="i" t-value="i+1" />
+                </t> 
+            </t>
+        	</div>
+        </div>
+        <div class="row" style="margin-top:40px;margin-left:15px;text-align:center;">
+        <div class="col-sm-2 onclick_month" style="padding-right:0">
+        	<div style="height:40px;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;cursor:pointer;" class="col-sm-12">
+        	<b><p style="padding-top: 8px;">Month</p></b>
+	        </div>
+	     </div>	
+        <!-- <div class="col-sm-2 onclick_week" style="padding-right:0">
+        	<div style="height:40px;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;cursor:pointer;" class="col-sm-12">
+        	<b><p style="padding-top: 8px;">Week</p></b>
+	        </div>
+	     </div>	 -->
+	    <div class="col-sm-2 onclick_quarter" style="padding-right:0">
+        	<div style="height:40px;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;cursor:pointer;" class="col-sm-12">
+        	<b><p style="padding-top: 8px;">Quarter</p></b>
+	        </div>
+	     </div>	 
+	     
+	      <div class="col-sm-2 onclick_year" style="padding-right:0">
+        	<div style="height:40px;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;cursor:pointer;" class="col-sm-12">
+        	<b><p style="padding-top: 8px;">Year</p></b>
+	        </div>
+	     </div>	 
+	     
+	    </div>
+        <div class="row" style="margin-top:50px;margin-left:15px;text-align:center;">
+        	<div class="col-sm-4" style="padding-right:0">
+	        	<div style="padding-top: 8px;height:50px;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;" class="col-sm-12">
+	        	<b><p style="padding-top: 8px;">Month</p></b>
+		        </div>
+	        </div>
+        	<div class="col-sm-8"  style="padding-left:0">
+            <t t-foreach="values['dates_count']" t-as="vals">
+            
+	            <t t-if="values['week_list']!='1'">
+	            <div style="height:50px;font-size:14px;float: left;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;" class="col-sm-2">
+	           		<b><p style="padding-top: 8px;"><t t-esc="vals" /></p></b>
+	            </div>
+	            </t>
+	            
+	            <t t-if="values['week_list']=='1'">
+	            <div style="height:50px;font-size:14px;float: left;border: 1px solid #6d4863;background-color: #865a7a;color: #fff;" class="col-sm-2">
+	           		<b><p style="padding-top: 8px;">
+	           		<t t-foreach="vals" t-as="rec">
+	           			<t t-esc="rec" /><br />
+	           		</t>
+	           		</p></b>
+	            </div>
+	            </t>
+	            
+	        </t>
+	        </div>
+	    </div>
+	    <div class="row " style="margin-left:15px;text-align:center;">
+            <t t-foreach="values['deta']" t-as="vals_5">
+           		 <t t-foreach="vals_5" t-as="vals_4">
+           		 	
+           		 	<t t-set="i" t-value="0" />
+			          <div class="col-sm-4"  style="padding-right:0"> 
+	           		  <t t-foreach="vals_4" t-as="vals">	
+			               <t t-set="i" t-value="i+1" />
+			               <t t-if="i==1">       		
+				               <div class="col-sm-12" style="height:40px;font-size:14px;float: left;border: 1px solid #855979;background-color: #232322;color: #f9f9f9;padding-top: 8px;">
+				                   <b><t t-esc="vals" /></b>
+				               </div>	
+			               </t>
+			              
+			          </t>
+			          </div>
+			          
+           		 		<t t-set="i" t-value="0" />
+			          <div class="col-sm-8" style="padding-left:0"> 	
+	           		  <t t-foreach="vals_4" t-as="vals">	
+			               <t t-set="i" t-value="i+1" />			               
+			               <t t-if="i!=1">           		  		
+			               <div class="col-sm-2" style="overflow-x : auto;height:40px;font-size:14px;float: left;border: 1px solid #855979;background-color: #ffffff;color: #855979;padding-top: 8px;">
+			                   <b><t t-esc="vals" /></b>
+			               </div>
+			               </t>
+			          </t>
+			          </div>
+		          </t>
+              </t>
+         </div>
+    </t>
+</templates>
+
+
+       
+       
+       
+       

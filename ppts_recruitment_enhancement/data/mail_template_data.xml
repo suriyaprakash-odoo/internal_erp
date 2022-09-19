@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+
+		<record id="mail_alias_recruitment_new" model="mail.alias">
+			<field name="alias_name">odoorecruiter</field>
+			<field name="alias_model_id" ref="model_calendar_event" />
+			<field name="alias_user_id" ref="base.user_root" />
+			<field name="alias_contact">everyone</field>
+		</record>
+
+		<record id="email_template_data_offer_letter_employee"
+			model="mail.template">
+			<field name="name">Applicant: Offer Letter</field>
+			<field name="email_from">${user.email}</field>
+			<field name="subject">Applicant: Offer Letter</field>
+			<field name="email_to">${object.email_from}</field>
+			<field name="model_id"
+				ref="ppts_recruitment_enhancement.model_calendar_event" />
+			<field name="user_signature" eval="False" />
+			<field name="body_html"><![CDATA[
+			
+			<p>Hi ${object.name or 'applicant'},</p>
+
+            <p>As discussed, Your interview is Scheduled with PPTS. Please find the below details.</p>
+            <br>
+            </br>
+			<p><strong><u>INTERVIEW DETAILS:</u></strong></p>
+
+            <p><strong>COMPANY LINK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: www.pptssolutions.com</strong></p>  
+
+            <p><strong>MAP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: https://goo.gl/maps/85YKh56jZEt</strong></p>
+
+            <p><strong>WORK LOCATION &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Coimbatore</strong></p>
+
+            <p><strong>DATE & TIME OF INTERVIEW&nbsp;&nbsp;&nbsp;: ${ctx['diff_days']}</strong></p>
+            <br>
+            </br>
+            <p><strong>VENUE:</strong></p>              
+
+            <p><strong>Point Perfect Transcription Services [India] Pvt.Ltd</strong></p>
+
+            <p><strong>7th Floor, Tower 1-A, India Land Tech Park</strong></p>
+
+            <p><strong>Keeranatham Village</strong></p>
+
+            <p><strong>Saravanampatti.</strong></p>
+
+            <p><strong>Coimbatore- 641035.</strong></p>
+            <br>
+            </br>
+            <p><strong>Documents to Carry :</strong></p>
+
+            <p>·         Updated Profile</p>
+
+            <p>·         Interview Call Letter.</p>
+
+            <p>·         Any ID Proof.</p>
+ 
+            <p>·         Passport Size Photo.</p>
+            <br>
+            </br>
+            <p><strong>NOTE:</strong></p>
+
+            <p style="background-color: yellow;">·         Make sure that your Mobile Device is in Silent mode inside the office premises.</p>
+
+            <p style="background-color: yellow;">·         Further Queries dial 0422-4037121 between 9:00 am-6:00 pm during Week days.(Except National Holidays).</p>
+
+            <p style="background-color: yellow;">·         Laptop and any other electronic devices other than mobile phones are prohibited inside the campus.</p>
+                      ]]></field>
+		</record>
+
+	</data>
+</odoo>

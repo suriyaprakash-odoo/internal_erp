@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_dwr_crm"
+            string="Daily Report"
+            model="crm.dwr" 
+            report_type="qweb-pdf"
+            name="custom_crm.report_dwrcrm"
+            file="custom_crm.report_dwrcrm" />
+            
+        <report 
+            id="report_dwr_crm_week"
+            string="Weekly Report"
+            model="crm.dwr" 
+            report_type="qweb-pdf"
+            name="custom_crm.report_dwrcrm_week"
+            file="custom_crm.report_dwrcrm_week" />
+    </data>
+</odoo>

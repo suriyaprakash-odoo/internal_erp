@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_email_followup_line,email_followup_line,model_email_followup_line,base.group_user,1,0,0,0
+access_crm_campaign,crm_campaign,model_crm_campaign,base.group_user,1,0,0,0
+access_ campaign_mail_template,campaign_mail_template,model_mail_tracking_email,base.group_user,1,0,0,0

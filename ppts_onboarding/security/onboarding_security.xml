@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+		<record model="ir.module.category"
+			id="module_hr_employee_onboarding">
+			<field name="name">Onboarding</field>
+			<field name="description">Onboarding</field>
+			<field name="sequence">10</field>
+		</record>
+
+		<record id="group_onboarding_user" model="res.groups">
+			<field name="name">User</field>
+			<field name="category_id"
+				ref="ppts_onboarding.module_hr_employee_onboarding" />
+			<!-- <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]" /> -->
+		</record>
+
+		<record id="group_onboarding_manager" model="res.groups">
+			<field name="name">Manager</field>
+			<field name="category_id"
+				ref="ppts_onboarding.module_hr_employee_onboarding" />
+			<field name="implied_ids"
+				eval="[(4, ref('group_onboarding_user'))]" />
+		<!-- 	<field name="users" eval="[(4, ref('base.user_root'))]" /> -->
+		</record>
+	</data>
+</odoo>

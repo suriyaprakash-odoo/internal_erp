@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<menuitem id="menu_hr_seniority_title" name="Job Seniority Titles"
+		parent="hr_recruitment.menu_hr_recruitment_configuration" 
+		action="hr_job_seniority_action" 		
+		sequence="5"/>
+		
+		
+	<menuitem id="menu_hr_job_template" name="Job Template"
+		parent="hr_recruitment.menu_hr_recruitment_configuration" action="hr_recruitment_job_template"
+		sequence="8" />
+		
+	<menuitem
+        name="Recruitment"
+        id="hr_recruitment.menu_hr_recruitment_root"
+        web_icon="hr_recruitment,static/description/icon.png"
+        groups="ppts_recruitment_enhancement.group_hr_recruitment_user_hr"
+        sequence="80"/>	
+	
+	<menuitem
+        name="Applications"
+        parent="hr_recruitment.menu_hr_recruitment_root"
+        id="hr_recruitment.menu_crm_case_categ0_act_job" sequence="2" groups="ppts_recruitment_enhancement.group_hr_recruitment_user_hr"/>
+        	
+</odoo>

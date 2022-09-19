@@ -1,0 +1,21 @@
+{
+    'name': 'Account FIRC',
+    'version': '11.0.1.0.0',
+    'description': 'Bulk payments for invoice',
+    'summary': 'FIRC payments for invoice',
+    'category': 'Account Invoice',
+    'author': 'PPTS [India] Pvt.Ltd.',
+    'website': "http://www.pptssolutions.com",
+    'sequence': 10,
+    'depends': ['base','account','ppts_multi_payment','ppts_account_invoice'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/account_invoice.xml',
+        'views/firc_view.xml',
+        'views/register_payment_view.xml',
+    ],
+    'license': 'LGPL-3',
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

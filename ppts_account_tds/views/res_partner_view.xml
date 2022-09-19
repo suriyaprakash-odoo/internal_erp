@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_vendor_form_inherit" model="ir.ui.view">
+			<field name="name">res.partner.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position="before">
+                	<group>
+	                	<group>
+	                		<field name="is_tds" />
+	                		<field name="tds_deductee_id" invisible="1"/>
+	                		<field name="tds_section_ids" invisible="1"/>
+							<field name="tds_section_id" options="{'no_create':1,'no_create_edit':1}" domain="[('id', 'in', (tds_section_ids))]"/>
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+		
+	</data>
+</odoo>

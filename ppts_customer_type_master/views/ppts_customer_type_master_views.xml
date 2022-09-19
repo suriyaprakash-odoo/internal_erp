@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Form View -->
+	<record id="ppts_customer_type_master_form" model="ir.ui.view">
+        <field name="name">ppts.customer.type.master</field>
+        <field name="model">ppts.customer.type.master</field>
+        <field name="arch" type="xml">
+            <form string="Customer Type Master">
+            	<sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="ppts_customer_type_master_tree" model="ir.ui.view">
+        <field name="name">ppts.customer.type.master</field>
+        <field name="model">ppts.customer.type.master</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Type Tree">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+	<!-- Search View -->
+	<record id="ppts_customer_type_master_filter" model="ir.ui.view">
+        <field name="name">ppts.customer.type.master</field>
+        <field name="model">ppts.customer.type.master</field>
+        <field name="arch" type="xml">
+            <search string="Search Customer Type">
+                <field name="name"/>
+                <group expand="0" string="Group By">
+                    <filter string="Name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+	<!-- Added billing field -->
+	<record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='user_id']" position="before">
+            		<field name="billing"/>
+            	</xpath>
+            </field>
+    </record>
+    
+    <!-- Added customer_type field -->
+	<record id="view_account_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form" />
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='partner_id']" position="before">
+            		<field name="customer_type" widget='radio' options="{'horizontal': true}"/>
+            	</xpath>
+            </field>
+    </record>
+    
+    <!-- Added New search filtter -->
+    <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.select.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+                   <field name="name"
+                       filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self)]"/>
+                   <filter name="filter_my_partners" help="My Partners"
+                           domain="[('user_id','=',uid)]"/>
+                   <separator/>
+                   <filter string="Persons" name="type_person" domain="[('is_company','=',0)]"/>
+                   <filter string="Companies" name="type_company" domain="[('is_company','=',1)]"/>
+                   <separator/>
+                   <filter string="Customers" name="customer" domain="[('billing','=',1), ('parent_id', '=', False)]"/>
+                   <filter string="Vendors" name="supplier" domain="[('supplier','=',1), ('parent_id', '=', False)]"/>
+                   <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                   <separator/>
+                   <field name="category_id" string="Tag" filter_domain="[('category_id','ilike', self)]"/>
+                   <field name="user_id"/>
+                   <field name="parent_id" domain="[('is_company','=',1)]" operator="child_of"/>
+                   <group expand="0" name="group_by" string="Group By">
+                       <filter name="salesperson" string="Salesperson" domain="[]" context="{'group_by' : 'user_id'}" />
+                       <filter name="group_company" string="Company" context="{'group_by': 'parent_id'}"/>
+                       <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
+                   </group>
+               </search>
+            </field>
+        </record>
+    
+    <!-- Added Search filter for customer_type is billing -->
+    <record id="action_partner_customer_form_inherit" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'default_customer':1,'search_default_customer':1,'search_default_billing':1, 'default_company_type': 'company','default_is_company': 1}</field>
+			<field name="search_view_id" ref="view_res_partner_filter_inherit"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a contact in your address book.
+              </p><p>
+                Odoo helps you easily track all activities related to
+                a customer: discussions, history of business opportunities,
+                documents, etc.
+              </p>
+            </field>
+        </record>
+        
+	<!-- Removed action and menuitem -->
+    <record model="ir.ui.menu" id="account.menu_account_customer">
+    	<field name="action" eval="False"/>
+	</record>
+	
+	<!-- Added New menu for Customers-->
+	<menuitem id="menu_account_customer_inherit" name="Customers"
+            parent="account.menu_finance_receivables_master_data"
+            action="action_partner_customer_form_inherit" sequence="90"/>
+	
+    <!-- Action View -->
+    <record id="mma_ppts_customer_type_master" model="ir.actions.act_window">
+        <field name="name">Customer Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ppts.customer.type.master</field>
+        <field name="view_id" ref="ppts_customer_type_master_tree"/>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="ppts_customer_type_master_filter"/>
+    </record>
+    
+    <!-- Menu Details -->
+    <menuitem id="mam_customer_type_master" name="Customer Type" parent="account.menu_finance_configuration" sequence="1" action="mma_ppts_customer_type_master"/>
+
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- External layouts styles -->
+
+		<template id="custom_invoice_external_layout_background">
+			<div class="header o_background_header">
+				<img t-if="company.logo"
+					t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+					class="pull-left"/>
+				<div class="pull-left company_address" style="padding-top:14px;line-height:16px;">
+					<div>
+						<strong><span style="font-size: 20px;" t-field="company.partner_id.name" /></strong>
+						<br />
+						<span t-field="o.company_id.street" />
+						<br />
+						<span t-field="o.company_id.street2" />
+						<br />
+						<span t-field="o.company_id.city" />
+						- 
+						<span t-field="o.company_id.zip" />
+						,
+						<!-- <br /> -->
+						<span t-field="o.company_id.state_id" />
+						,
+						<span t-field="o.company_id.country_id" />
+						<br />
+						<span>Phone :</span>
+						<span t-field="o.company_id.phone" />, 
+						<span>GSTIN:</span>
+						<span t-field="o.company_id.vat" />
+						<br />
+						<span>E-mail:</span>
+						<span t-field="o.company_id.email" />
+					</div>
+				</div>
+				<div style="text-align:right;">
+					<strong><span style="font-size: 25px;color:#875A7B;margin-right:-7px;">INVOICE</span></strong>
+					<br />
+					<strong><span style="color:#875A7B;font-size: 15px;margin-right:-7px;" t-field="o.number" /></strong>
+					<br/>
+					<span t-field="o.date_invoice" t-field-options='{"format": "d/MMM/y"}'/>
+				</div>
+				<div class="clearfix mb8" />
+			</div>
+
+			<div class="article o_report_layout_background">
+				<t t-raw="0" />
+			</div>
+
+			<div class="footer o_background_footer">
+				<div >
+					<ul class="list-inline" style="width:100%;text-align:right;">
+						<span style="text-align:right;">For Point Perfect Transcription
+							Services India Pvt Ltd
+						</span>
+						<br/>
+						<br/>
+						<br/>
+						<span style="text-align:right;">Authorised Signatory</span>
+					</ul>
+					<div t-field="company.report_footer" />
+					<div style="text-align:left;">This is a Computer Generated Invoice</div>
+					<div class="text-muted text-right">
+						Page:
+						<span class="page" />
+						of
+						<span class="topage" />
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="custom_invoice_external_layout">
+			<!-- Multicompany -->
+			<t t-if="not o and doc">
+				<t t-set="o" t-value="doc" />
+			</t>
+
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id.sudo()" />
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company" />
+			</t>
+
+			<t
+				t-call="ppts_account_invoice.custom_invoice_external_layout_background">
+				<t t-raw="0" />
+			</t>
+
+		</template>
+
+		<record id="paperformat_invoices_domestic"
+			model="report.paperformat">
+			<field name="name">Invoice domestic Paperformat</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">35</field>
+			<field name="margin_bottom">32</field>
+			<field name="margin_left">6</field>
+			<field name="margin_right">6</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">30</field>
+			<field name="dpi">90</field>
+		</record>
+
+		<!-- QWeb Reports -->
+		<report id="account_invoices_ppts" model="account.invoice"
+			string="PPTS Invoice" report_type="qweb-pdf"
+			name="ppts_account_invoice.report_ppts_invoice_custom"
+			file="ppts_account_invoice.report_ppts_invoice_custom"
+			paperformat="paperformat_invoices_domestic"
+			attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')" />
+	</data>
+</odoo>
